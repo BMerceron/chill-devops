@@ -1,1 +1,1 @@
-{"version":3,"file":"../master.css","sources":["master.scss","test.scss"],"sourcesContent":["@import \"test.scss\";",".test {\n  padding: 50px;\n  margin: 40px;\n}"],"names":[],"mappings":"ACAA,AAAA,KAAK,CAAC;EACJ,OAAO,EAAE,IAAI;EACb,MAAM,EAAE,IAAI,GACb"}
+{"version":3,"file":"../master.css","sources":["master.scss","test.scss"],"sourcesContent":["@import \"test.scss\";",".test {\n  padding-bottom: 40px;\n}"],"names":[],"mappings":"ACAA,AAAA,KAAK,CAAC;EACJ,cAAc,EAAE,IAAI,GACrB"}

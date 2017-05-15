@@ -2,18 +2,23 @@
 <html>
     <head>
         <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-        {# scss #}
+        {# css compiled #}
         <link rel="stylesheet" href="{{ asset('css/master.css') }}"/>
+        {# materialize#}
+        <link rel="stylesheet" href="{{ asset('fonts/materialize/css/materialize.min.css') }}"/>
     </head>
     <body>
+        <h1>Hey c'est la base.html.twig !</h1>
         {% block body %}
-            <div class="test"> appuyer ici ..... ()</div>
         {% endblock %}
         {% block javascripts %}
             <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+            <script src="{{ asset('fonts/materialize/js/materialize.min.js') }}"></script>
         {% endblock %}
     </body>
 </html>

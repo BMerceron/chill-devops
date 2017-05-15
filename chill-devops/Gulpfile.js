@@ -6,7 +6,7 @@ var del = require('del');
 var image = require('gulp-image');
 
 gulp.task('sass', function () {
-    return gulp.src('./src/AppBundle/Resources/Public/scss/master.scss')
+    return gulp.src('./src/AppBundle/Resources/public/scss/master.scss')
         .pipe(sourcemaps.init())
         .pipe(sass().on('error', sass.logError))
         .pipe(sourcemaps.write('./maps'))
@@ -19,13 +19,17 @@ gulp.task('materialize', function () {
 });
 
 gulp.task('img', function () {
-    return gulp.src('./src/AppBundle/Resources/Public/img/**.+(png|jpg|gif|svg|jpeg)')
+    return gulp.src('./src/AppBundle/Resources/public/img/**.+(png|jpg|gif|svg|jpeg)')
         .pipe(gulp.dest('./web/img/'));
 });
 
 gulp.task('js', function () {
-    return gulp.src('./src/AppBundle/Resources/Public/js/**')
+    return gulp.src('./src/AppBundle/Resources/public/js/**')
         .pipe(gulp.dest('./web/js/'));
+});
+
+gulp.task('clean', function () {
+    del(['./web/css/', './web/js/', './web/fonts/', './web/img/', './web/bundles']);
 });
 
 gulp.task('watch', function () {
@@ -35,27 +39,22 @@ gulp.task('watch', function () {
 
     // Watch Sass files
     gulp.watch([
-        './src/AppBundle/Resources/Public/scss/**/*.scss'
+        './src/AppBundle/Resources/public/scss/*.scss'
     ], ['sass']).on('change', onChange);
 
     // Watch Javascript files
     gulp.watch([
         './node_modules/jquery/dist/jquery.min.js',
-        './src/AppBundle/Resources/Public/js/*.js',
+        './src/AppBundle/Resources/public/js/*.js',
     ], ['js'])
         .on('change', onChange);
 
     // Watch Images files
     gulp.watch([
-        './src/AppBundle/Resources/Public/img/*.+(png|jpg|gif|svg|jpeg)',
+        './src/AppBundle/Resources/public/img/*.+(png|jpg|gif|svg|jpeg)',
     ], ['img']).on('change', onChange);
-
-
-    gulp.watch([
-        './src/CND/ShowCase/ProBundle/Resources/public/docs/*.+(jpeg|jpg|xls|svg|ifc|pdf|png)'
-    ], ['docs']).on('change', onChange);
 });
 
 gulp.task('build', function (callback) {
-    runSequence('sass','js', 'img', 'materialize', callback);
+    runSequence('clean', 'sass', 'js', 'img', 'materialize', callback);
 });
