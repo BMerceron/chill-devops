@@ -14,10 +14,48 @@ gulp.task('sass', function () {
 });
 
 gulp.task('materialize', function () {
-    return gulp.src('./node_modules/materialize-css/dist/fonts/bootstrap/*')
+    return gulp.src('./node_modules/materialize-css/dist/**')
         .pipe(gulp.dest('./web/fonts/materialize/'));
 });
 
+gulp.task('img', function () {
+    return gulp.src('./src/AppBundle/Resources/Public/img/**.+(png|jpg|gif|svg|jpeg)')
+        .pipe(gulp.dest('./web/img/'));
+});
+
+gulp.task('js', function () {
+    return gulp.src('./src/AppBundle/Resources/Public/js/**')
+        .pipe(gulp.dest('./web/js/'));
+});
+
+gulp.task('watch', function () {
+    var onChange = function (event) {
+        console.log('File ' + event.path + ' has been ' + event.type);
+    };
+
+    // Watch Sass files
+    gulp.watch([
+        './src/AppBundle/Resources/Public/scss/**/*.scss'
+    ], ['sass']).on('change', onChange);
+
+    // Watch Javascript files
+    gulp.watch([
+        './node_modules/jquery/dist/jquery.min.js',
+        './src/AppBundle/Resources/Public/js/*.js',
+    ], ['js'])
+        .on('change', onChange);
+
+    // Watch Images files
+    gulp.watch([
+        './src/AppBundle/Resources/Public/img/*.+(png|jpg|gif|svg|jpeg)',
+    ], ['img']).on('change', onChange);
+
+
+    gulp.watch([
+        './src/CND/ShowCase/ProBundle/Resources/public/docs/*.+(jpeg|jpg|xls|svg|ifc|pdf|png)'
+    ], ['docs']).on('change', onChange);
+});
+
 gulp.task('build', function (callback) {
-    runSequence('sass', 'materialize', callback);
+    runSequence('sass','js', 'img', 'materialize', callback);
 });
