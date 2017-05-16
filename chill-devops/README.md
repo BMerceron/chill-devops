@@ -7,6 +7,7 @@ SETUP
 =====
 
 SSH: git clonegit@github.com:Bastoon01/chill-devops.git
+
 HTTPS: git clone https://github.com/Bastoon01/chill-devops.git
 
 APP UPDATE
