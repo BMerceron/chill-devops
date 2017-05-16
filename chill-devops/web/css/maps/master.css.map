@@ -1,1 +1,0 @@
-{"version":3,"file":"../master.css","sources":["master.scss","test.scss"],"sourcesContent":["@import \"test.scss\";",".test {\n  padding-bottom: 40px;\n}"],"names":[],"mappings":"ACAA,AAAA,KAAK,CAAC;EACJ,cAAc,EAAE,IAAI,GACrB"}

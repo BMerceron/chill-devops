@@ -1,15 +1,11 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-var sourcemaps = require('gulp-sourcemaps');
 var runSequence = require('run-sequence');
 var del = require('del');
-var image = require('gulp-image');
 
 gulp.task('sass', function () {
     return gulp.src('./src/AppBundle/Resources/public/scss/master.scss')
-        .pipe(sourcemaps.init())
-        .pipe(sass().on('error', sass.logError))
-        .pipe(sourcemaps.write('./maps'))
+        .pipe(sass())
         .pipe(gulp.dest('./web/css/'));
 });
 
