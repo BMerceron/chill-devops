@@ -34,5 +34,30 @@ RUN
 
 In your CLI :
     php bin/console server:run  
+    
+    
+VERSIONNING -GITHUB
+
+BRANCHS
+
+    SPB-N° US*-Name-Function
+    *US = User Storie (cf taiga)
+
+        ex : SPB-1-Login-Page
+        ex : SPB-2-Forms-Page
+COMMITS
+    FEAT : Créer d'une nouvelle fonctionnalité.
+    FIX : Régler un problème/bug sur une fonctionnalité.
+    UPDATE : Améliorer une fonctionnalité.
+
+        Ex : FEAT : Login page
+
+        Ex : FIX : Form username on login page
+
+        Ex : UPDATE : Form lastanme on login page
+        
+ARCHITECTURE
+
+    MyBranch -> Dev -> Preprod (test) -> Prod
 
 
