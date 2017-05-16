@@ -15,6 +15,8 @@ APP UPDATE
 Install composer : https://getcomposer.org/download/
 Open a CLI:  
 
+            composer install
+            and for update :
             composer update
 
 After, your application is up to date.
