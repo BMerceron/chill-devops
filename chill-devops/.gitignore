@@ -1,17 +1,8 @@
 /app/config/parameters.yml
 /build/
 /phpunit.xml
-src/var/*
-!src/var/cache
-src/var/cache/*
-!src/var/cache/.gitkeep
-!src/var/logs
-src/var/logs/*
-!src/var/logs/.gitkeep
-!src/var/sessions
-src/var/sessions/*
-!src/var/sessions/.gitkeep
-!src/var/SymfonyRequirements.php
+src/var/**
+var/**
 /vendor/
 /web/bundles/
 /web/css/
@@ -19,5 +10,6 @@ src/var/sessions/*
 /web/js/*
 /web/img/*
 /node_modules/**
-.idea/*
+.idea/**
+.idea/workspace.xml
 /.phpintel/*

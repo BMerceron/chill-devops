@@ -7,18 +7,21 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-        {# css compiled #}
+        <!-- css compiled -->
         <link rel="stylesheet" href="{{ asset('css/master.css') }}"/>
-        {# materialize#}
+        <!-- materialize-->
         <link rel="stylesheet" href="{{ asset('fonts/materialize/css/materialize.min.css') }}"/>
+        <!--Import Google Icon Font-->
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
-        <h1>Hey c'est la base.html.twig !</h1>
+    {# {% include 'menu.html.twig' %} #}
         {% block body %}
         {% endblock %}
         {% block javascripts %}
             <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
             <script src="{{ asset('fonts/materialize/js/materialize.min.js') }}"></script>
+            {#<script src="{{ asset('js/navabar.js') }}"></script>#}
         {% endblock %}
     </body>
 </html>
