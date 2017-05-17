@@ -13,3 +13,6 @@ var/**
 .idea/**
 .idea/workspace.xml
 /.phpintel/*
+/bin/symfony_requirements
+/app/bootstrap.php.cache
+/web/config.php
