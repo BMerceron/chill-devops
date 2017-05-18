@@ -1,1 +1,38 @@
-@import "test.scss";
+.input-field label {
+    color: #424242;
+}
+.input-field input[type=text]:focus + label, .input-field input[type=password]:focus + label {
+    color: #424242;
+}
+.input-field input[type=text]:focus, .input-field input[type=password]:focus {
+    border-bottom: 1px solid #9ccc65;
+    box-shadow: 0 1px 0 0 #9ccc65;
+}
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+.page-footer .row{
+	margin: 0;
+}
+
+h2{
+	font-weight: 300; 
+}
+
+p, span, h1, h2, h3, h4, h5, h6{
+	color: #424242;
+}
+
+input[type=range]{
+	border: none;
+}
+
+input[type=range]::-webkit-slider-thumb, input[type=range]+.thumb{
+	background-color: #9ccc65;
+}
