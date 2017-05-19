@@ -11,6 +11,6 @@ class TestController extends Controller
     public function testAction(Request $request)
     {
         // replace this example code with whatever you need
-        return $this->render('AppBundle::simulator.html.twig');
+        return $this->render('AppBundle::result.html.twig');
     }
 }
