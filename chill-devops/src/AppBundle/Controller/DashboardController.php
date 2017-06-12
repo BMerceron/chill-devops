@@ -25,7 +25,10 @@ class DashboardController extends Controller
             ->add('clientStart', IntegerType::class)
             ->add('periodicity', IntegerType::class)
             ->add('clientAdd', IntegerType::class)
-            ->add('Load', SubmitType::class, array('label' => 'Load'))
+            ->add('Load', SubmitType::class, [
+                'attr' => ['class' => 'btn waves-effect waves-light right light-green lighten-1'],
+                'label' => 'Load'
+            ])
             ->getForm();
 
         $form->handleRequest($request);
