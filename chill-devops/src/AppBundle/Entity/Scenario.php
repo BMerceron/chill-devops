@@ -2,60 +2,80 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Validator\Constraints\DateTime;
 
-use DateTime;
-use Symfony\Component\Finder\Iterator\DateRangeFilterIterator;
-
+/**
+ * Scenario
+ *
+ * @ORM\Table(name="scenario")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ScenarioRepository")
+ */
 class Scenario
 {
     /**
-     * @var string
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * Scenario need customer start number to simulation
-     * @var integer
+     * @var int
+     *
+     * @ORM\Column(name="clientStart", type="integer")
      */
     private $clientStart;
 
     /**
-     * Periodicity of the load (month)
-     * @var integer
+     * @var int
+     *
+     * @ORM\Column(name="periodicity", type="integer")
      */
     private $periodicity;
 
     /**
-     * Percentage of additional customers
-     * @var integer
+     * @var int
+     *
+     * @ORM\Column(name="clientAdd", type="integer")
      */
     private $clientAdd;
 
     /**
-     * JSON costs by month
-     * @var string
+     * @var array
+     *
+     * @ORM\Column(name="cost", type="json_array")
      */
     private $cost;
 
     /**
-     * Energy cost by month
-     * @var integer
+     * @var int
+     *
+     * @ORM\Column(name="energyCost", type="integer")
      */
     private $energyCost;
 
     /**
-     * Check if bookmarked
-     * @var boolean
+     * @var bool
+     *
+     * @ORM\Column(name="isBookmarked", type="boolean")
      */
     private $isBookmarked;
 
     /**
-     * @var DateTime
+     * @var \DateTime
+     *
+     * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
@@ -69,7 +89,9 @@ class Scenario
 
 
     /**
-     * @return string
+     * Get id
+     *
+     * @return int
      */
     public function getId()
     {
@@ -77,16 +99,22 @@ class Scenario
     }
 
     /**
-     * @param string $id
+     * Set clientStart
+     *
+     * @param integer $clientStart
+     *
      * @return Scenario
      */
-    public function setId($id)
+    public function setClientStart($clientStart)
     {
-        $this->id = $id;
+        $this->clientStart = $clientStart;
+
         return $this;
     }
 
     /**
+     * Get clientStart
+     *
      * @return int
      */
     public function getClientStart()
@@ -95,16 +123,22 @@ class Scenario
     }
 
     /**
-     * @param int $clientStart
+     * Set periodicity
+     *
+     * @param integer $periodicity
+     *
      * @return Scenario
      */
-    public function setClientStart($clientStart)
+    public function setPeriodicity($periodicity)
     {
-        $this->clientStart = $clientStart;
+        $this->periodicity = $periodicity;
+
         return $this;
     }
 
     /**
+     * Get periodicity
+     *
      * @return int
      */
     public function getPeriodicity()
@@ -113,16 +147,22 @@ class Scenario
     }
 
     /**
-     * @param int $periodicity
+     * Set clientAdd
+     *
+     * @param integer $clientAdd
+     *
      * @return Scenario
      */
-    public function setPeriodicity($periodicity)
+    public function setClientAdd($clientAdd)
     {
-        $this->periodicity = $periodicity;
+        $this->clientAdd = $clientAdd;
+
         return $this;
     }
 
     /**
+     * Get clientAdd
+     *
      * @return int
      */
     public function getClientAdd()
@@ -131,17 +171,23 @@ class Scenario
     }
 
     /**
-     * @param int $clientAdd
+     * Set cost
+     *
+     * @param array $cost
+     *
      * @return Scenario
      */
-    public function setClientAdd($clientAdd)
+    public function setCost($cost)
     {
-        $this->clientAdd = $clientAdd;
+        $this->cost = $cost;
+
         return $this;
     }
 
     /**
-     * @return string
+     * Get cost
+     *
+     * @return array
      */
     public function getCost()
     {
@@ -149,16 +195,22 @@ class Scenario
     }
 
     /**
-     * @param string $cost
+     * Set energyCost
+     *
+     * @param integer $energyCost
+     *
      * @return Scenario
      */
-    public function setCost($cost)
+    public function setEnergyCost($energyCost)
     {
-        $this->cost = $cost;
+        $this->energyCost = $energyCost;
+
         return $this;
     }
 
     /**
+     * Get energyCost
+     *
      * @return int
      */
     public function getEnergyCost()
@@ -167,35 +219,47 @@ class Scenario
     }
 
     /**
-     * @param int $energyCost
-     * @return Scenario
-     */
-    public function setEnergyCost($energyCost)
-    {
-        $this->energyCost = $energyCost;
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isIsBookmarked()
-    {
-        return $this->isBookmarked;
-    }
-
-    /**
+     * Set isBookmarked
+     *
      * @param boolean $isBookmarked
+     *
      * @return Scenario
      */
     public function setIsBookmarked($isBookmarked)
     {
         $this->isBookmarked = $isBookmarked;
+
         return $this;
     }
 
     /**
-     * @return DateTime
+     * Get isBookmarked
+     *
+     * @return bool
+     */
+    public function getIsBookmarked()
+    {
+        return $this->isBookmarked;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Scenario
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -203,32 +267,27 @@ class Scenario
     }
 
     /**
-     * @param DateTime $createdAt
+     * Set name
+     *
+     * @param string $name
+     *
      * @return Scenario
      */
-    public function setCreatedAt($createdAt)
+    public function setName($name)
     {
-        $this->createdAt = $createdAt;
+        $this->name = $name;
+
         return $this;
     }
 
     /**
+     * Get name
+     *
      * @return string
      */
     public function getName()
     {
         return $this->name;
     }
-
-    /**
-     * @param string $name
-     * @return Scenario
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-        return $this;
-    }
-
-
 }
+
