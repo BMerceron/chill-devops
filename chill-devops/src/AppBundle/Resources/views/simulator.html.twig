@@ -1,0 +1,123 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+    <div class="container" style="margin: 50px auto">
+        <div class="row">
+            <div class="col s12 grey lighten-3">
+                <h2>Simulateur</h2>
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col m6 s6">
+                            <label for="nb_users">Nombre d'utilisateurs</label>
+                            <input type="number" id="nb_users" step="2500" value="10000" />
+                        </div>
+                        <div class="input-field col m6 s6">
+                            <label for="increment">Incrément (%)</label>
+                            <input type="number" id="nb_users" value="5" />
+                        </div>
+                        <div class="range-field col m12 s12">
+                            <span>Jalon</span>
+                            <input type="range" id="step" min="1" max="12" step="1" value="1" />
+                        </div>
+                        <div class="input-field col m12 s12">
+                            <button class="btn waves-effect waves-light right light-green lighten-1" type="submit" name="action">Lancer la simulation</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 grey lighten-3">
+                <h2 class="left">Scénario n°4097</h2>
+                <div class="right" style="margin-top: 25px;">
+                    <a class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">edit</i></a>
+                    <a class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">star</i></a>
+                    <a class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">delete</i></a>
+                </div>
+                <img class="responsive-img" src="https://cdn.discordapp.com/attachments/268738233754451978/314775475392217098/Capture_decran_2017-05-18_a_16.43.37.png">
+                <div class="row">
+                    <div class="col s6 m6">
+                        <p>
+                            <b>Nombre d'utilisateur de départ: </b>100000<br>
+                            <b>Incrément: </b>7%
+                            
+                        </p>
+                    </div>
+                    <div class="col s6 m6">
+                        <p>
+                            <b>Interval: </b>2 mois<br>
+                            <b>Date de la simulation: </b>28/11/2018
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 m6">
+                        <h4>Configurations</h4>
+                        <p>
+                            <b>Coût infrastructure: </b>2934€<br>
+                            <b>Coût énergétique: </b>2934€
+                        </p>
+                        <table class="responsive-table striped">
+                            <thead>
+                                <tr>
+                                    <th>RAM</th>
+                                    <th>CPU</th>
+                                    <th>Disque</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>4Go</td>
+                                    <td>750 Mhz - 1 coeur</td>
+                                    <td>1x500Go 7200tpm SATA3</td>
+                                </tr>
+                                <tr>
+                                    <td>4Go</td>
+                                    <td>750 Mhz - 1 coeur</td>
+                                    <td>1x500Go 7200tpm SATA3</td>
+                                </tr>
+                                <tr>
+                                    <td>4Go</td>
+                                    <td>750 Mhz - 1 coeur</td>
+                                    <td>1x500Go 7200tpm SATA3</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col s12 m6">
+                        <h4>Configurations écologique</h4>
+                        <p>
+                            <b>Coût infrastrucure: </b>1015€<br>
+                            <b>Coût énergétique: </b>115€
+                        </p>
+                        <table class="responsive-table striped">
+                            <thead>
+                                <tr>
+                                    <th>RAM</th>
+                                    <th>CPU</th>
+                                    <th>Disque</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2Go</td>
+                                    <td>400 Mhz - 2 coeurs</td>
+                                    <td>1x500Go 5400tpm SATA3</td>
+                                </tr>
+                                <tr>
+                                    <td>2Go</td>
+                                    <td>400 Mhz - 2 coeurs</td>
+                                    <td>1x500Go 5400tpm SATA3</td>
+                                </tr>
+                                <tr>
+                                    <td>2Go</td>
+                                    <td>400 Mhz - 2 coeurs</td>
+                                    <td>1x500Go 5400tpm SATA3</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -13,3 +13,5 @@ var/**
 .idea/**
 .idea/workspace.xml
 /.phpintel/*
+app/bootstrap.php.cache
+.DS_Store
