@@ -9,42 +9,52 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class DashboardController extends Controller
 {
     /**
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)
     {
-        $scenario = new Scenario();
+        $em = $this->getDoctrine()->getManager();
 
+        $scenario = new Scenario();
         $form = $this->createFormBuilder($scenario)
             ->add('Name', TextType::class)
             ->add('clientStart', IntegerType::class)
             ->add('periodicity', IntegerType::class)
             ->add('clientAdd', IntegerType::class)
-            ->add('Load', SubmitType::class, [
-                'attr' => ['class' => 'btn waves-effect waves-light right light-green lighten-1'],
-                'label' => 'Load'
-            ])
             ->getForm();
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // $form->getData() holds the submitted values
-            // but, the original `$task` variable has also been updated
-            $scenario = $form->getData();
 
-            // ... perform some action, such as saving the task to the database
-            // for example, if Task is a Doctrine entity, save it!
-            // $em->persist($task);
-            // $em->flush();
+            if ($form->isSubmitted() && $form->isValid()) {
 
-            return $this->redirectToRoute('app_dashboard');
-        }
+                /*TODO - SEND SIMULATION*/
+
+                /** @var Scenario $scenario */
+                $scenario = $form->getData();
+                $scenario->setCreatedAt(new \DateTime());
+                $scenario->setCost([
+                    'month' => 'Jan',
+                    'cost' => [
+                        'greenCost' => 123,
+                        'classicCost' => 456
+                    ]
+                ]);
+
+                $em->persist($scenario);
+                $em->flush();
+
+                return $this->render('AppBundle:dashboard:index.html.twig', array(
+                    'form' => $form->createView(),
+                    'scenario' => $scenario
+                ));
+            }
 
         return $this->render('AppBundle:dashboard:index.html.twig', array(
             'form' => $form->createView(),

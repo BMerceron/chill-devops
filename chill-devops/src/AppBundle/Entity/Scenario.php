@@ -3,8 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Scenario
@@ -27,6 +27,11 @@ class Scenario
      * @var int
      *
      * @ORM\Column(name="clientStart", type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Range(
+     *      min = 1,
+     *      minMessage = "Must be at least {{ limit }}",
+     * )
      */
     private $clientStart;
 
@@ -34,6 +39,11 @@ class Scenario
      * @var int
      *
      * @ORM\Column(name="periodicity", type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Range(
+     *      min = 1,
+     *      minMessage = "Must be at least {{ limit }}",
+     * )
      */
     private $periodicity;
 
@@ -41,6 +51,11 @@ class Scenario
      * @var int
      *
      * @ORM\Column(name="clientAdd", type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Range(
+     *      min = 1,
+     *      minMessage = "Must be at least {{ limit }}",
+     * )
      */
     private $clientAdd;
 
@@ -54,14 +69,14 @@ class Scenario
     /**
      * @var int
      *
-     * @ORM\Column(name="energyCost", type="integer")
+     * @ORM\Column(name="energyCost", type="integer", nullable=true)
      */
     private $energyCost;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="isBookmarked", type="boolean")
+     * @ORM\Column(name="isBookmarked", type="boolean", nullable=true)
      */
     private $isBookmarked;
 
@@ -76,6 +91,7 @@ class Scenario
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $name;
 
