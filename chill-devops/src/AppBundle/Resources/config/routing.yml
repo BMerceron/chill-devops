@@ -18,3 +18,9 @@ scenario_show:
     defaults: { _controller: AppBundle:Scenario:show }
     requirements:
         id: \d+
+
+scenario_delete:
+    path:     /scenario/delete/{id}
+    defaults: { _controller: AppBundle:Scenario:delete }
+    requirements:
+        id: \d+
