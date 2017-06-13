@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1>Scenarios list</h1>
+
+        <table>
+            <thead>s
+                <tr>
+                    <th>Id</th>
+                    <th>Clientstart</th>
+                    <th>Periodicity</th>
+                    <th>Clientadd</th>
+                    <th>Cost</th>
+                    <th>Energycost</th>
+                    <th>Isbookmarked</th>
+                    <th>Createdat</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for scenario in scenarios %}
+                <tr>
+                    <td><a href="{{ path('scenario_show', { 'id': scenario.id }) }}">{{ scenario.id }}</a></td>
+                    <td>{{ scenario.clientStart }}</td>
+                    <td>{{ scenario.periodicity }}</td>
+                    <td>{{ scenario.clientAdd }}</td>
+                    <td>{{ scenario.cost }}</td>
+                    <td>{{ scenario.energyCost }}</td>
+                    <td>{% if scenario.isBookmarked %}Yes{% else %}No{% endif %}</td>
+                    <td>{% if scenario.createdAt %}{{ scenario.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{{ scenario.name }}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('scenario_show', { 'id': scenario.id }) }}">show</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('scenario_edit', { 'id': scenario.id }) }}">edit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -1,3 +1,20 @@
 app_test:
     path:     /
     defaults: { _controller: AppBundle:App:test }
+
+# crud for scenarios
+scenario_edit:
+    path:     /scenario/edit/{id}
+    defaults: { _controller: AppBundle:Scenario:edit }
+    requirements:
+        id: \d+
+
+scenario_index:
+    path:     /scenario
+    defaults: { _controller: AppBundle:Scenario:index }
+
+scenario_show:
+    path:     /scenario/show/{id}
+    defaults: { _controller: AppBundle:Scenario:show }
+    requirements:
+        id: \d+
