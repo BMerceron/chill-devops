@@ -1,6 +1,6 @@
-app_test:
+app_dashboard:
     path:     /
-    defaults: { _controller: AppBundle:App:test }
+    defaults: { _controller: AppBundle:Dashboard:index }
 
 # crud for scenarios
 scenario_edit:
