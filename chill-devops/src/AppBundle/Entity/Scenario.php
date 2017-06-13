@@ -69,7 +69,7 @@ class Scenario
     /**
      * @var int
      *
-     * @ORM\Column(name="energyCost", type="integer", nullable=true
+     * @ORM\Column(name="energyCost", type="integer", nullable=true)
      */
     private $energyCost;
 
