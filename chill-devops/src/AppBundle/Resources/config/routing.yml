@@ -1,3 +1,7 @@
 app_test:
     path:     /
     defaults: { _controller: AppBundle:Test:test }
+
+app_test_pdf:
+   path: /pdf
+   defaults: { _controller: AppBundle:Test:pdf }
