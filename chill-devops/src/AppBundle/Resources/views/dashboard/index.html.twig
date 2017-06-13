@@ -34,7 +34,7 @@
                 <div class="col s12 grey lighten-3">
                     <h2 class="left">{{ scenario.name }}</h2>
                     <div class="right" style="margin-top: 25px;">
-                        <a class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">edit</i></a>
+                        <a href="{{ path('scenario_edit', {'id': scenario.id}) }}" class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">edit</i></a>
                         <a class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">star</i></a>
                         <a class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">delete</i></a>
                     </div>

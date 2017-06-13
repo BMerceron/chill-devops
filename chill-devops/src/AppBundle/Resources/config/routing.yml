@@ -5,22 +5,22 @@ app_dashboard:
 # crud for scenarios
 scenario_edit:
     path:     /scenario/edit/{id}
-    defaults: { _controller: AppBundle:Scenario:edit }
+    defaults: { _controller: AppBundle:Dashboard:edit }
     requirements:
         id: \d+
 
 scenario_index:
     path:     /scenario
-    defaults: { _controller: AppBundle:Scenario:index }
+    defaults: { _controller: AppBundle:Dashboard:index }
 
 scenario_show:
     path:     /scenario/show/{id}
-    defaults: { _controller: AppBundle:Scenario:show }
+    defaults: { _controller: AppBundle:Dashboard:show }
     requirements:
         id: \d+
 
 scenario_delete:
     path:     /scenario/delete/{id}
-    defaults: { _controller: AppBundle:Scenario:delete }
+    defaults: { _controller: AppBundle:Dashboard:delete }
     requirements:
         id: \d+
