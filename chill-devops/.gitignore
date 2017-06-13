@@ -13,5 +13,7 @@ var/**
 .idea/**
 .idea/workspace.xml
 /.phpintel/*
-app/bootstrap.php.cache
 .DS_Store
+/bin/symfony_requirements
+/app/bootstrap.php.cache
+/web/config.php
