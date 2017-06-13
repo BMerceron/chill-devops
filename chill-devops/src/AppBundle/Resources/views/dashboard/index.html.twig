@@ -1,0 +1,61 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+    <div class="container" style="margin: 50px auto">
+        <div class="row">
+            <div class="col s12 grey lighten-3">
+                <h2>Simulateur</h2>
+                <h5>Comment ça marche ?</h5>
+                <p>Il suffit de renseigner les données manquantes à la phrase suivante :</p>
+                <p>Je souhaite connaître le coût du serveur {Name}. Au départ avec {Client start} utilisateurs en simultané, puis tous les {Periodicity} mois, {Client add} % s'ajouteront à ce serveur.</p>
+                <p><i>Exemple : </i></p>
+                <p><i>Je souhaite connaître le coût du serveur <b>Corporate</b>. Au départ avec <b>10000</b> utilisateurs en simultané, puis tous les <b>3</b> mois, <b>5</b> % s'ajouteront à ce serveur.</i></p>
+                {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <!-- Modal Button -->
+                    <a class="btn waves-effect waves-light right light-green lighten-1 js-submit_scenario" href="#confirm_scenario_modal">Load</a>
+
+                    <!-- Modal Structure -->
+                    <div id="confirm_scenario_modal" class="modal">
+                        <div class="modal-content">
+                            <h4>Are you ready ?</h4>
+                            <p><i>Temps d'attente estimé à 10 minutes</i></p>
+                        </div>
+                        <div class="modal-footer">
+                            <!-- Submit Button (confirmation) -->
+                            <button class="btn waves-effect waves-light right light-green lighten-1" type="submit" name="action">Yes</button>
+                            <a href="#" class="modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
+                        </div>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+        <div class="row">
+            {% if scenario is defined %}
+                <div class="col s12 grey lighten-3">
+                    <h2 class="left">{{ scenario.name }}</h2>
+                    <div class="right" style="margin-top: 25px;">
+                        <a class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">edit</i></a>
+                        <a class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">star</i></a>
+                        <a class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">delete</i></a>
+                    </div>
+                    {# TODO - display graph#}
+                    <div class="row">
+                        <div class="col s6 m6">
+                            <p>
+                                <b>Nombre d'utilisateur de départ: </b>{{ scenario.clientStart }}<br>
+                                <b>Incrément: </b>{{ scenario.clientAdd~" %" }}
+
+                            </p>
+                        </div>
+                        <div class="col s6 m6">
+                            <p>
+                                <b>Interval: </b>{{ scenario.periodicity~" mois" }}<br>
+                                <b>Date de la simulation: </b>{{ scenario.createdAt|date("d/M/Y") }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
