@@ -5,7 +5,6 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}SAASPAASBIEN{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}" />
         <!-- materialize-->
         <link rel="stylesheet" href="{{ asset('fonts/materialize/css/materialize.min.css') }}"/>
@@ -13,6 +12,8 @@
         <link rel="stylesheet" href="{{ asset('css/master.css') }}"/>
         <!--Import Google Icon Font-->
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        {% block stylesheets %}
+        {% endblock %}
     </head>
     <body class="grey darken-3">
         {% include 'header.html.twig' %}
