@@ -15,6 +15,7 @@
                             <th>Périodicité</th>
                             <th>Incrément</th>
                             <th>Actions</th>
+                            <th><a id="multibutton" class="btn waves-effect waves-ripple">Supprimer sélection</a></th>
                         </tr>
 
                         </thead>
@@ -24,7 +25,7 @@
                                 <td>
                                     <p>
                                         <input type="checkbox" class="psb-js-delete-select"
-                                               id="delete-{{ scenario.id }}" name="selected-scenario"
+                                               data-id="{{ scenario.id }}" id="delete-{{ scenario.id }}" name="selected-scenario"
                                                value="{{ scenario.id }}"/>
                                         <label for="delete-{{ scenario.id }}"></label>
                                     </p>
@@ -78,4 +79,5 @@
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('js/modalDelete.js') }}"></script>
+    <script src="{{ asset('js/multiDelete.js') }}"></script>
 {% endblock %}
