@@ -1,9 +1,8 @@
 {% extends 'AppBundle::layout.html.twig' %}
 
 {% block content %}
-<div class="container">
     <div class="row">
-        <div class="col s12 grey lighten-3 center">
+        <div class="col s12 center">
             <h1>{{ scenario.name }}</h1>
             <table class="responsive-table striped">
                 <thead>
@@ -24,27 +23,26 @@
                     <td>{{ scenario.periodicity~" mois" }}</td>
                     <td>{{ scenario.clientAdd~" %" }}</td>
                     <td>
-                        <a href="{{ path('scenario_edit', {'id': scenario.id}) }}" class="btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">edit</i></a>
-                        <a class="btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">star</i></a>
-                        <a href="{{ path('scenario_delete', {'id': scenario.id}) }}" class="btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">delete</i></a>
+                        <a href="{{ path('scenario_edit', {'id': scenario.id}) }}"
+                           class="btn-floating waves-effect waves-light light-green lighten-1"><i
+                                    class="material-icons">edit</i></a>
+                        <a class="btn-floating waves-effect waves-light light-green lighten-1"><i
+                                    class="material-icons">star</i></a>
+                        <a href="#deleteModal"
+                           class="modal-delete btn-floating waves-effect waves-light light-green lighten-1"
+                           role="button" data-toggle="modalDelete"
+                           data-target-url="{{ path('scenario_delete', {'id': scenario.id}) }}"
+                           data-target="#deleteModal" title="Supprimer ce scénario">
+                            <i class="material-icons">delete</i></a>
                     </td>
                 </tr>
                 </tbody>
             </table>
-            <img class="responsive-img" src="https://cdn.discordapp.com/attachments/268738233754451978/314775475392217098/Capture_decran_2017-05-18_a_16.43.37.png">
-            <ul class="center">
-                <li>
-                    <a class="btn" href="{{ path('scenario_history') }}">Retourner à mon historique</a>
-                </li>
-                <li>
-                    <a class="btn" href="{{ path('scenario_edit', { 'id': scenario.id }) }}">Modifier</a>
-                </li>
-                <li>
-                    <a href="{{ path('scenario_delete', {'id': scenario.id}) }}" class="btn">Suppression</a>
-                </li>
-            </ul>
-
+            <img class="responsive-img"
+                 src="https://cdn.discordapp.com/attachments/268738233754451978/314775475392217098/Capture_decran_2017-05-18_a_16.43.37.png">
+            <div class="col s12 ">
+                <a class="btn" href="{{ path('scenario_history') }}">Retourner à mon historique</a>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}

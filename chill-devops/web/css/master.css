@@ -1,6 +1,9 @@
 .edit-content h2 {
   text-transform: uppercase; }
 
+.page-content {
+  padding: 40px; }
+
 .input-field label {
   color: #424242; }
 
