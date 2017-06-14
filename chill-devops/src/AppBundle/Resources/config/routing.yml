@@ -12,7 +12,7 @@ scenario_edit:
 scenario_history:
     path:     /scenario/history
     defaults: { _controller: AppBundle:Dashboard:history }
-      
+
 scenario_show:
     path:     /scenario/show/{id}
     defaults: { _controller: AppBundle:Dashboard:show }
