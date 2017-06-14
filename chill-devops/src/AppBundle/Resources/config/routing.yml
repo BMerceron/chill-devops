@@ -11,7 +11,7 @@ scenario_edit:
 
 scenario_index:
     path:     /scenario
-    defaults: { _controller: AppBundle:Dashboard:index }
+    defaults: { _controller: AppBundle:Scenario:index }
 
 scenario_show:
     path:     /scenario/show/{id}
@@ -24,3 +24,7 @@ scenario_delete:
     defaults: { _controller: AppBundle:Dashboard:delete }
     requirements:
         id: \d+
+
+scenario_delete_selection:
+    path:    /scenario/delete/selection
+    defaults: { _controller: AppBundle:Scenario:deleteSelection }
