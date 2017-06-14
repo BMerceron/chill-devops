@@ -1,63 +1,54 @@
-{% extends 'base.html.twig' %}
+{% extends 'AppBundle::layout.html.twig' %}
 
-{% block body %}
-    <div class="container">
-        <h1>Scenario</h1>
-        <table>
-            <tbody>
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col s12 grey lighten-3 center">
+            <h1>{{ scenario.name }}</h1>
+            <table class="responsive-table striped">
+                <thead>
                 <tr>
-                    <th>Id</th>
-                    <td>{{ scenario.id }}</td>
+                    <th>Nom du scénario</th>
+                    <th>Date de simulation</th>
+                    <th>Clients de départ</th>
+                    <th>Périodicité</th>
+                    <th>Incrément</th>
+                    <th>Actions</th>
                 </tr>
+                </thead>
+                <tbody>
                 <tr>
-                    <th>Clientstart</th>
+                    <td><a href="{{ path('scenario_show', {'id': scenario.id}) }}">{{ scenario.name }}</a></td>
+                    <td>{{ scenario.createdAt|date("d/M/Y") }}</td>
                     <td>{{ scenario.clientStart }}</td>
+                    <td>{{ scenario.periodicity~" mois" }}</td>
+                    <td>{{ scenario.clientAdd~" %" }}</td>
+                    <td>
+                        <a href="{{ path('scenario_edit', {'id': scenario.id}) }}" class="btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">edit</i></a>
+                        <a class="btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">star</i></a>
+                        <a class="btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">delete</i></a>
+                    </td>
                 </tr>
-                <tr>
-                    <th>Periodicity</th>
-                    <td>{{ scenario.periodicity }}</td>
-                </tr>
-                <tr>
-                    <th>Clientadd</th>
-                    <td>{{ scenario.clientAdd }}</td>
-                </tr>
-                <tr>
-                    <th>Cost</th>
-                    <td>{{ scenario.cost }}</td>
-                </tr>
-                <tr>
-                    <th>Energycost</th>
-                    <td>{{ scenario.energyCost }}</td>
-                </tr>
-                <tr>
-                    <th>Isbookmarked</th>
-                    <td>{% if scenario.isBookmarked %}Yes{% else %}No{% endif %}</td>
-                </tr>
-                <tr>
-                    <th>Createdat</th>
-                    <td>{% if scenario.createdAt %}{{ scenario.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                </tr>
-                <tr>
-                    <th>Name</th>
-                    <td>{{ scenario.name }}</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <ul class="center">
-            <li>
-                <a class="btn" href="{{ path('scenario_index') }}">Retourner à ma liste</a>
-            </li>
-            <br>
-            <li>
-                <a class="btn" href="{{ path('scenario_edit', { 'id': scenario.id }) }}">Modifier</a>
-            </li>
-            <br>
-            <li>
-                {{ form_start(delete_form) }}
+                </tbody>
+            </table>
+            <img class="responsive-img" src="https://cdn.discordapp.com/attachments/268738233754451978/314775475392217098/Capture_decran_2017-05-18_a_16.43.37.png">
+            <ul class="center">
+                <li>
+                    <a class="btn" href="{{ path('scenario_history') }}">Retourner à mon historique</a>
+                </li>
+                <br>
+                <li>
+                    <a class="btn" href="{{ path('scenario_edit', { 'id': scenario.id }) }}">Modifier</a>
+                </li>
+                <br>
+                <li>
+                    {{ form_start(delete_form) }}
                     <input type="submit" value="Delete">
-                {{ form_end(delete_form) }}
-            </li>
-        </ul>
+                    {{ form_end(delete_form) }}
+                </li>
+            </ul>
+
+        </div>
     </div>
+</div>
 {% endblock %}

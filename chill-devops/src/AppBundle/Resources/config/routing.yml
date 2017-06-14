@@ -9,9 +9,9 @@ scenario_edit:
     requirements:
         id: \d+
 
-scenario_index:
-    path:     /scenario
-    defaults: { _controller: AppBundle:Dashboard:index }
+scenario_history:
+    path:     /scenario/history
+    defaults: { _controller: AppBundle:Dashboard:history }
 
 scenario_show:
     path:     /scenario/show/{id}
