@@ -7,6 +7,7 @@
                 <table class="responsive-table striped">
                     <thead>
                         <tr>
+                            <th></th>
                             <th>Nom du scénario</th>
                             <th>Date de simulation</th>
                             <th>Clients de départ</th>
@@ -18,6 +19,12 @@
                     <tbody>
                     {% for scenario in scenarios %}
                         <tr>
+                            <td>
+                                <p>
+                                    <input type="checkbox" class="psb-js-delete-select" id="delete-{{ scenario.id }}" name="selected-scenario" value="{{ scenario.id }}" />
+                                    <label for="delete-{{ scenario.id }}"></label>
+                                </p>
+                            </td>
                             <td><a href="{{ path('scenario_show', {'id': scenario.id}) }}">{{ scenario.name }}</a></td>
                             <td>{{ scenario.createdAt|date("d/M/Y") }}</td>
                             <td>{{ scenario.clientStart }}</td>
