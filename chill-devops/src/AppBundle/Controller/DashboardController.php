@@ -92,7 +92,12 @@ class DashboardController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid())    {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('scenario_edit', array('id' => $scenario->getId()));
+            $em = $this->getDoctrine()->getManager();
+            $scenarios = $em->getRepository('AppBundle:Scenario')->findAll();
+
+            return $this->render('AppBundle:dashboard:history.html.twig', array(
+                'scenarios' => $scenarios,
+            ));
         }
 
         return $this->render('AppBundle:dashboard:edit.html.twig', array(

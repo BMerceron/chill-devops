@@ -1,24 +1,25 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container">
-        <h1>Scenario edit</h1>
+<div class="container edit-content">
+    <div class="row">
+        <div class="col s12 grey lighten-3 center">
+            <h2>Historique des scénarios</h2>
+            {{ form_start(edit_form) }}
+            {{ form_widget(edit_form) }}
+            <button type="submit" href="{{ path('scenario_edit', {'id': scenario.id}) }}" class="btn">Modifier</button>
+            {{ form_end(edit_form) }}
 
-        {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-        {{ form_end(edit_form) }}
-
-        <ul class="center">
-            <li>
-                <a class="btn" href="{{ path('scenario_history') }}">Back to the list</a>
-            </li>
-            <li>
-                <br>
-                {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-                {{ form_end(delete_form) }}
-            </li>
-        </ul>
+            <ul class="center">
+                <li>
+                    <a class="btn" href="{{ path('scenario_history') }}">Retourner à mon historique</a>
+                </li>
+                <li>
+                    <br>
+                    <a href="{{ path('scenario_delete', {'id': scenario.id}) }}" class="btn">Suppression</a>
+                </li>
+            </ul>
+        </div>
     </div>
+</div>
 {% endblock %}

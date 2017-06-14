@@ -26,7 +26,7 @@
                     <td>
                         <a href="{{ path('scenario_edit', {'id': scenario.id}) }}" class="btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">edit</i></a>
                         <a class="btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">star</i></a>
-                        <a class="btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">delete</i></a>
+                        <a href="{{ path('scenario_delete', {'id': scenario.id}) }}" class="btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">delete</i></a>
                     </td>
                 </tr>
                 </tbody>
@@ -36,15 +36,11 @@
                 <li>
                     <a class="btn" href="{{ path('scenario_history') }}">Retourner à mon historique</a>
                 </li>
-                <br>
                 <li>
                     <a class="btn" href="{{ path('scenario_edit', { 'id': scenario.id }) }}">Modifier</a>
                 </li>
-                <br>
                 <li>
-                    {{ form_start(delete_form) }}
-                    <input type="submit" value="Delete">
-                    {{ form_end(delete_form) }}
+                    <a href="{{ path('scenario_delete', {'id': scenario.id}) }}" class="btn">Suppression</a>
                 </li>
             </ul>
 

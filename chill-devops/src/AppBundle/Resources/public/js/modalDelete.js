@@ -6,7 +6,7 @@ $(document).ready(function(){
     $('.modal').modal();
 });
 
-$('.modal-delete').click(function(e) {
+$('.modal-delete').click(function() {
     var targetUrl = $('.modal-delete').attr("data-target-url");
     $('#removeLink').attr('href', targetUrl);
 });
