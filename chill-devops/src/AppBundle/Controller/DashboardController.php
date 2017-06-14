@@ -35,20 +35,22 @@ class DashboardController extends Controller
             if ($form->isSubmitted() && $form->isValid()) {
 
                 /*TODO - SEND SIMULATION*/
-
-                /** @var Scenario $scenario */
                 $scenario = $form->getData();
-                $scenario->setCreatedAt(new \DateTime());
-                $scenario->setCost([
-                    'month' => 'Jan',
-                    'cost' => [
-                        'greenCost' => 123,
-                        'classicCost' => 456
-                    ]
-                ]);
+                $totalClients = $this->get('app_dashboard_scenario_result')->getTotalClientsByPeriodicity($scenario);
 
-                $em->persist($scenario);
-                $em->flush();
+//                /** @var Scenario $scenario */
+//                $scenario = $form->getData();
+//                $scenario->setCreatedAt(new \DateTime());
+//                $scenario->setCost([
+//                    'month' => 'Jan',
+//                    'cost' => [
+//                        'greenCost' => 123,
+//                        'classicCost' => 456
+//                    ]
+//                ]);
+//
+//                $em->persist($scenario);
+//                $em->flush();
 
                 return $this->render('AppBundle:dashboard:index.html.twig', array(
                     'form' => $form->createView(),
