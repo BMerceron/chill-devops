@@ -29,7 +29,7 @@
                                     <label for="delete-{{ scenario.id }}"></label>
                                 </p>
                             </td>
-                            <td><a href="{{ path('scenario_show', {'id': scenario.id}) }}">{{ scenario.name }}</a>
+                            <td><a class="spb-js-edit" data-id="{{ scenario.id }}" data-name="{{ scenario.name }}">{{ scenario.name }}</a>
                             </td>
                             <td>{{ scenario.createdAt|date("d/M/Y") }}</td>
                             <td>{{ scenario.clientStart }}</td>

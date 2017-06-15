@@ -9,6 +9,10 @@ scenario_edit:
     requirements:
         id: \d+
 
+scenario_edit_input:
+    path:     /scenario/editInput/
+    defaults: { _controller: AppBundle:Dashboard:editInput }
+
 scenario_history:
     path:     /scenario/history
     defaults: { _controller: AppBundle:Dashboard:history }

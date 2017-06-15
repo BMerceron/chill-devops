@@ -108,6 +108,23 @@ class DashboardController extends Controller
         ));
     }
 
+    public function editInputAction (Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $scenarioRepository = $em->getRepository('AppBundle:Scenario');
+
+        if($request->isXmlHttpRequest()) {
+            $entity = $scenarioRepository->findOneById($request->get('id'));
+            if(!empty($entity)){
+                $entity->setName($request->get('name'));
+                $em->persist($entity);
+                $em->flush();
+            }
+        }
+
+        return new JsonResponse();
+    }
+
     public function deleteAction(Request $request, Scenario $scenario)
     {
         $em = $this->getDoctrine()->getManager();
