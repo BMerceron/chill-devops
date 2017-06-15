@@ -64,5 +64,5 @@ var chrono  = {
         }
 
     }
-}
+};
 chrono.initChronoDate();
