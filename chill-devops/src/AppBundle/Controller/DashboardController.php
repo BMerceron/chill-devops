@@ -26,10 +26,10 @@ class DashboardController extends Controller
 
         $scenario = new Scenario();
         $form = $this->createFormBuilder($scenario)
-            ->add('Name', TextType::class)
-            ->add('clientStart', IntegerType::class)
-            ->add('periodicity', IntegerType::class)
-            ->add('clientAdd', IntegerType::class)
+            ->add('name', TextType::class, array('label' => "Nom du scénario"))
+            ->add('clientStart', IntegerType::class, array('label' => "Nombre d'utilisateurs"))
+            ->add('periodicity', IntegerType::class, array('label' => "Périodicité"))
+            ->add( 'clientAdd', IntegerType::class, array('label' => "Pourcentage d'utilisateurs"))
             ->getForm();
 
         $form->handleRequest($request);

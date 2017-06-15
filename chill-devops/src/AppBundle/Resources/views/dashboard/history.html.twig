@@ -8,13 +8,13 @@
                 <table class="responsive-table striped">
                     <thead>
                     <tr>
-                        <th></th>
-                        <th>Nom du scénario</th>
-                        <th>Date de simulation</th>
-                        <th>Clients de départ</th>
-                        <th>Périodicité</th>
-                        <th>Incrément</th>
-                        <th>Actions</th>
+                        <th class="center">Nom du scénario</th>
+                        <th class="center">Date de simulation</th>
+                        <th class="center">Clients de départ</th>
+                        <th class="center">Périodicité</th>
+                        <th class="center">Incrément</th>
+                        <th class="center">Actions</th>
+                        <th class="center">Supprimer</th>
                     </tr>
 
                     </thead>
@@ -31,11 +31,11 @@
                             </td>
                             <td><a class="spb-js-edit" data-id="{{ scenario.id }}" data-name="{{ scenario.name }}">{{ scenario.name }}</a>
                             </td>
-                            <td>{{ scenario.createdAt|date("d/M/Y") }}</td>
-                            <td>{{ scenario.clientStart }}</td>
-                            <td>{{ scenario.periodicity~" mois" }}</td>
-                            <td>{{ scenario.clientAdd~" %" }}</td>
-                            <td>
+                            <td class="center">{{ scenario.createdAt|date("d/M/Y") }}</td>
+                            <td class="center">{{ scenario.clientStart }}</td>
+                            <td class="center">{{ scenario.periodicity~" mois" }}</td>
+                            <td class="center">{{ scenario.clientAdd~" %" }}</td>
+                            <td class="center">
                                 <a href="{{ path('scenario_edit', {'id': scenario.id}) }}"
                                    class="btn-floating waves-effect waves-light light-green lighten-1"><i
                                             class="material-icons">edit</i></a>
@@ -50,6 +50,14 @@
                                    data-target-url="{{ path('scenario_delete', {'id': scenario.id}) }}"
                                    data-target="#deleteModal" title="Supprimer ce scénario">
                                     <i class="material-icons">delete</i></a>
+                            </td>
+                            <td class="center">
+                                <p>
+                                    <input type="checkbox" class="psb-js-delete-select"
+                                           id="delete-{{ scenario.id }}" name="selected-scenario"
+                                           value="{{ scenario.id }}" data-id="{{ scenario.id }}"/>
+                                    <label for="delete-{{ scenario.id }}"></label>
+                                </p>
                             </td>
                         </tr>
                     {% endfor %}

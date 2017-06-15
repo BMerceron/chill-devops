@@ -1,6 +1,9 @@
 .edit-content h2 {
   text-transform: uppercase; }
 
+#dropdown-header {
+  margin-top: 3%; }
+
 .page-content {
   padding: 40px; }
 
