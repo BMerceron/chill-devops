@@ -24,7 +24,23 @@ $( document ).ready(function() {
             ratio: 0.5 }
     },
     axis: {
+        x: {
+            label: {
+                text: 'Durée',
+                position: 'outer-center'
+            }
+        },
+        y: {
+            label: {
+                text: 'Clients',
+                position: 'outer-middle'
+            }
+        },
         y2: {
+            label: {
+                text: 'Achats Matériel',
+                position: 'outer-middle'
+            },
             show: true
         }
     }
