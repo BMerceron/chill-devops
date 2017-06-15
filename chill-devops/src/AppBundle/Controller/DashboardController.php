@@ -136,6 +136,8 @@ class DashboardController extends Controller
 
     public function deleteSelectionAction(Request $request)
     {
+        dump($request->get("tab"));
+        die;
         $em = $this->getDoctrine()->getManager();
 
         if($request->isXmlHttpRequest()){
