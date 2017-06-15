@@ -84,6 +84,36 @@ class DashboardController extends Controller
         ));
     }
 
+    public function pdfAction(Request $request)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $scenarioRepository = $em->getRepository('AppBundle:Scenario');
+        $scenario = $scenarioRepository->findOneById($request->get('id'));
+
+        $deleteForm = $this->createDeleteForm($scenario);
+
+//        return $this->render('AppBundle:dashboard:pdfExport.html.twig', array(
+//            'scenario' => $scenario,
+//            'delete_form' => $deleteForm->createView(),
+//        ));
+        $html = $this->renderView('AppBundle:dashboard:pdfExport.html.twig', array(
+            'scenario' => $scenario,
+            'delete_form' => $deleteForm->createView(),
+        ));
+
+        $filename = sprintf('test-%s.pdf', date('Y-m-d'));
+
+        return new \Symfony\Component\HttpFoundation\Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            200,
+            [
+                'Content-Type'        => 'application/pdf',
+                'Content-Disposition' => sprintf('attachment; filename="%s"', $filename),
+            ]
+        );
+    }
+
     public function editAction(Request $request, Scenario $scenario)
     {
         $deleteForm = $this->createDeleteForm($scenario);

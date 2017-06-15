@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col s12 center">
+        <h1>{{ scenario.name }}</h1>
+        <table class="responsive-table striped">
+            <thead>
+            <tr>
+                <th>Nom du scénario</th>
+                <th>Date de simulation</th>
+                <th>Clients de départ</th>
+                <th>Périodicité</th>
+                <th>Incrément</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><a href="{{ path('scenario_show', {'id': scenario.id}) }}">{{ scenario.name }}</a></td>
+                <td>{{ scenario.createdAt|date("d/M/Y") }}</td>
+                <td>{{ scenario.clientStart }}</td>
+                <td>{{ scenario.periodicity~" mois" }}</td>
+                <td>{{ scenario.clientAdd~" %" }}</td>
+                <td>
+                    <a href="{{ path('scenario_edit', {'id': scenario.id}) }}"
+                       class="btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">edit</i></a>
+                    <a class="btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">star</i></a>
+                    <a href="{{ path('scenario_delete', {'id': scenario.id}) }}" class="modal-delete btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">delete</i></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <img class="responsive-img"
+             src="https://cdn.discordapp.com/attachments/268738233754451978/314775475392217098/Capture_decran_2017-05-18_a_16.43.37.png">
+        <div class="col s12 ">
+            <a class="btn" href="{{ path('scenario_history') }}">Retourner à mon historique</a>
+        </div>
+        <div class="col s12 ">
+            <a class="btn" href="{{ path('scenario_pdf', {'id': scenario.id}) }}">Exporter en PDF</a>
+        </div>
+    </div>
+</div>
