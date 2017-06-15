@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Scenario;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -64,7 +65,6 @@ class DashboardController extends Controller
     }
 
     public function historyAction() {
-
         $em = $this->getDoctrine()->getManager();
 
         $scenarios = $em->getRepository('AppBundle:Scenario')->findAll();
@@ -136,22 +136,20 @@ class DashboardController extends Controller
 
     public function deleteSelectionAction(Request $request)
     {
-        dump($request->get("tab"));
-        die;
         $em = $this->getDoctrine()->getManager();
+        $scenarioRepository = $em->getRepository('AppBundle:Scenario');
 
-        if($request->isXmlHttpRequest()){
+        if($request->isXmlHttpRequest() && !empty($request->get('tab'))) {
             $scenarioTable = $request->get('tab');
-            $scenarioEntity = $em->getRepository('AppBundle:Scenario');
-            dump($scenarioTable);
-            die;
             foreach ($scenarioTable as $scenario) {
-                $entity = $scenarioEntity->findOneById($scenario);
-                $em->remove($entity);
-                $em->flush();
+                $entity = $scenarioRepository->findOneById($scenario);
+                if(!empty($entity)){
+                    $em->remove($entity);
+                    $em->flush();
+                }
             }
-            return new JsonResponse($this->render("AppBundle:dashboard:history.html.twig", array("scenarios"=>$scenarioTable)));
         }
-
+        
+        return new JsonResponse();
     }
 }
