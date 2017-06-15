@@ -3,20 +3,28 @@ $( document ).ready(function() {
 
     var dataset = JSON.parse(data);
 
-
   var chart = c3.generate({
   bindto: "#chart-container",
   data:{
         json: dataset,
         keys: {
-            value: ['Client', 'PriceByMonth', 'BuyingCost'],
+            value: ['Client', 'PriceByMonth', 'BuyingCost', 'GreenPriceByMonth', 'GreenBuyingCost'],
         },
         types: {
             BuyingCost: 'bar',
+            GreenBuyingCost: 'bar',
         },
         axes: {
             Client: 'y',
-            BuyingCost: 'y2'
+            BuyingCost: 'y2',
+            GreenBuyingCost: 'y2'
+        },
+      colors: {
+          GreenPriceByMonth: 'green',
+          GreenBuyingCost: 'blue',
+          BuyingCost: 'purple',
+          Client: 'red',
+          PriceByMonth: 'orange'
         }
     },
     bar: {

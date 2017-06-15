@@ -53,7 +53,7 @@
         </div>
         <div class="row">
             {% if scenario is defined %}
-            <input id="chartDatas" hidden="hidden" value="{{ result }}">
+            <input id="chartDatas" hidden="hidden" value="{{ data }}">
                 <div class="col s12 grey lighten-3">
                     <h2 class="left">{{ scenario.name }}</h2>
                     <div class="right" style="margin-top: 25px;">
@@ -62,18 +62,51 @@
                         <a class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">delete</i></a>
                     </div>
                     {% include 'AppBundle:dashboard:chart.html.twig' %}
+                    <hr>
                     <div class="row">
                         <div class="col s6 m6">
                             <p>
+                                <b>Date de la simulation: </b>{{ scenario.createdAt|date("d/m/Y") }}<br>
                                 <b>Nombre d'utilisateur de départ: </b>{{ scenario.clientStart }}<br>
-                                <b>Incrément: </b>{{ scenario.clientAdd~" %" }}
+                                <b>Incrémentation mensuelle: </b>{{ scenario.periodicity~" mois" }}<br>
+                                <b>Pourcentage d'ajout client: </b>{{ scenario.clientAdd~" %" }}
                             </p>
                         </div>
                         <div class="col s6 m6">
-                            <p>
-                                <b>Interval: </b>{{ scenario.periodicity~" mois" }}<br> 
-                                <b>Date de la simulation: </b>{{ scenario.createdAt|date("d/m/Y") }}
-                            </p>
+                            <p><b>Total: </b>{{ totalPrice~" EUR" }}</p>
+                            <p><b>Total Green: </b>{{ totalGreenPrice~" EUR" }}</p>
+                        </div>
+                        <div >
+                            <table class="striped centered">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Core</th>
+                                    <th>CPU</th>
+                                    <th>RAM</th>
+                                    <th>Disque</th>
+                                    <th>Capacité<br> simultanée</th>
+                                    <th>Maintenance | Green <br>(EUR/mois)</th>
+                                    <th>Coût d'achat | Green <br>(EUR)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for key,value in servers %}
+                                    {% if value is not empty %}
+                                        <tr>
+                                            <td>Serveur 1</td>
+                                            <td>1</td>
+                                            <td>2</td>
+                                            <td>3</td>
+                                            <td>4</td>
+                                            <td>{{ infoServers[key]["capacity"] }}</td>
+                                            <td>{{ infoServers[key]["priceByMonth"]~" | "~infoServers[key]["greenPriceByMonth"] }}</td>
+                                            <td>{{ infoServers[key]["buyingPrice"]~" | "~infoServers[key]["greenBuyingPrice"] }}</td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

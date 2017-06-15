@@ -52,7 +52,17 @@ class DashboardController extends Controller
                 }
 
                 $result = $this->get('app_dashboard_scenario_result')->getPricesAndServers($scenario);
-                $result = json_encode($result);
+                $servers = $this->get('app_dashboard_scenario_result')->getServers();
+                $infoServers = [];
+                foreach ($servers as $key => $value) {
+                    $infoServers[$key] = $this->get('app_dashboard_scenario_result')->getInfoServer($key);
+                }
+                $datas = [];
+                foreach ($result as $key => $value){
+                    array_push($datas, $value);
+                }
+
+                $datas = json_encode($datas);
 //                dump($result); die;
 
                 $scenario->setCost([
@@ -69,7 +79,12 @@ class DashboardController extends Controller
                 return $this->render('AppBundle:dashboard:index.html.twig', array(
                     'form' => $form->createView(),
                     'scenario' => $scenario,
-                    'result' => $result
+                    'result' => $result,
+                    'data' => $datas,
+                    'servers' => $servers,
+                    'infoServers' => $infoServers,
+                    'totalPrice' => $this->get('app_dashboard_scenario_result')->getTotalPrice(),
+                    'totalGreenPrice' => $this->get('app_dashboard_scenario_result')->getTotalGreenPrice()
                 ));
             }
 

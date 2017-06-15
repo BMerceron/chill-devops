@@ -10,6 +10,13 @@ class ScenarioResult
     const TEST_DURATION = 60;
     const MAX_CHARGE = 5000000;
 
+    private $periodicity;
+
+    private $servers = [];
+
+    private $totalPrice;
+
+    private $totalGreenPrice;
     /**
      * @param Scenario $scenario
      * @return array|void
@@ -20,24 +27,24 @@ class ScenarioResult
             return;
         }
 
-        $periodicity = $scenario->getPeriodicity();
+        $this->periodicity = $scenario->getPeriodicity();
         $clientStart = $scenario->getClientStart();
         $clientAdd = $scenario->getClientAdd()/100;
         $total = [];
 
-        $total[$periodicity]=$clientStart;
-        $nextPeriodicity = $periodicity + $periodicity;
+        $total[$this->periodicity]=$clientStart;
+        $nextPeriodicity = $this->periodicity + $this->periodicity;
 
         if ($nextPeriodicity > self::TEST_DURATION) {
-            $nbMonthprorata = self::TEST_DURATION - $periodicity;
-            $total[self::TEST_DURATION] = round(($total[$periodicity]*($clientAdd*($nbMonthprorata/$periodicity))) + $total[$periodicity]);
+            $nbMonthprorata = self::TEST_DURATION - $this->periodicity;
+            $total[self::TEST_DURATION] = round(($total[$this->periodicity]*($clientAdd*($nbMonthprorata/$this->periodicity))) + $total[$this->periodicity]);
         }
 
-        for ( $i = $periodicity + $periodicity; $i <= self::TEST_DURATION; $i+=$periodicity ){
-            $total[$i] = round($total[$i-$periodicity] + ($total[$i-$periodicity]*($clientAdd)));
-            if ($i + $periodicity > self::TEST_DURATION) {
+        for ( $i = $this->periodicity + $this->periodicity; $i <= self::TEST_DURATION; $i+=$this->periodicity ){
+            $total[$i] = round($total[$i-$this->periodicity] + ($total[$i-$this->periodicity]*($clientAdd)));
+            if ($i + $this->periodicity > self::TEST_DURATION) {
                 $nbMonthprorata = self::TEST_DURATION - $i;
-                $total[self::TEST_DURATION] = round(($total[$i]*($clientAdd*($nbMonthprorata/$periodicity))) + $total[$i]);
+                $total[self::TEST_DURATION] = round(($total[$i]*($clientAdd*($nbMonthprorata/$this->periodicity))) + $total[$i]);
             }
         }
         return $total;
@@ -83,18 +90,11 @@ class ScenarioResult
      */
     public function putOnlineServers($number, array $servers){
 
-        $time = 0;
-
-        foreach($servers as $key=>$value){
-            if ($value == "offline"){
-                $value = "online";
-                $time++;
-                if ($time == $number){
-                    break;
-                }
+        for($i=0;$i<$number;$i++){
+            if ($servers[$i]=="offline"){
+                $servers[$i]="online";
             }
         }
-
         return $servers;
     }
 
@@ -105,19 +105,30 @@ class ScenarioResult
      */
     public function putOfflineServers($number, array $servers){
 
-        $time = 0;
-
-        foreach($servers as $key=>$value){
-            if ($value == "online"){
-                $value = "offline";
-                $time++;
-                if ($time == $number){
-                    break;
-                }
+        for($i=0;$i<$number;$i++){
+            if ($servers[$i]=="online"){
+                $servers[$i]="offline";
             }
         }
-
         return $servers;
+    }
+
+    /**
+     * @param $server
+     * @return array
+     */
+    public function getInfoServer($server)
+    {
+        switch ($server) {
+            case "one":
+                return ["capacity" =>6500, "buyingPrice" =>850, "priceByMonth" =>20, "greenBuyingPrice" =>1000, "greenPriceByMonth" =>10];
+            case "two":
+                return ["capacity" =>8000, "buyingPrice" =>1200, "priceByMonth" =>30, "greenBuyingPrice" =>1500, "greenPriceByMonth" =>15];
+            case "three":
+                return ["capacity" =>10000, "buyingPrice" =>1500, "priceByMonth" =>50, "greenBuyingPrice" =>2000, "greenPriceByMonth" =>25];
+        }
+
+        return ["capacity" =>0, "buyingPrice" =>0, "priceByMonth" =>0, "greenBuyingPrice" =>0, "greenPriceByMonth" =>0 ];
     }
 
     /**
@@ -129,32 +140,30 @@ class ScenarioResult
         if (!$scenario instanceof Scenario) {
             return;
         }
-
         $totalClients = $this->getTotalClientsByPeriodicity($scenario);
 
-        $one = ["capacity" =>6500, "buyingPrice" =>850, "priceByMonth" =>20];
-        $two = ["capacity" =>8000, "buyingPrice" =>1200, "priceByMonth" =>30];
-        $three = ["capacity" =>10000, "buyingPrice" =>1500, "priceByMonth" =>50];
-
+        $one = $this->getInfoServer("one");
+        $two = $this->getInfoServer("two");
+        $three = $this->getInfoServer("three");
 
         $result = [];
-
         $servers = ["one"=>[], "two"=>[], "three"=>[]];
 
-        $j = -1;
+        $totalPrice = 0;
+        $totalGreenPrice = 0;
 
         foreach ($totalClients as $key => $value){
-            $j++;
 
             $needed = ["one"=>0,"two"=>0,"three"=>0];
 
-            $result[$j]["Client"] = $value;
-            $result[$j]["PriceByMonth"] = 0;
-            $result[$j]["BuyingCost"] = 0;
-            $result[$j]["LastMonth"] = $key;
+            $result[$key]["Client"] = $value;
+            $result[$key]["PriceByMonth"] = 0;
+            $result[$key]["GreenPriceByMonth"] = 0;
+            $result[$key]["BuyingCost"] = 0;
+            $result[$key]["GreenBuyingCost"] = 0;
+            $result[$key]["LastMonth"] = $key;
 
             //how many servers do we need
-
             while($value > 0){
                 if($value >= $three["capacity"]){
                     $value -= $three["capacity"];
@@ -182,71 +191,67 @@ class ScenarioResult
                 $offlineTwo = $this->getOfflineServers($servers["two"]);
                 $offlineOne = $this->getOfflineServers($servers["one"]);
 
+                $onlineThree = $this->getOnlineServers($servers["three"]);
+                $onlineTwo = $this->getOnlineServers($servers["two"]);
+                $onlineOne = $this->getOnlineServers($servers["one"]);
+
 
                 if ($offlineThree >0 && $needed["three"] >0){
                     if(($needed["three"] - $offlineThree)>=0){
                         // puting servers online, even if we don't have enough
-                        $result[$j]["Server"]["three"] = $this->putOnlineServers($offlineThree, $servers["three"]);
-                        $needed["three"]-=$needed["three"]-$offlineThree;
+                        $servers["three"] = $this->putOnlineServers($offlineThree, $servers["three"]);
+                        $needed["three"]-=$offlineThree;
                     }else{
                         // puting online servers, we have enough
                         $servers["three"] = $this->putOnlineServers($needed["three"], $servers["three"]);
                         $needed["three"]=0;
+                    }
+                }elseif ($onlineThree >0 && $needed["three"] >= 0 ){
+                    if (($onlineThree - $needed["three"])>=0){
+                        $servers["three"] = $this->putOfflineServers(($onlineThree - $needed["three"]), $servers["three"]);
+                        $needed["three"]=0;
+                    }elseif($needed["three"] - $onlineThree > 0){
+                        $needed["three"]-=$onlineThree;
                     }
                 }
 
                 if ($offlineTwo >0 && $needed["two"] >0){
                     if(($needed["two"] - $offlineTwo)>=0){
                         // puting servers online, even if we don't have enough
-                        $result[$j]["Server"]["two"] = $this->putOnlineServers($offlineTwo, $servers["two"]);
-                        $needed["two"]-=$needed["two"]-$offlineTwo;
+                        $servers["two"] = $this->putOnlineServers($offlineTwo, $servers["two"]);
+                        $needed["two"]-=$offlineTwo;
                     }else{
                         // puting online servers, we have enough
                         $servers["two"] = $this->putOnlineServers($needed["two"], $servers["two"]);
                         $needed["two"]=0;
                     }
-                }
-
-                if ($offlineOne >0 && $needed["one"] >0){
-                    if(($needed["one"] - $offlineOne)>=0){
-                        // puting servers online, even if we don't have enough
-                        $result[$j]["Server"]["one"] = $this->putOnlineServers($offlineOne, $servers["one"]);
-                        $needed["one"]-=$needed["one"]-$offlineOne;
-                    }else{
-                        // puting online servers, we have enough
-                        $servers["one"] = $this->putOnlineServers($needed["one"], $servers["one"]);
-                        $needed["one"]=0;
-                    }
-                }
-
-                $onlineThree = $this->getOnlineServers($servers["three"]);
-                $onlineTwo = $this->getOnlineServers($servers["two"]);
-                $onlineOne = $this->getOnlineServers($servers["one"]);
-
-                if ($onlineThree >0 && $needed["three"] > 0 ){
-                    if (($onlineThree - $needed["three"])>=0){
-                        $servers["three"] = $this->putOfflineServers($needed["three"], $servers["three"]);
-                        $needed["three"]=0;
-                    }elseif($needed["three"] - $onlineThree > 0){
-                        $needed["three"]=$needed["three"] - $onlineThree;
-                    }
-                }
-
-                if ($onlineTwo >0 && $needed["two"] > 0 ){
+                }elseif ($onlineTwo >0 && $needed["two"] >= 0 ){
                     if (($onlineTwo - $needed["two"])>=0) {
-                        $servers["three"] = $this->putOfflineServers($needed["two"], $servers["two"]);
+                        $servers["two"] = $this->putOfflineServers(($onlineTwo - $needed["two"]), $servers["two"]);
                         $needed["two"]=0;
                     } elseif($needed["two"] - $onlineTwo > 0){
                         $needed["two"]=$needed["two"] - $onlineTwo;
                     }
                 }
 
-                if ($onlineOne >0 && $needed["one"] > 0 ){
-                    if (($onlineOne - $needed["one"])>=0) {
-                        $servers["one"] = $this->putOfflineServers($needed["one"], $servers["one"]);
+                if ($offlineOne >0 && $needed["one"] >0){
+                    if(($needed["one"] - $offlineOne)>=0){
+                        // puting servers online, even if we don't have enough
+                        $servers["one"] = $this->putOnlineServers($offlineOne, $servers["one"]);
+                        $needed["one"]-=$offlineOne;
+                    }else{
+                        // puting online servers, we have enough
+                        $servers["one"] = $this->putOnlineServers($needed["one"], $servers["one"]);
+                        $needed["one"]=0;
+                    }
+                }elseif ($onlineOne >0 && $needed["one"] >= 0 ){
+                    if (($onlineOne - $needed["one"])>0){
+                        $servers["one"] = $this->putOfflineServers(($onlineOne - $needed["one"]), $servers["one"]);
                         $needed["one"]=0;
                     } elseif($needed["one"] - $onlineOne > 0){
                         $needed["one"]=$needed["one"] - $onlineOne;
+                    }else{
+                        $needed["one"]=0;
                     }
                 }
             }
@@ -254,39 +259,82 @@ class ScenarioResult
                 //create new servers that are needed + add buying price to bill
                 for ($i=1; $i<=$needed["three"]; $i++) {
                     array_push($servers["three"], "online");
-                    $result[$j]["BuyingCost"] += $three["buyingPrice"];
+                    $result[$key]["BuyingCost"] += $three["buyingPrice"];
+                    $result[$key]["GreenBuyingCost"] += $three["greenBuyingPrice"];
+                    $totalPrice += $three["buyingPrice"];
+                    $totalGreenPrice += $three["greenBuyingPrice"];
                 }
             }
-
             if ($needed["two"]>0){
-                //create new servers that are needed + add buying price to bill
                 for ($i=1; $i<=$needed["two"]; $i++) {
                     array_push($servers["two"], "online");
-                    $result[$j]["BuyingCost"] += $two["buyingPrice"];
+                    $result[$key]["BuyingCost"] += $two["buyingPrice"];
+                    $result[$key]["GreenBuyingCost"] += $two["greenBuyingPrice"];
+                    $totalPrice += $two["buyingPrice"];
+                    $totalGreenPrice += $two["greenBuyingPrice"];
                 }
             }
-
             if ($needed["one"]>0){
-                //create new servers that are needed + add buying price to bill
                 for ($i=1; $i<=$needed["one"]; $i++) {
                     array_push($servers["one"], "online");
-                    $result[$j]["BuyingCost"] += $one["buyingPrice"];
+                    $result[$key]["BuyingCost"] += $one["buyingPrice"];
+                    $result[$key]["GreenBuyingCost"] += $one["greenBuyingPrice"];
+                    $totalPrice += $one["buyingPrice"];
+                    $totalGreenPrice += $one["greenBuyingPrice"];
+
                 }
             }
-
             if (!empty($servers["three"])){
-                $result[$j]["PriceByMonth"] += (($this->getOnlineServers($servers["three"]))*$three['priceByMonth']);
+                $result[$key]["PriceByMonth"] += (($this->getOnlineServers($servers["three"]))*$three['priceByMonth']);
+                $result[$key]["GreenPriceByMonth"] += (($this->getOnlineServers($servers["three"]))*$three['greenPriceByMonth']);
+                $totalPrice += ($three['priceByMonth']*$this->periodicity);
+                $totalGreenPrice += ($three['greenPriceByMonth']*$this->periodicity);
             }
-
             if (!empty($servers["two"])){
-                $result[$j]["PriceByMonth"] += (($this->getOnlineServers($servers["two"]))*$two['priceByMonth']);
+                $result[$key]["PriceByMonth"] += (($this->getOnlineServers($servers["two"]))*$two['priceByMonth']);
+                $result[$key]["GreenPriceByMonth"] += (($this->getOnlineServers($servers["two"]))*$two['greenPriceByMonth']);
+                $totalPrice += ($two['priceByMonth']*$this->periodicity);
+                $totalGreenPrice += ($two['greenPriceByMonth']*$this->periodicity);
             }
-
             if (!empty($servers["one"])){
-                $result[$j]["PriceByMonth"] += (($this->getOnlineServers($servers["one"]))*$one['priceByMonth']);
+                $result[$key]["PriceByMonth"] += (($this->getOnlineServers($servers["one"]))*$one['priceByMonth']);
+                $result[$key]["GreenPriceByMonth"] += (($this->getOnlineServers($servers["one"]))*$one['greenPriceByMonth']);
+                $totalPrice += ($one['priceByMonth']*$this->periodicity);
+                $totalGreenPrice += ($one['greenPriceByMonth']*$this->periodicity);
+
             }
         }
+
+        $this->servers = $servers;
+        $this->totalPrice = $totalPrice;
+        $this->totalGreenPrice = $totalGreenPrice;
         return $result;
 
     }
+
+    /**
+     * @return array
+     */
+    public function getServers()
+    {
+        return $this->servers;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTotalPrice()
+    {
+        return $this->totalPrice;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTotalGreenPrice()
+    {
+        return $this->totalGreenPrice;
+    }
+
+
 }
