@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
@@ -140,12 +141,14 @@ class DashboardController extends Controller
         if($request->isXmlHttpRequest()){
             $scenarioTable = $request->get('tab');
             $scenarioEntity = $em->getRepository('AppBundle:Scenario');
+            dump($scenarioTable);
+            die;
             foreach ($scenarioTable as $scenario) {
                 $entity = $scenarioEntity->findOneById($scenario);
                 $em->remove($entity);
                 $em->flush();
             }
-            return new JsonResponse($this->render());
+            return new JsonResponse($this->render("AppBundle:dashboard:history.html.twig", array("scenarios"=>$scenarioTable)));
         }
 
     }
