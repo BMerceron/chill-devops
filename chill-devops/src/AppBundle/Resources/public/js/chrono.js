@@ -4,9 +4,9 @@
 var chrono  = {
     initChronoDate: function (){
         var dataDate = $('.psb-js-date');
-        var start  = new Date(dataDate.attr('data-start'));
-        var end = new Date(dataDate.attr('data-end'));
-
+        var start  = new Date('2017-06-13 00:12:10');
+        var end = new Date('2017-06-13 00:00:00');
+        console.log("test")
         return this.dateDiff(end, start);
     },
 
@@ -47,8 +47,20 @@ var chrono  = {
         if (secondes < 10) {
             secondes = "0" + parseInt(secondes);
         }
+        if (secondes < 2) {
+            $('.chrono .psb-js-inner-secondes').text(' seconde ');
+        }
         if (minutes < 10) {
             minutes = "0" + parseInt(minutes);
+        }
+        if (minutes < 2) {
+            $('.chrono .psb-js-inner-minutes').html(' minute ');
+        }
+        if (secondes > 10) {
+            $('.chrono .psb-js-inner-secondes').html(' secondes ');
+        }
+        if (minutes > 10) {
+            $('.chrono .psb-js-inner-minutes').html(' minutes ');
         }
 
         $('.chrono .psb-js-chrono-hours').html(hour);
@@ -65,4 +77,4 @@ var chrono  = {
 
     }
 };
-chrono.initChronoDate();
+    chrono.initChronoDate();
