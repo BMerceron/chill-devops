@@ -6,11 +6,24 @@
                 <h2>Simulateur</h2>
                 <h5>Comment ça marche ?</h5>
                 <p>Il suffit de renseigner les données manquantes à la phrase suivante :</p>
-                <p>Je souhaite connaître le coût du serveur {Name}. Au départ avec {Client start} utilisateurs en simultané, puis tous les {Periodicity} mois, {Client add} % s'ajouteront à ce serveur.</p>
+                <p>Je souhaite connaître le coût du serveur <b>{Nom du serveur}</b>. Au départ avec <b>{Nombre d'utilisateurs}</b> utilisateurs en simultané, puis tous les <b>{Périodicité}</b> mois, <b>{Pourcentage d'utilisateurs}</b> % s'ajouteront à ce serveur.</p>
                 <p><i>Exemple : </i></p>
                 <p><i>Je souhaite connaître le coût du serveur <b>Corporate</b>. Au départ avec <b>10000</b> utilisateurs en simultané, puis tous les <b>3</b> mois, <b>5</b> % s'ajouteront à ce serveur.</i></p>
                 {{ form_start(form) }}
-                    {{ form_widget(form) }}
+
+                <div class="col s12">
+                    {{ form_row(form.name) }}
+                </div>
+                <div class="col s4">
+                    {{ form_row(form.clientStart) }}
+                </div>
+                <div class="col s4">
+                    {{ form_row(form.periodicity) }}
+                </div>
+                <div class="col s4">
+                    {{ form_row(form.clientAdd) }}
+                </div>
+
                     <!-- Modal Button -->
                     <a class="btn waves-effect waves-light right light-green lighten-1 js-submit_scenario" href="#confirm_scenario_modal">Load</a>
 
