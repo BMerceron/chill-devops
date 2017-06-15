@@ -9,6 +9,15 @@
                 <p>Je souhaite connaître le coût du serveur {Name}. Au départ avec {Client start} utilisateurs en simultané, puis tous les {Periodicity} mois, {Client add} % s'ajouteront à ce serveur.</p>
                 <p><i>Exemple : </i></p>
                 <p><i>Je souhaite connaître le coût du serveur <b>Corporate</b>. Au départ avec <b>10000</b> utilisateurs en simultané, puis tous les <b>3</b> mois, <b>5</b> % s'ajouteront à ce serveur.</i></p>
+                {% for type, flash_messages in app.session.flashBag.all %}
+                    {% for flash_message in flash_messages %}
+                        <div class="flash-{{ type }} card red" id="card-alert">
+                            <div class="card-content white-text">
+                                <p><i class="mdi-alert-error"></i> Error: {{ flash_message }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
                 {{ form_start(form) }}
                     {{ form_widget(form) }}
                     <!-- Modal Button -->

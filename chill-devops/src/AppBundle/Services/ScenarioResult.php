@@ -26,6 +26,12 @@ class ScenarioResult
         $total = [];
 
         $total[$periodicity]=$clientStart;
+        $nextPeriodicity = $periodicity + $periodicity;
+
+        if ($nextPeriodicity > self::TEST_DURATION) {
+            $nbMonthprorata = self::TEST_DURATION - $periodicity;
+            $total[self::TEST_DURATION] = round(($total[$periodicity]*($clientAdd*($nbMonthprorata/$periodicity))) + $total[$periodicity]);
+        }
 
         for ( $i = $periodicity + $periodicity; $i <= self::TEST_DURATION; $i+=$periodicity ){
             $total[$i] = round($total[$i-$periodicity] + ($total[$i-$periodicity]*($clientAdd)));
@@ -34,7 +40,6 @@ class ScenarioResult
                 $total[self::TEST_DURATION] = round(($total[$i]*($clientAdd*($nbMonthprorata/$periodicity))) + $total[$i]);
             }
         }
-
         return $total;
     }
 
