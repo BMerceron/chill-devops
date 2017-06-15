@@ -1,6 +1,9 @@
 {% extends '::base.html.twig' %}
 {% block body %}
-    <h2>Hey c'est le layout.html.twig !</h2>
-    {% block test %}
-    {% endblock %}
-{% endblock %}
+    <div class="section">
+        <div class="container page-content grey lighten-3">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock body %}
