@@ -13,7 +13,8 @@
         <!--Import Google Icon Font-->
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         {% block stylesheets %}
-        {% endblock %}
+            <link src="{{ asset('scss/c3.css')}}" rel="stylesheet" type="text/css" />
+        {% endblock %} 
     </head>
     <body class="grey darken-3">
         {% include 'header.html.twig' %}
@@ -27,6 +28,9 @@
             <script src="{{ asset('fonts/materialize/js/materialize.min.js') }}"></script>
             <script src="{{ asset('js/main.js') }}"></script>
             <script src="{{ asset('js/dashboard.js') }}"></script>
+            <script src="{{ asset('js/c3.min.js') }}"></script>
+            <script src="{{ asset('js/d3.min.js') }}"></script>
+            {#<script src="{{ asset('js/drawChart.js') }}"></script>#}
         {% endblock %}
     </body>
 </html>
