@@ -5,7 +5,6 @@
 var socket = io.connect('http://192.170.1.14:9090');
 
 function onSimulate() {
-    debugger;
     socket.emit('simulate', 'simulate');
 }
 
