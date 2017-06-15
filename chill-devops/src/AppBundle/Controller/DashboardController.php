@@ -132,4 +132,21 @@ class DashboardController extends Controller
             ->getForm()
             ;
     }
+
+    public function deleteSelectionAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        if($request->isXmlHttpRequest()){
+            $scenarioTable = $request->get('tab');
+            $scenarioEntity = $em->getRepository('AppBundle:Scenario');
+            foreach ($scenarioTable as $scenario) {
+                $entity = $scenarioEntity->findOneById($scenario);
+                $em->remove($entity);
+                $em->flush();
+            }
+            return new JsonResponse($this->render());
+        }
+
+    }
 }

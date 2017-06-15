@@ -27,4 +27,4 @@ scenario_delete:
 
 scenario_delete_selection:
     path:    /scenario/delete/selection
-    defaults: { _controller: AppBundle:Scenario:deleteSelection }
+    defaults: { _controller: AppBundle:Dashboard:deleteSelection }
