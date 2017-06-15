@@ -39,14 +39,6 @@
                         <a class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">delete</i></a>
                     </div>
                     {% include 'chart.html.twig' %}
-                    {% block stylesheets %}
-                        <link src="{{ asset('js/c3/c3.css')}}" rel="stylesheet" type="text/css" />
-                    {% endblock %}
-                    {% block javascripts %}
-                        <script src="{{ asset('js/d3/c3.min.js') }}"></script>
-                        <script src="{{ asset('js/c3/d3.min.js') }}"></script>
-                        <script src="{{ asset('js/drawChart.js') }}"></script>
-                    {% endblock %}
                     <div class="row">
                         <div class="col s6 m6">
                             <p>

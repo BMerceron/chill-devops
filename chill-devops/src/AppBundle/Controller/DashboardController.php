@@ -40,7 +40,7 @@ class DashboardController extends Controller
 
                 $totalClient = $this->get('app_dashboard_scenario_result')->getTotalClientsByPeriodicity($scenario);
 
-                if ($totalClient[60] > 5000000) {
+                if ($totalClient[60] > 5000000 ) {
                     echo 'NON';
                     return $this->render('AppBundle:dashboard:index.html.twig', array(
                         'form' => $form->createView(),
@@ -48,6 +48,7 @@ class DashboardController extends Controller
                 }
 
                 $result = $this->get('app_dashboard_scenario_result')->getPricesAndServers($scenario);
+                $result = json_encode($result);
                 dump($result); die;
 //                /** @var Scenario $scenario */
 //                $scenario = $form->getData();

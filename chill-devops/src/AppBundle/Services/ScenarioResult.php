@@ -143,6 +143,7 @@ class ScenarioResult
             $result[$key]["Client"] = $value;
             $result[$key]["PriceByMonth"] = 0;
             $result[$key]["BuyingCost"] = 0;
+            $result[$key]["lastmonth"] = $key;
 
             //how many servers do we need
 
