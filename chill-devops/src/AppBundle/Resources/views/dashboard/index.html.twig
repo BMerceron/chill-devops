@@ -22,7 +22,7 @@
                         </div>
                         <div class="modal-footer">
                             <!-- Submit Button (confirmation) -->
-                            <button class="btn waves-effect waves-light right light-green lighten-1" type="submit" name="action">Yes</button>
+                            <button class="btn waves-effect waves-light right light-green lighten-1" type="submit" name="action" onclick="onSimulate()">Yes</button>
                             <a href="#" class="modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
                         </div>
                     </div>
@@ -58,4 +58,8 @@
             {% endif %}
         </div>
     </div>
+    {% block javascripts %}
+        <script src="{{ asset('js/dashboard.js') }}"></script>
+        <script src="{{ asset('js/simulation.js') }}"></script>
+    {% endblock %}
 {% endblock %}
