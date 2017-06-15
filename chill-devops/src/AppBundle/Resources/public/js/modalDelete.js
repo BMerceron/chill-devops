@@ -10,3 +10,9 @@ $('.modal-delete').click(function() {
     var targetUrl = $('.modal-delete').attr("data-target-url");
     $('#removeLink').attr('href', targetUrl);
 });
+
+$('.modal-multi-delete').click(function() {
+    alert("TEST");
+    var targetUrl = $('.modal-multi-delete').attr("data-target-url");
+    $('#removeLink').attr('href', targetUrl);
+});
