@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col s12 center">
             <h2>Historique des scénarios</h2>
-            <div><a href="#multiDeleteModal" id="multibutton" class="modal-multi-delete btn waves-effect waves-ripple" data-toggle="modalDelete">Supprimer sélection</a></div>
+            <div class="right"><a href="#multiDeleteModal" id="multibutton" class="modal-multi-delete btn waves-effect waves-ripple" data-toggle="modalDelete">Supprimer sélection</a></div>
             {% if scenarios is not empty %}
                 <table class="responsive-table striped">
                     <thead>
@@ -21,13 +21,7 @@
                     <tbody>
                     {% for scenario in scenarios %}
                         <tr>
-                            <td>
-                                <p>
-                                    <input type="checkbox" class="psb-js-delete-select"
-                                           id="delete-{{ scenario.id }}" name="selected-scenario"
-                                           value="{{ scenario.id }}" data-id="{{ scenario.id }}"/>
-                                    <label for="delete-{{ scenario.id }}"></label>
-                                </p>
+                            <td class="center"><a href="{{ path('scenario_show', {'id': scenario.id}) }}">{{ scenario.name }} <i class="material-icons">edit</i></a>
                             </td>
                             <td><a class="spb-js-edit" data-id="{{ scenario.id }}" data-name="{{ scenario.name }}">{{ scenario.name }}</a>
                             </td>
@@ -37,19 +31,12 @@
                             <td class="center">{{ scenario.clientAdd~" %" }}</td>
                             <td class="center">
                                 <a href="{{ path('scenario_edit', {'id': scenario.id}) }}"
-                                   class="btn-floating waves-effect waves-light light-green lighten-1"><i
-                                            class="material-icons">edit</i></a>
+                                   class="btn-floating waves-effect waves-light light-green lighten-1"></a>
                                 <a href="{{ path('scenario_show', {'id': scenario.id}) }}"
                                    class="btn-floating waves-effect waves-light light-green lighten-1"><i
                                             class="material-icons">visibility</i></a>
                                 <a class="btn-floating waves-effect waves-light light-green lighten-1"><i
                                             class="material-icons">star</i></a>
-                                <a href="#deleteModal"
-                                   class="modal-delete btn-floating waves-effect waves-light light-green lighten-1"
-                                   role="button" data-toggle="modalDelete"
-                                   data-target-url="{{ path('scenario_delete', {'id': scenario.id}) }}"
-                                   data-target="#deleteModal" title="Supprimer ce scénario">
-                                    <i class="material-icons">delete</i></a>
                             </td>
                             <td class="center">
                                 <p>
@@ -63,6 +50,7 @@
                     {% endfor %}
                     </tbody>
                 </table>
+                <div class="right"><a href="#multiDeleteModal" id="multibutton" class="modal-multi-delete btn waves-effect waves-ripple" data-toggle="modalDelete">Supprimer sélection</a></div>
             {% else %}
                 <div class="col s12 grey lighten-3 center">
                     <p>Il n'y pas de scénarios dans votre historique pour le moment. Vous pouvez dès à présent
