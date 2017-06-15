@@ -1,16 +1,29 @@
-{% extends '::base.html.twig' %}
-{% block body %}
+{% extends 'AppBundle::layout.html.twig' %}
+{% block content %}
     <div class="container" style="margin: 50px auto">
         <div class="row">
             <div class="col s12 grey lighten-3">
                 <h2>Simulateur</h2>
                 <h5>Comment ça marche ?</h5>
                 <p>Il suffit de renseigner les données manquantes à la phrase suivante :</p>
-                <p>Je souhaite connaître le coût du serveur {Name}. Au départ avec {Client start} utilisateurs en simultané, puis tous les {Periodicity} mois, {Client add} % s'ajouteront à ce serveur.</p>
+                <p>Je souhaite connaître le coût du serveur <b>{Nom du serveur}</b>. Au départ avec <b>{Nombre d'utilisateurs}</b> utilisateurs en simultané, puis tous les <b>{Périodicité}</b> mois, <b>{Pourcentage d'utilisateurs}</b> % s'ajouteront à ce serveur.</p>
                 <p><i>Exemple : </i></p>
                 <p><i>Je souhaite connaître le coût du serveur <b>Corporate</b>. Au départ avec <b>10000</b> utilisateurs en simultané, puis tous les <b>3</b> mois, <b>5</b> % s'ajouteront à ce serveur.</i></p>
                 {{ form_start(form) }}
-                    {{ form_widget(form) }}
+
+                <div class="col s12">
+                    {{ form_row(form.name) }}
+                </div>
+                <div class="col s4">
+                    {{ form_row(form.clientStart) }}
+                </div>
+                <div class="col s4">
+                    {{ form_row(form.periodicity) }}
+                </div>
+                <div class="col s4">
+                    {{ form_row(form.clientAdd) }}
+                </div>
+
                     <!-- Modal Button -->
                     <a class="btn waves-effect waves-light right light-green lighten-1 js-submit_scenario" href="#confirm_scenario_modal">Load</a>
 
@@ -34,7 +47,7 @@
                 <div class="col s12 grey lighten-3">
                     <h2 class="left">{{ scenario.name }}</h2>
                     <div class="right" style="margin-top: 25px;">
-                        <a class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">edit</i></a>
+                        <a href="{{ path('scenario_edit', {'id': scenario.id}) }}" class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">edit</i></a>
                         <a class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">star</i></a>
                         <a class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">delete</i></a>
                     </div>
@@ -58,4 +71,7 @@
             {% endif %}
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/dashboard.js') }}"></script>
 {% endblock %}
