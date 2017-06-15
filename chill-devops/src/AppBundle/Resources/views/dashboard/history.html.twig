@@ -21,7 +21,7 @@
                     <tbody>
                     {% for scenario in scenarios %}
                         <tr>
-                            <td class="center"><a class="spb-js-edit" data-id="{{ scenario.id }}" data-name="{{ scenario.name }}">{{ scenario.name }}<i class="right material-icons">edit</i></a>
+                            <td class="center"><a href="{{ path('scenario_show', {'id': scenario.id}) }}">{{ scenario.name }}</a><i style="color: #039be5;" class="spb-js-edit right material-icons" data-id="{{ scenario.id }}" data-name="{{ scenario.name }}">edit</i>
                             </td>
                             <td class="center">{{ scenario.createdAt|date("d/M/Y") }}</td>
                             <td class="center">{{ scenario.clientStart }}</td>
