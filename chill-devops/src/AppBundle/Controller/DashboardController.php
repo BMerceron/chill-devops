@@ -49,7 +49,7 @@ class DashboardController extends Controller
 
                 $result = $this->get('app_dashboard_scenario_result')->getPricesAndServers($scenario);
                 $result = json_encode($result);
-                dump($result); die;
+                //dump($result); die;
 //                /** @var Scenario $scenario */
 //                $scenario = $form->getData();
 //                $scenario->setCreatedAt(new \DateTime());
@@ -66,7 +66,8 @@ class DashboardController extends Controller
 
                 return $this->render('AppBundle:dashboard:index.html.twig', array(
                     'form' => $form->createView(),
-                    'scenario' => $scenario
+                    'scenario' => $scenario,
+                    'result' => $result
                 ));
             }
 
