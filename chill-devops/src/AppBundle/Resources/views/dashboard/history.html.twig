@@ -3,6 +3,7 @@
     <div class="row">
         <div class="col s12 center">
             <h2>Historique des scénarios</h2>
+            <div><a href="#multiDeleteModal" id="multibutton" class="modal-multi-delete btn waves-effect waves-ripple" data-toggle="modalDelete">Supprimer sélection</a></div>
             {% if scenarios is not empty %}
                 <table class="responsive-table striped">
                     <thead>
@@ -14,7 +15,6 @@
                         <th>Périodicité</th>
                         <th>Incrément</th>
                         <th>Actions</th>
-                        <th><a id="multibutton" class="btn waves-effect waves-ripple">Supprimer sélection</a></th>
                     </tr>
 
                     </thead>
@@ -74,6 +74,21 @@
         </div>
         <div class="modal-footer">
             <a href="#" id="removeLink" class="modal-action modal-close waves-effect waves-green btn-flat">Oui</a>
+            <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat">Non</a>
+        </div>
+    </div>
+
+    {# modal multidelete scenario#}
+    <div id="multiDeleteModal" class="modal">
+        <div class="modal-content">
+            <h4>Attention</h4>
+            <p>Vous êtes sur le point de supprimer les scénarios sélectionnés. Il vous sera impossible de les récupérer
+                après la suppression. Etes-vous sûr de vouloir continuer ?
+                <suppression class=""></suppression>
+            </p>
+        </div>
+        <div class="modal-footer">
+            <a href="#" id="multiDeleteButton" class="modal-action modal-close waves-effect waves-green btn-flat">Oui</a>
             <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat">Non</a>
         </div>
     </div>
