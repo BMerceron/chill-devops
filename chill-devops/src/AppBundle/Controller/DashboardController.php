@@ -47,8 +47,8 @@ class DashboardController extends Controller
                     ));
                 }
 
-                $this->get('app_dashboard_scenario_result')->getPricesAndServers($scenario);
-
+                $result = $this->get('app_dashboard_scenario_result')->getPricesAndServers($scenario);
+                dump($result); die;
 //                /** @var Scenario $scenario */
 //                $scenario = $form->getData();
 //                $scenario->setCreatedAt(new \DateTime());
