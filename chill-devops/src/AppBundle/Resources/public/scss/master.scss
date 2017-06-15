@@ -1,3 +1,10 @@
+@import "edit.scss";
+@import "footer.scss";
+@import "header.scss";
+
+.page-content {
+  padding: 40px;
+}
 .input-field label {
     color: #424242;
 }
@@ -21,13 +28,6 @@ main {
 	margin: 0;
 }
 
-h2{
-	font-weight: 300; 
-}
-
-p, span, h1, h2, h3, h4, h5, h6{
-	color: #424242;
-}
 
 input[type=range]{
 	border: none;
