@@ -25,10 +25,10 @@ class DashboardController extends Controller
 
         $scenario = new Scenario();
         $form = $this->createFormBuilder($scenario)
-            ->add('Name', TextType::class)
-            ->add('clientStart', IntegerType::class)
-            ->add('periodicity', IntegerType::class)
-            ->add('clientAdd', IntegerType::class)
+            ->add('name', TextType::class, array('label' => "Nom du scénario"))
+            ->add('clientStart', IntegerType::class, array('label' => "Nombre d'utilisateurs"))
+            ->add('periodicity', IntegerType::class, array('label' => "Périodicité"))
+            ->add( 'clientAdd', IntegerType::class, array('label' => "Pourcentage d'utilisateurs"))
             ->getForm();
 
         $form->handleRequest($request);
@@ -136,22 +136,20 @@ class DashboardController extends Controller
 
     public function deleteSelectionAction(Request $request)
     {
-        dump($request->get("tab"));
-        die;
         $em = $this->getDoctrine()->getManager();
 
         if($request->isXmlHttpRequest()){
             $scenarioTable = $request->get('tab');
             $scenarioEntity = $em->getRepository('AppBundle:Scenario');
-            dump($scenarioTable);
-            die;
             foreach ($scenarioTable as $scenario) {
                 $entity = $scenarioEntity->findOneById($scenario);
                 $em->remove($entity);
                 $em->flush();
             }
-            return new JsonResponse($this->render("AppBundle:dashboard:history.html.twig", array("scenarios"=>$scenarioTable)));
+//            return new JsonResponse($this->render("AppBundle:dashboard:history.html.twig", array("scenarios"=>$scenarioTable)));
         }
+
+        return $this->render('AppBundle:dashboard:history.html.twig', array("scenarios" => $scenarioTable));
 
     }
 }
