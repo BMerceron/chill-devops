@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Scenario;
+use AppBundle\Services\ScenarioResult;
 use PHPUnit\Framework\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -40,7 +41,7 @@ class DashboardController extends Controller
 
                 $totalClient = $this->get('app_dashboard_scenario_result')->getTotalClientsByPeriodicity($scenario);
 
-                if ($totalClient[60] > 5000000) {
+                if ($totalClient[ScenarioResult::TEST_DURATION] > ScenarioResult::MAX_CHARGE) {
                     echo 'NON';
                     return $this->render('AppBundle:dashboard:index.html.twig', array(
                         'form' => $form->createView(),

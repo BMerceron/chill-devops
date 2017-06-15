@@ -42,7 +42,9 @@ class Scenario
      * @Assert\NotBlank()
      * @Assert\Range(
      *      min = 1,
+     *      max = 60,
      *      minMessage = "Must be at least {{ limit }}",
+     *      maxMessage = "Must be at most {{ limit }}",
      * )
      */
     private $periodicity;

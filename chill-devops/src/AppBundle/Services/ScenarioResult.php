@@ -4,11 +4,11 @@
 namespace AppBundle\Services;
 
 use AppBundle\Entity\Scenario;
-use phpDocumentor\Reflection\Types\Integer;
 
 class ScenarioResult
 {
     const TEST_DURATION = 60;
+    const MAX_CHARGE = 5000000;
 
     /**
      * @param Scenario $scenario
