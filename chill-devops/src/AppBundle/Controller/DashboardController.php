@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Scenario;
+use PHPUnit\Framework\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -36,7 +37,17 @@ class DashboardController extends Controller
 
                 /*TODO - SEND SIMULATION*/
                 $scenario = $form->getData();
-                $totalClients = $this->get('app_dashboard_scenario_result')->getTotalClientsByPeriodicity($scenario);
+
+                $totalClient = $this->get('app_dashboard_scenario_result')->getTotalClientsByPeriodicity($scenario);
+
+                if ($totalClient[60] > 5000000) {
+                    echo 'NON';
+                    return $this->render('AppBundle:dashboard:index.html.twig', array(
+                        'form' => $form->createView(),
+                    ));
+                }
+
+                $this->get('app_dashboard_scenario_result')->getPricesAndServers($scenario);
 
 //                /** @var Scenario $scenario */
 //                $scenario = $form->getData();
