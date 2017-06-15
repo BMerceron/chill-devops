@@ -40,7 +40,7 @@ class DashboardController extends Controller
                 if ($totalClient[ScenarioResult::TEST_DURATION] > ScenarioResult::MAX_CHARGE) {
                     $this->addFlash(
                         'error',
-                        'Your changes were saved!'
+                        'You\'ve reached the loading limit.'
                     );
                     return $this->render('AppBundle:dashboard:index.html.twig', array(
                         'form' => $form->createView(),
