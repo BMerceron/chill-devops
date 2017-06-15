@@ -17,7 +17,7 @@ $(".psb-js-delete-select").on("click", function() {
 })
 
 // click on delete multiple button
-$("#multibutton").on("click", function () {
+$("#multiDeleteButton").on("click", function () {
     console.log(scenarioIdArray)
     $.ajax({
         url: "/scenario/delete/selection",
