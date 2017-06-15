@@ -1,9 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'AppBundle::layout.html.twig' %}
 
-{% block body %}
+{% block content %}
     <div class="row">
         <div class="col s12">
-            <h2>Historique des scénarios</h2>
+            <h2>Modification du nom</h2>
             {{ form_start(edit_form) }}
             {{ form_widget(edit_form) }}
             <button type="submit" href="{{ path('scenario_edit', {'id': scenario.id}) }}" class="btn">Modifier</button>
@@ -21,3 +21,6 @@
         </div>
     </div>
 {% endblock %}
+
+
+
