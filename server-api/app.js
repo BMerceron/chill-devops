@@ -10,6 +10,8 @@ socket.on('simulate', function(id){
 
 	exec('echo "'+id+'" | /chill_project/scripts/launch_project.sh', function puts(error, stdout, stderr) {
 		console.log("stdout", stdout)
+		console.log("error", error)
+		console.log("stderr", stderr)
 		/*fs.readFile('/var/lib/phoronix-test-suite/test-results/'+id+'/composite.xml', 'utf-8', function(err, data){
 			var json = JSON.parse(parser.toJson(data));
 			var hardware = json.PhoronixTestSuite.System.Hardware;
