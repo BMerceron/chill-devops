@@ -38,6 +38,13 @@ class Configuration
     /**
      * @var int
      *
+     * @ORM\Column(name="core", type="integer")
+     */
+    private $core;
+
+    /**
+     * @var int
+     *
      * @ORM\Column(name="cpu", type="integer")
      */
     private $cpu;
@@ -49,6 +56,12 @@ class Configuration
      */
     private $disk;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="label", type="string", length=255)
+     */
+    private $label;
 
     /**
      * Get id
@@ -144,6 +157,41 @@ class Configuration
         return $this;
     }
 
+    /**
+     * @return int
+     */
+    public function getCore()
+    {
+        return $this->core;
+    }
+
+    /**
+     * @param int $core
+     * @return Configuration
+     */
+    public function setCore($core)
+    {
+        $this->core = $core;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLabel()
+    {
+        return $this->label;
+    }
+
+    /**
+     * @param string $label
+     * @return Configuration
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
+        return $this;
+    }
 
 }
 

@@ -109,9 +109,24 @@ class DashboardController extends Controller
     {
         $deleteForm = $this->createDeleteForm($scenario);
 
+        $totalPrice = $scenario->getTotalPrices()[0];
+        $totalGreenPrice = $scenario->getTotalPrices()[1];
+        $servers = $scenario->getServers();
+
+        $infoServers = [];
+        $count = 1;
+        foreach ($servers as $server) {
+            $infoServers[$count] = $this->get('app_dashboard_scenario_result')->getInfoServer($server->getLabel());
+            $count++;
+        }
+
         return $this->render('AppBundle:dashboard:show.html.twig', array(
             'scenario' => $scenario,
             'delete_form' => $deleteForm->createView(),
+            'totalPrice' => $totalPrice,
+            'totalGreenPrice' => $totalGreenPrice,
+            'servers' => $servers,
+            'infoServers' => $infoServers,
         ));
     }
 

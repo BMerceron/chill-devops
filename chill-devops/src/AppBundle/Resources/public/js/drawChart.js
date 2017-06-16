@@ -15,7 +15,7 @@ $( document ).ready(function() {
             GreenBuyingCost: 'bar',
         },
         axes: {
-            Client: 'y',
+            Clients: 'y',
             BuyingCost: 'y2',
             GreenBuyingCost: 'y2'
         },
@@ -23,7 +23,7 @@ $( document ).ready(function() {
           GreenPriceByMonth: 'green',
           GreenBuyingCost: 'blue',
           BuyingCost: 'purple',
-          Client: 'red',
+          Clients: 'red',
           PriceByMonth: 'orange'
         }
     },
