@@ -3,16 +3,14 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\Configuration;
 use AppBundle\Entity\Scenario;
+use AppBundle\Services\ScenarioResult;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 class DashboardController extends Controller
 {
@@ -37,24 +35,57 @@ class DashboardController extends Controller
             if ($form->isSubmitted() && $form->isValid()) {
 
                 /*TODO - SEND SIMULATION*/
-
                 /** @var Scenario $scenario */
                 $scenario = $form->getData();
-                $scenario->setCreatedAt(new \DateTime());
-                $scenario->setCost([
-                    'month' => 'Jan',
-                    'cost' => [
-                        'greenCost' => 123,
-                        'classicCost' => 456
-                    ]
-                ]);
+                $totalClient = $this->get('app_dashboard_scenario_result')->getTotalClientsByPeriodicity($scenario);
 
+                if ($totalClient[ScenarioResult::TEST_DURATION] > ScenarioResult::MAX_CHARGE) {
+                    $this->addFlash(
+                        'error',
+                        'You\'ve reached the loading limit.'
+                    );
+                    return $this->render('AppBundle:dashboard:index.html.twig', array(
+                        'form' => $form->createView(),
+                    ));
+                }
+
+                $result = $this->get('app_dashboard_scenario_result')->getPricesAndServers($scenario);
+                $servers = $this->get('app_dashboard_scenario_result')->getServers();
+                $infoServers = [];
+                foreach ($servers as $key => $value) {
+                    $infoServers[$key] = $this->get('app_dashboard_scenario_result')->getInfoServer($key);
+                }
+                $datas = [];
+                foreach ($result as $key => $value){
+                    array_push($datas, $value);
+                }
+
+                $datas = json_encode($datas);
+                $totalPrice = $this->get('app_dashboard_scenario_result')->getTotalPrice();
+                $totalGreenPrice = $this->get('app_dashboard_scenario_result')->getTotalGreenPrice();
+                $scenario->setCost($datas);
+                $scenario->setTotalPrices([$totalPrice,$totalGreenPrice]);
+                $serverInfos = [];
+                $count = 1;
+                foreach ($servers as $key => $value) {
+                    if (!empty($value)){
+                        $serverInfos[] = $em->getRepository(Configuration::class)->find($count);
+                    }
+                    $count++;
+                }
+                $scenario->setServers($serverInfos);
                 $em->persist($scenario);
                 $em->flush();
 
                 return $this->render('AppBundle:dashboard:index.html.twig', array(
                     'form' => $form->createView(),
-                    'scenario' => $scenario
+                    'scenario' => $scenario,
+                    'result' => $result,
+                    'data' => $datas,
+                    'servers' => $servers,
+                    'infoServers' => $infoServers,
+                    'totalPrice' => $totalPrice,
+                    'totalGreenPrice' => $totalGreenPrice,
                 ));
             }
 
@@ -77,9 +108,24 @@ class DashboardController extends Controller
     {
         $deleteForm = $this->createDeleteForm($scenario);
 
+        $totalPrice = $scenario->getTotalPrices()[0];
+        $totalGreenPrice = $scenario->getTotalPrices()[1];
+        $servers = $scenario->getServers();
+
+        $infoServers = [];
+        $count = 1;
+        foreach ($servers as $server) {
+            $infoServers[$count] = $this->get('app_dashboard_scenario_result')->getInfoServer($server->getLabel());
+            $count++;
+        }
+
         return $this->render('AppBundle:dashboard:show.html.twig', array(
             'scenario' => $scenario,
             'delete_form' => $deleteForm->createView(),
+            'totalPrice' => $totalPrice,
+            'totalGreenPrice' => $totalGreenPrice,
+            'servers' => $servers,
+            'infoServers' => $infoServers,
         ));
     }
 
@@ -174,7 +220,7 @@ class DashboardController extends Controller
                 }
             }
         }
-        
+
         return new JsonResponse();
     }
 }
