@@ -8,8 +8,7 @@ socket.on('simulate', function(id){
 
 	var name = 'Test server';
 
-	//exec('echo "'+id+'" | /chill_project/scripts/launch_test.sh', function puts(error, stdout, stderr) {
-		var id = 'pbwafdzyfa2mjvbdaaai';
+	exec('echo "'+id+'" | /chill_project/scripts/launch_test.sh', function puts(error, stdout, stderr) {
 
 		fs.readFile('/var/lib/phoronix-test-suite/test-results/'+id+'/composite.xml', 'utf-8', function(err, data){
 			var json = JSON.parse(parser.toJson(data));
@@ -18,7 +17,6 @@ socket.on('simulate', function(id){
 			var core = re.exec(hardware)[1];
 			re = /Memory: ([\d]) x (.+) MB DRAM/g;
 			var ramtemp = re.exec(hardware);
-			console.log(ramtemp);
 			var ram = ramtemp[1] * ramtemp[2];
 			re = /Disk: ([\d]+)GB/g;
 			var disk = re.exec(hardware)[1];
@@ -37,6 +35,6 @@ socket.on('simulate', function(id){
 			socket.emit('response', result);
 
 		});
-	//});
+	});
 
 });
