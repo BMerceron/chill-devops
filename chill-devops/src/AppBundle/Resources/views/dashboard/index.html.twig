@@ -1,6 +1,6 @@
 {% extends 'AppBundle::layout.html.twig' %}
 {% block content %}
-    <div class="container" style="margin: 50px auto">
+    <div class="container-fluid" id="index-form" style="margin: 50px auto">
         <div class="row">
             <div class="col s12 grey lighten-3">
                 <h2>Simulateur</h2>
@@ -29,7 +29,7 @@
                     {{ form_row(form.periodicity) }}
                 </div>
                 <div class="col s4">
-                    {{ form_row(form.clientAdd) }}
+                    {{ form_row(form.clientAdd, { 'attr': {'placeholder': 'Ce nombre est un %'} }) }}
                 </div>
                     <!-- Modal Button -->
                     <a class="btn waves-effect waves-light right light-green lighten-1 js-submit_scenario" href="#confirm_scenario_modal">Load</a>
