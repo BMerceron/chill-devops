@@ -27,6 +27,7 @@
                            class="btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">edit</i></a>
                         <a class="btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">star</i></a>
                         <a href="{{ path('scenario_delete', {'id': scenario.id}) }}" class="modal-delete btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">delete</i></a>
+                        <a class="btn-floating waves-effect waves-light light-green lighten-1" href="{{ path('scenario_pdf', {'id': scenario.id}) }}"><img src="{{ asset('img/pdf_logo.png') }}" width="30px" style="margin-top: 4px; margin-left: 6px"></a>
                     </td>
                 </tr>
                 </tbody>
@@ -35,9 +36,6 @@
                  src="https://cdn.discordapp.com/attachments/268738233754451978/314775475392217098/Capture_decran_2017-05-18_a_16.43.37.png">
             <div class="col s12 ">
                 <a class="btn" href="{{ path('scenario_history') }}">Retourner à mon historique</a>
-            </div>
-            <div class="col s12 ">
-                <a class="btn" href="{{ path('scenario_pdf', {'id': scenario.id}) }}">Exporter en PDF</a>
             </div>
         </div>
     </div>

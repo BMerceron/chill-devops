@@ -93,17 +93,13 @@ class DashboardController extends Controller
 
         $deleteForm = $this->createDeleteForm($scenario);
 
-//        return $this->render('AppBundle:dashboard:pdfExport.html.twig', array(
-//            'scenario' => $scenario,
-//            'delete_form' => $deleteForm->createView(),
-//        ));
         $html = $this->renderView('AppBundle:dashboard:pdfExport.html.twig', array(
             'scenario' => $scenario,
             'delete_form' => $deleteForm->createView(),
         ));
 
         $filename = sprintf('test-%s.pdf', date('Y-m-d'));
-
+        
         return new \Symfony\Component\HttpFoundation\Response(
             $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
             200,
