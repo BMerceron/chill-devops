@@ -33,6 +33,53 @@
             </table>
             <input id="chartDatas" hidden="hidden" value="{{ scenario.cost }}">
             {% include 'AppBundle:dashboard:chart.html.twig' %}
+            <hr>
+            <div class="row">
+                <div class="col s6 m6">
+                    <p>
+                        <b>Date de la simulation: </b>{{ scenario.createdAt|date("d/m/Y") }}<br>
+                        <b>Nombre d'utilisateur de départ: </b>{{ scenario.clientStart }}<br>
+                        <b>Incrémentation mensuelle: </b>{{ scenario.periodicity~" mois" }}<br>
+                        <b>Pourcentage d'ajout client: </b>{{ scenario.clientAdd~" %" }}
+                    </p>
+                </div>
+                <div class="col s6 m6">
+                    <p><b>Total: </b>{{ totalPrice~" EUR" }}</p>
+                    <p><b>Total Green: </b>{{ totalGreenPrice~" EUR" }}</p>
+                </div>
+                <div >
+                    <table class="striped centered">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Core</th>
+                            <th>CPU</th>
+                            <th>RAM</th>
+                            <th>Disque</th>
+                            <th>Capacité<br> simultanée</th>
+                            <th>Maintenance | Green <br>(EUR/mois)</th>
+                            <th>Coût d'achat | Green <br>(EUR)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for server in servers %}
+                            {% if server is not empty %}
+                                <tr>
+                                    <td>{{ server.name }}</td>
+                                    <td>{{ server.core }}</td>
+                                    <td>{{ server.cpu }}</td>
+                                    <td>{{ server.ram }}</td>
+                                    <td>{{ server.disk }}</td>
+                                    <td>{{ infoServers[loop.index]["capacity"] }}</td>
+                                    <td>{{ infoServers[loop.index]["priceByMonth"]~" | "~infoServers[loop.index]["greenPriceByMonth"] }}</td>
+                                    <td>{{ infoServers[loop.index]["buyingPrice"]~" | "~infoServers[loop.index]["greenBuyingPrice"] }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <div class="col s12 ">
                 <a class="btn" href="{{ path('scenario_history') }}">Retourner à mon historique</a>
             </div>

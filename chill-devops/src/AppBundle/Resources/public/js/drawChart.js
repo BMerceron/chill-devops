@@ -3,6 +3,23 @@ $( document ).ready(function() {
 
     var dataset = JSON.parse(data);
 
+    var regions = [];
+    
+    console.log(dataset);
+    if(dataset.length % 5 == 0){
+        var nbData = dataset.length;
+        var PByMonth = nbData/5;
+        //year1
+        var year = {axis:'x',start:0, end: PByMonth, class:"regionYear"};
+        regions.push(year);
+        //year3
+        year = {axis:'x', start:PByMonth*2, end:(PByMonth*3), class:"regionYear"};
+        regions.push(year);
+        //year5
+        year = {axis:'x', start: nbData-PByMonth, class:"regionYear"};
+        regions.push(year);
+    }
+
   var chart = c3.generate({
   bindto: "#chart-container",
   data:{
@@ -15,7 +32,7 @@ $( document ).ready(function() {
             GreenBuyingCost: 'bar',
         },
         axes: {
-            Client: 'y',
+            Clients: 'y',
             BuyingCost: 'y2',
             GreenBuyingCost: 'y2'
         },
@@ -23,7 +40,7 @@ $( document ).ready(function() {
           GreenPriceByMonth: 'green',
           GreenBuyingCost: 'blue',
           BuyingCost: 'purple',
-          Client: 'red',
+          Clients: 'red',
           PriceByMonth: 'orange'
         }
     },
@@ -51,8 +68,8 @@ $( document ).ready(function() {
             },
             tick: {
                 format: function (d) { 
-                    console.log(d);
-                    return (d + " €"); }
+                    return (d + " €"); 
+                }
             },
             show: true
         }
@@ -71,7 +88,8 @@ $( document ).ready(function() {
     },
     zoom: {
         enabled: true
-    }
+    },
+    regions: regions
   });
 
 });
