@@ -7,6 +7,69 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    months:
+         1 : "JAN"
+         2 : "FEB"
+         3 : "MAR"
+         4 : "APR"
+         5 : "MAY"
+         6 : "JUN"
+         7 : "JUL"
+         8 : "AUG"
+         9 : "SEP"
+         10 : "OCT"
+         11 : "NOV"
+         12 : "DEC"
+         13 : "JAN"
+         14 : "FEB"
+         15 : "MAR"
+         16 : "APR"
+         17 : "MAY"
+         18 : "JUN"
+         19 : "JUL"
+         20 : "AUG"
+         21 : "SEP"
+         22 : "OCT"
+         23 : "NOV"
+         24 : "DEC"
+         25 : "JAN"
+         26 : "FEB"
+         27 : "MAR"
+         28 : "APR"
+         29 : "MAY"
+         30 : "JUN"
+         31 : "JUL"
+         32 : "AUG"
+         33 : "SEP"
+         34 : "OCT"
+         35 : "NOV"
+         36 : "DEC"
+         37 : "JAN"
+         38 : "FEB"
+         39 : "MAR"
+         40 : "APR"
+         41 : "MAY"
+         42 : "JUN"
+         43 : "JUL"
+         44 : "AUG"
+         45 : "SEP"
+         46 : "OCT"
+         47 : "NOV"
+         48 : "DEC"
+         49 : "JAN"
+         50 : "FEB"
+         51 : "MAR"
+         52 : "APR"
+         53 : "MAY"
+         54 : "JUN"
+         55 : "JUL"
+         56 : "AUG"
+         57 : "SEP"
+         58 : "OCT"
+         59 : "NOV"
+         60 : "DEC"
+
+
 
 framework:
     #esi: ~
@@ -68,3 +131,8 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     %kernel.root_dir%/../vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64

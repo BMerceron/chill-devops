@@ -16,3 +16,5 @@ var/**
 /bin/symfony_requirements
 /app/bootstrap.php.cache
 /web/config.php
+.DS_Store
+/app/build/

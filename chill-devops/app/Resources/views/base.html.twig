@@ -4,24 +4,32 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}SAASPAASBIEN{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-        <!-- css compiled -->
-        <link rel="stylesheet" href="{{ asset('css/master.css') }}"/>
+        <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}" />
         <!-- materialize-->
         <link rel="stylesheet" href="{{ asset('fonts/materialize/css/materialize.min.css') }}"/>
+        <!-- css compiled -->
+        <link rel="stylesheet" href="{{ asset('css/master.css') }}"/>
+        <!-- css chart -->
+        <link rel="stylesheet" href="{{ asset('css/c3.min.css')}}" />
         <!--Import Google Icon Font-->
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script src="{{ asset('fonts/materialize/js/materialize.min.js') }}"></script>
+        <script src="{{ asset('js/main.js') }}"></script>
+        <script src="{{ asset('js/dashboard.js') }}"></script>
+        <script src="{{ asset('js/c3.min.js') }}"></script>
+        <script src="{{ asset('js/d3.min.js') }}"></script>
     </head>
-    <body>
-    {# {% include 'menu.html.twig' %} #}
-        {% block body %}
-        {% endblock %}
-        {% block javascripts %}
-            <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-            <script src="{{ asset('fonts/materialize/js/materialize.min.js') }}"></script>
-            {#<script src="{{ asset('js/navabar.js') }}"></script>#}
-        {% endblock %}
+    <body class="grey darken-3">
+        {% include 'header.html.twig' %}
+        <main>
+            {% block body %}
+            {% endblock %}
+        </main>
+        {% include 'footer.html.twig' %}
     </body>
+    {% block javascripts %}
+    {% endblock %}
 </html>

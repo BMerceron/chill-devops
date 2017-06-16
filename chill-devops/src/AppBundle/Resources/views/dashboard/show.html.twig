@@ -1,0 +1,89 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col s12 center">
+            <h1>{{ scenario.name }}</h1>
+            <table class="responsive-table striped">
+                <thead>
+                <tr>
+                    <th>Nom du scénario</th>
+                    <th>Date de simulation</th>
+                    <th>Clients de départ</th>
+                    <th>Périodicité</th>
+                    <th>Incrément</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><a href="{{ path('scenario_show', {'id': scenario.id}) }}">{{ scenario.name }}</a><i style="color: #039be5; margin-right: 50px;" class="spb-js-edit right material-icons" data-id="{{ scenario.id }}" data-name="{{ scenario.name }}">edit</i></td>
+                    <td>{{ scenario.createdAt|date("d/M/Y") }}</td>
+                    <td>{{ scenario.clientStart }}</td>
+                    <td>{{ scenario.periodicity~" mois" }}</td>
+                    <td>{{ scenario.clientAdd~" %" }}</td>
+                    <td>
+                        <a class="btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">star</i></a>
+                        <a href="{{ path('scenario_delete', {'id': scenario.id}) }}" class="modal-delete btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">delete</i></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <input id="chartDatas" hidden="hidden" value="{{ scenario.cost }}">
+            {% include 'AppBundle:dashboard:chart.html.twig' %}
+            <hr>
+            <div class="row">
+                <div class="col s6 m6">
+                    <p>
+                        <b>Date de la simulation: </b>{{ scenario.createdAt|date("d/m/Y") }}<br>
+                        <b>Nombre d'utilisateur de départ: </b>{{ scenario.clientStart }}<br>
+                        <b>Incrémentation mensuelle: </b>{{ scenario.periodicity~" mois" }}<br>
+                        <b>Pourcentage d'ajout client: </b>{{ scenario.clientAdd~" %" }}
+                    </p>
+                </div>
+                <div class="col s6 m6">
+                    <p><b>Total: </b>{{ totalPrice~" EUR" }}</p>
+                    <p><b>Total Green: </b>{{ totalGreenPrice~" EUR" }}</p>
+                </div>
+                <div >
+                    <table class="striped centered">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Core</th>
+                            <th>CPU</th>
+                            <th>RAM</th>
+                            <th>Disque</th>
+                            <th>Capacité<br> simultanée</th>
+                            <th>Maintenance | Green <br>(EUR/mois)</th>
+                            <th>Coût d'achat | Green <br>(EUR)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for server in servers %}
+                            {% if server is not empty %}
+                                <tr>
+                                    <td>{{ server.name }}</td>
+                                    <td>{{ server.core }}</td>
+                                    <td>{{ server.cpu }}</td>
+                                    <td>{{ server.ram }}</td>
+                                    <td>{{ server.disk }}</td>
+                                    <td>{{ infoServers[loop.index]["capacity"] }}</td>
+                                    <td>{{ infoServers[loop.index]["priceByMonth"]~" | "~infoServers[loop.index]["greenPriceByMonth"] }}</td>
+                                    <td>{{ infoServers[loop.index]["buyingPrice"]~" | "~infoServers[loop.index]["greenBuyingPrice"] }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col s12 ">
+                <a class="btn" href="{{ path('scenario_history') }}">Retourner à mon historique</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/edit.js') }}"></script>
+{% endblock %}
