@@ -8,7 +8,7 @@ socket.on('simulate', function(id){
 
 	var name = 'Test server';
 
-	exec('echo "'+id+'" | /chill_project/scripts/launch_project.sh', function puts(error, stdout, stderr) {
+	exec('echo "'+id+'" | /chill_project/scripts/launch_test.sh', function puts(error, stdout, stderr) {
 		console.log("stdout", stdout)
 		console.log("error", error)
 		console.log("stderr", stderr)
