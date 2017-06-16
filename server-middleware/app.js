@@ -58,6 +58,7 @@ setInterval(function(){
 	console.log(queue.length, 'Events in queue');
 
 	if(vms.length === results.length && isSimulating){
+		console.log("All results received for "+forWhoSimulating.id+", sending response to client");
 		forWhoSimulating.emit('response', results);
 		results = [];
 		forWhoSimulating = null;

@@ -7,6 +7,7 @@ var exec = require('child_process').exec;
 socket.on('simulate', function(id){
 
 	var name = 'Test server';
+	var id = 'j1ge4gjvnmjqticeaaao';
 	var idpath = id.replace('_', '').replace('-', '').toLowerCase();
 
 	exec('echo "'+id+'" | /chill_project/scripts/launch_test.sh', function(error, stdout, stderr) {
@@ -16,7 +17,7 @@ socket.on('simulate', function(id){
 
 			var json = JSON.parse(parser.toJson(data));
 			var hardware = json.PhoronixTestSuite.System.Hardware;
-			var re = /Hz \((.+)\), Motherboard/g;
+			var re = /Hz \((\d) Core\), Motherboard/g;
 			var core = re.exec(hardware)[1];
 			re = /Memory: ([\d]) x (.+) MB DRAM/g;
 			var ramtemp = re.exec(hardware);
@@ -25,7 +26,7 @@ socket.on('simulate', function(id){
 			var disk = re.exec(hardware)[1];
 
 			var result = {
-				capacity: json.PhoronixTestSuite.Result.Data.Entry.Value,
+				capacity: parseInt(json.PhoronixTestSuite.Result.Data.Entry.Value),
 				config: {
 					name: name,
 					core: core,
