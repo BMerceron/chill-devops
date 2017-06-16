@@ -17,7 +17,9 @@ socket.on('simulate', function(id){
 			var re = /Hz \((.+)\), Motherboard/g;
 			var core = re.exec(hardware)[1];
 			re = /Memory: ([\d]) x (.+) MB DRAM/g;
-			var ram = re.exec(hardware)[1] * re.exec(hardware)[2];
+			var ramtemp = re.exec(hardware);
+			console.log(ramtemp);
+			var ram = ramtemp[1] * ramtemp[2];
 			re = /Disk: ([\d]+)GB/g;
 			var disk = re.exec(hardware)[1];
 
