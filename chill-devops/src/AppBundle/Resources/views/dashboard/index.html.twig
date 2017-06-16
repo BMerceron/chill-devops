@@ -59,7 +59,21 @@
                     <div class="right" style="margin-top: 25px;">
                         <a href="{{ path('scenario_edit', {'id': scenario.id}) }}" class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">edit</i></a>
                         <a class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">star</i></a>
-                        <a class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">delete</i></a>
+                        <!-- Modal Button -->
+                        <a class="btn-floating btn-large waves-effect waves-light light-green lighten-1 js-delete_scenario" href="#confirm_delete_scenario"><i class="material-icons">delete</i></a>
+                    </div>
+
+                    <!-- Modal Structure -->
+                    <div id="confirm_delete_scenario" class="modal">
+                        <div class="modal-content">
+                            <h4>Attention</h4>
+                            <p>Vous êtes sur le point de supprimer le scénario. Il vous sera impossible de le récupérer après la suppression. Etes-vous sûr de vouloir continuer ? </p>
+                        </div>
+                        <div class="modal-footer">
+                            <!-- Submit Button (confirmation) -->
+                            <button class="btn waves-effect waves-light right light-green lighten-1" type="submit" name="action">Yes</button>
+                            <a href="#" class="modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
+                        </div>
                     </div>
                     {% include 'AppBundle:dashboard:chart.html.twig' %}
                     <hr>
