@@ -34,7 +34,7 @@
                 </div>
 
                     <!-- Modal Button -->
-                    <a class="btn waves-effect waves-light right light-green lighten-1 js-submit_scenario" href="#confirm_scenario_modal">Load</a>
+                    <a class="btn waves-effect waves-light right light-green lighten-1 js-submit_scenario spb-js-start-chrono" href="#confirm_scenario_modal">Load</a>
 
                     <!-- Modal Structure -->
                     <div id="confirm_scenario_modal" class="modal">
@@ -42,6 +42,7 @@
                             <h4>Are you ready ?</h4>
                             <p><i>Temps d'attente estimé à 10 minutes</i></p>
                         </div>
+
                         <div class="modal-footer">
                             <!-- Submit Button (confirmation) -->
                             <button class="btn waves-effect waves-light right light-green lighten-1" type="submit" name="action">Yes</button>
@@ -51,7 +52,7 @@
                 {{ form_end(form) }}
             </div>
         </div>
-        <div class="row">
+        <div class="row" style="border-top: 1px #9e9e9e solid">
             {% if scenario is defined %}
             <input id="chartDatas" hidden="hidden" value="{{ data }}">
                 <div class="col s12 grey lighten-3">
@@ -124,10 +125,19 @@
                         </div>
                     </div>
                 </div>
+                <div class="chrono" style="width: 80%; margin: auto;">
+                    <div style="float: right">
+                        <span>Le temps estimé est d'environ </span><span class="psb-js-chrono-minutes">11</span><span class="psb-js-inner-minutes"> minutes </span><span class="psb-js-chrono-secondes">00</span><span class="psb-js-inner-secondes"> secondes</span>
+                    </div>
+                    <div class="progress" >
+                        <div class="indeterminate"></div>
+                    </div>
+                </div>
             {% endif %}
         </div>
     </div>
 {% endblock %}
 {% block javascripts %}
+    <script src="{{ asset('js/chrono.js') }}"></script>
     <script src="{{ asset('js/dashboard.js') }}"></script>
 {% endblock %}
