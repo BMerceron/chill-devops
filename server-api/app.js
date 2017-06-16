@@ -12,12 +12,12 @@ socket.on('simulate', function(id){
 
 	//exec('echo "'+id+'" | /chill_project/scripts/launch_test.sh', function(error, stdout, stderr) {
 		fs.readFile('/var/lib/phoronix-test-suite/test-results/'+idpath+'/composite.xml', 'utf-8', function(err, data){
-			console.log(data);
 			if(err)
 				console.log(err);
 
 			var json = JSON.parse(parser.toJson(data));
 			var hardware = json.PhoronixTestSuite.System.Hardware;
+			console.log(hardware)
 			var re = /Hz \((\d) Core\), Motherboard/g;
 			console.log(re.exec(hardware));
 			var core = re.exec(hardware)[1];
