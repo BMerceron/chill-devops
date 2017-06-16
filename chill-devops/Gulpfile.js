@@ -9,6 +9,12 @@ gulp.task('sass', function () {
         .pipe(gulp.dest('./web/css/'));
 });
 
+gulp.task('c3', function () {
+    return gulp.src('./src/AppBundle/Resources/public/css/c3.min.css')
+        .pipe(gulp.dest('./web/css/'));
+});
+
+
 gulp.task('materialize', function () {
     return gulp.src('./node_modules/materialize-css/dist/**')
         .pipe(gulp.dest('./web/fonts/materialize/'));
@@ -52,5 +58,5 @@ gulp.task('watch', function () {
 });
 
 gulp.task('build', function (callback) {
-    runSequence('clean', 'sass', 'js', 'img', 'materialize', callback);
+    runSequence('clean', 'sass', 'js', 'img', 'materialize', 'c3', callback);
 });

@@ -29,8 +29,8 @@
                 </tr>
                 </tbody>
             </table>
-            <img class="responsive-img"
-                 src="https://cdn.discordapp.com/attachments/268738233754451978/314775475392217098/Capture_decran_2017-05-18_a_16.43.37.png">
+            <input id="chartDatas" hidden="hidden" value="{{ scenario.cost }}">
+            {% include 'AppBundle:dashboard:chart.html.twig' %}
             <div class="col s12 ">
                 <a class="btn" href="{{ path('scenario_history') }}">Retourner à mon historique</a>
             </div>

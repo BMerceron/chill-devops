@@ -3,7 +3,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -42,7 +41,9 @@ class Scenario
      * @Assert\NotBlank()
      * @Assert\Range(
      *      min = 1,
+     *      max = 60,
      *      minMessage = "Must be at least {{ limit }}",
+     *      maxMessage = "Must be at most {{ limit }}",
      * )
      */
     private $periodicity;
@@ -100,7 +101,7 @@ class Scenario
      */
     public function __construct()
     {
-        $this->createdAt = new DateTime();
+        $this->createdAt = new \DateTime();
     }
 
     /**
