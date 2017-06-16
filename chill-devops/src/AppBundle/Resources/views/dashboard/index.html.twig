@@ -59,7 +59,8 @@
         </div>
     </div>
     {% block javascripts %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
         <script src="{{ asset('js/dashboard.js') }}"></script>
-        <script src="{{ asset('js/simulation.js') }}"></script>
+        <script src="{{ asset('js/clientSimulation.js') }}"></script>
     {% endblock %}
 {% endblock %}
