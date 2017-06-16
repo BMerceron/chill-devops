@@ -1,9 +1,12 @@
 {% extends 'AppBundle::layout.html.twig' %}
 {% block content %}
     <div class="row">
-        <div class="col s12 center">
+        <div class="col s12 center history-content">
             <h2>Historique des scénarios</h2>
-            <div class="right"><a href="#multiDeleteModal" id="multibutton" class="modal-multi-delete btn waves-effect waves-ripple" data-toggle="modalDelete">Supprimer sélection</a></div>
+            <div class="col s12">
+                <a class="left btn waves-effect waves-light light-green lighten-1" href="{{ path ("app_dashboard") }}">Ajouter un Scénario</a>
+                <a href="#multiDeleteModal" id="multibutton" class="right modal-multi-delete btn waves-light light-green lighten-1" data-toggle="modalDelete">Supprimer la sélection</a>
+            </div>
             {% if scenarios is not empty %}
                 <table class="responsive-table striped">
                     <thead>
@@ -16,14 +19,13 @@
                         <th class="center">Favoris</th>
                         <th class="center">Supprimer</th>
                     </tr>
-
                     </thead>
                     <tbody>
                     {% for scenario in scenarios %}
                         <tr>
                             <td class="center"><a href="{{ path('scenario_show', {'id': scenario.id}) }}">{{ scenario.name }}</a><i style="color: #039be5;" class="spb-js-edit right material-icons" data-id="{{ scenario.id }}" data-name="{{ scenario.name }}">edit</i>
                             </td>
-                            <td class="center">{{ scenario.createdAt|date("d/M/Y") }}</td>
+                            <td class="center">{{ scenario.createdAt|date("d/M/ Y") }}</td>
                             <td class="center">{{ scenario.clientStart }}</td>
                             <td class="center">{{ scenario.periodicity~" mois" }}</td>
                             <td class="center">{{ scenario.clientAdd~" %" }}</td>
@@ -43,7 +45,9 @@
                     {% endfor %}
                     </tbody>
                 </table>
-                <div class="right"><a href="#multiDeleteModal" id="multibutton" class="modal-multi-delete btn waves-effect waves-ripple" data-toggle="modalDelete">Supprimer sélection</a></div>
+                <div class="col s12">
+                    <a href="#multiDeleteModal" id="multibutton" class="right modal-multi-delete btn waves-light light-green lighten-1" data-toggle="modalDelete">Supprimer la sélection</a>
+                </div>
             {% else %}
                 <div class="col s12 grey lighten-3 center">
                     <p>Il n'y pas de scénarios dans votre historique pour le moment. Vous pouvez dès à présent
@@ -85,4 +89,5 @@
 {% block javascripts %}
     <script src="{{ asset('js/modalDelete.js') }}"></script>
     <script src="{{ asset('js/multiDelete.js') }}"></script>
+    <script src="{{ asset('js/edit.js') }}"></script>
 {% endblock %}

@@ -84,30 +84,6 @@ class DashboardController extends Controller
         ));
     }
 
-    public function editAction(Request $request, Scenario $scenario)
-    {
-        $deleteForm = $this->createDeleteForm($scenario);
-        $editForm = $this->createForm('AppBundle\Form\ScenarioType', $scenario);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid())    {
-            $this->getDoctrine()->getManager()->flush();
-
-            $em = $this->getDoctrine()->getManager();
-            $scenarios = $em->getRepository('AppBundle:Scenario')->findAll();
-
-            return $this->render('AppBundle:dashboard:history.html.twig', array(
-                'scenarios' => $scenarios,
-            ));
-        }
-
-        return $this->render('AppBundle:dashboard:edit.html.twig', array(
-            'scenario' => $scenario,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
     public function editInputAction (Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -123,23 +99,6 @@ class DashboardController extends Controller
         }
 
         return new JsonResponse();
-    }
-
-    public function deleteAction(Request $request, Scenario $scenario)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $scenarioRepo = $em->getRepository('AppBundle:Scenario');
-        $scenarioToRemove = $scenarioRepo->findOneById($scenario);
-        try {
-            $em->remove($scenarioToRemove);
-            $em->flush();
-            $request->getSession()->getFlashBag()->add('success', 'Scenario supprimé');
-        } catch (\Doctrine\DBAL\DBALException $e){
-        $request->getSession()->getFlashBag()->add('danger', 'Erreur lors de la suppression :'
-        . PHP_EOL . $e->getMessage());
-        }
-
-        return $this->redirectToRoute('scenario_history');
     }
 
     private function createDeleteForm(Scenario $scenario)
