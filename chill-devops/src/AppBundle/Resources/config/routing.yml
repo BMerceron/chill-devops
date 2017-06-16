@@ -1,3 +1,34 @@
 app_dashboard:
     path:     /
     defaults: { _controller: AppBundle:Dashboard:index }
+
+# crud for scenarios
+scenario_edit:
+    path:     /scenario/edit/{id}
+    defaults: { _controller: AppBundle:Dashboard:edit }
+    requirements:
+        id: \d+
+
+scenario_edit_input:
+    path:     /scenario/editInput/
+    defaults: { _controller: AppBundle:Dashboard:editInput }
+
+scenario_history:
+    path:     /scenario/history
+    defaults: { _controller: AppBundle:Dashboard:history }
+
+scenario_show:
+    path:     /scenario/show/{id}
+    defaults: { _controller: AppBundle:Dashboard:show }
+    requirements:
+        id: \d+
+
+scenario_delete:
+    path:     /scenario/delete/{id}
+    defaults: { _controller: AppBundle:Dashboard:delete }
+    requirements:
+        id: \d+
+
+scenario_delete_selection:
+    path:    /scenario/delete/selection
+    defaults: { _controller: AppBundle:Dashboard:deleteSelection }
