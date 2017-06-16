@@ -12,6 +12,7 @@ socket.on('simulate', function(id){
 
 	//exec('echo "'+id+'" | /chill_project/scripts/launch_test.sh', function(error, stdout, stderr) {
 		fs.readFile('/var/lib/phoronix-test-suite/test-results/'+idpath+'/composite.xml', 'utf-8', function(err, data){
+			console.log(data);
 			if(err)
 				console.log(err);
 
