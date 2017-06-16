@@ -19,7 +19,6 @@
                     {% endfor %}
                 {% endfor %}
                 {{ form_start(form) }}
-
                 <div class="col s12">
                     {{ form_row(form.name) }}
                 </div>
@@ -32,7 +31,6 @@
                 <div class="col s4">
                     {{ form_row(form.clientAdd, { 'attr': {'placeholder': 'Ce nombre est un %'} }) }}
                 </div>
-
                     <!-- Modal Button -->
                     <a class="btn waves-effect waves-light right light-green lighten-1 js-submit_scenario spb-js-start-chrono" href="#confirm_scenario_modal">Load</a>
 
@@ -60,7 +58,21 @@
                     <div class="right" style="margin-top: 25px;">
                         <a href="{{ path('scenario_edit', {'id': scenario.id}) }}" class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">edit</i></a>
                         <a class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">star</i></a>
-                        <a class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">delete</i></a>
+                        <!-- Modal Button -->
+                        <a class="btn-floating btn-large waves-effect waves-light light-green lighten-1 js-delete_scenario" href="#confirm_delete_scenario"><i class="material-icons">delete</i></a>
+                    </div>
+
+                    <!-- Modal Structure -->
+                    <div id="confirm_delete_scenario" class="modal">
+                        <div class="modal-content">
+                            <h4>Attention</h4>
+                            <p>Vous êtes sur le point de supprimer le scénario. Il vous sera impossible de le récupérer après la suppression. Etes-vous sûr de vouloir continuer ? </p>
+                        </div>
+                        <div class="modal-footer">
+                            <!-- Submit Button (confirmation) -->
+                            <button class="btn waves-effect waves-light right light-green lighten-1" type="submit" name="action">Yes</button>
+                            <a href="#" class="modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
+                        </div>
                     </div>
                     {% include 'AppBundle:dashboard:chart.html.twig' %}
                     <hr>
@@ -74,8 +86,8 @@
                             </p>
                         </div>
                         <div class="col s6 m6">
-                            <p><b>Total: </b>{{ totalPrice~" EUR" }}</p>
-                            <p><b>Total Green: </b>{{ totalGreenPrice~" EUR" }}</p>
+                            <p><b>Total: </b>{{ totalPrice~" €" }}</p>
+                            <p><b>Total Green: </b>{{ totalGreenPrice~" €" }}</p>
                         </div>
                         <div >
                             <table class="striped centered">
@@ -87,8 +99,8 @@
                                     <th>RAM</th>
                                     <th>Disque</th>
                                     <th>Capacité<br> simultanée</th>
-                                    <th>Maintenance | Green <br>(EUR/mois)</th>
-                                    <th>Coût d'achat | Green <br>(EUR)</th>
+                                    <th>Maintenance | Green <br>(€/mois)</th>
+                                    <th>Coût d'achat | Green <br>(€)</th>
                                 </tr>
                                 </thead>
                                 <tbody>

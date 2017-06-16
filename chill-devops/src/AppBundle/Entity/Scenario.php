@@ -68,11 +68,11 @@ class Scenario
     private $cost;
 
     /**
-     * @var int
+     * @var array
      *
-     * @ORM\Column(name="energyCost", type="integer", nullable=true)
+     * @ORM\Column(name="totalPrices", type="array", nullable=true)
      */
-    private $energyCost;
+    private $totalPrices;
 
     /**
      * @var bool
@@ -97,11 +97,22 @@ class Scenario
     private $name;
 
     /**
+     *
+     * @ORM\ManyToMany(targetEntity="Configuration")
+     * @ORM\JoinTable(name="scenario_configuration",
+     *      joinColumns={@ORM\JoinColumn(name="scenario_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="configuration_id", referencedColumnName="id")}
+     *      )
+     */
+    private $servers;
+
+    /**
      * Scenario constructor.
      */
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->servers = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -211,30 +222,6 @@ class Scenario
     }
 
     /**
-     * Set energyCost
-     *
-     * @param integer $energyCost
-     *
-     * @return Scenario
-     */
-    public function setEnergyCost($energyCost)
-    {
-        $this->energyCost = $energyCost;
-
-        return $this;
-    }
-
-    /**
-     * Get energyCost
-     *
-     * @return int
-     */
-    public function getEnergyCost()
-    {
-        return $this->energyCost;
-    }
-
-    /**
      * Set isBookmarked
      *
      * @param boolean $isBookmarked
@@ -305,5 +292,44 @@ class Scenario
     {
         return $this->name;
     }
+
+    /**
+     * @return array
+     */
+    public function getTotalPrices()
+    {
+        return $this->totalPrices;
+    }
+
+    /**
+     * @param array $totalPrices
+     * @return Scenario
+     */
+    public function setTotalPrices($totalPrices)
+    {
+        $this->totalPrices = $totalPrices;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getServers()
+    {
+        return $this->servers;
+    }
+
+    /**
+     * @param mixed $servers
+     * @return Scenario
+     */
+    public function setServers($servers)
+    {
+        $this->servers = $servers;
+        return $this;
+    }
+
+
+
 }
 
