@@ -156,7 +156,7 @@ class ScenarioResult
 
             $needed = ["one"=>0,"two"=>0,"three"=>0];
 
-            $result[$key]["Client"] = $value;
+            $result[$key]["Clients"] = $value;
             $result[$key]["PriceByMonth"] = 0;
             $result[$key]["GreenPriceByMonth"] = 0;
             $result[$key]["BuyingCost"] = 0;

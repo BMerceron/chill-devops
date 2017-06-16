@@ -8,7 +8,7 @@ $( document ).ready(function() {
   data:{
         json: dataset,
         keys: {
-            value: ['Client', 'PriceByMonth', 'BuyingCost', 'GreenPriceByMonth', 'GreenBuyingCost'],
+            value: ['Clients', 'PriceByMonth', 'BuyingCost', 'GreenPriceByMonth', 'GreenBuyingCost'],
         },
         types: {
             BuyingCost: 'bar',
@@ -34,7 +34,7 @@ $( document ).ready(function() {
     axis: {
         x: {
             label: {
-                text: 'Durée',
+                text: 'Durée ( périodicité )',
                 position: 'outer-center'
             }
         },
@@ -49,8 +49,28 @@ $( document ).ready(function() {
                 text: 'Achats Matériel',
                 position: 'outer-middle'
             },
+            tick: {
+                format: function (d) { 
+                    console.log(d);
+                    return (d + " €"); }
+            },
             show: true
         }
+    },
+    tooltip: {
+        format: {
+            title: function (d) { return d; },
+            value: function (value, ratio, id) {
+                var res = value;
+                if(id !== "Clients" ){
+                    res = value + " €";
+                }
+                return res;
+            }
+        }
+    },
+    zoom: {
+        enabled: true
     }
   });
 
