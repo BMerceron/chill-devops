@@ -17,11 +17,9 @@ socket.on('simulate', function(id){
 
 			var json = JSON.parse(parser.toJson(data));
 			var hardware = json.PhoronixTestSuite.System.Hardware;
-			console.log(hardware)
 			var re = /Hz \((\d+) Core[s]?\), Motherboard/g;
-			console.log(re.exec(hardware));
 			var core = re.exec(hardware)[1];
-			re = /Memory: ([\d]) x (.+) MB DRAM/g;
+			re = /Memory: (\d+) x (\d+) MB DRAM/g;
 			var ramtemp = re.exec(hardware);
 			var ram = ramtemp[1] * ramtemp[2];
 			re = /Disk: ([\d]+)GB/g;
