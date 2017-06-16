@@ -29,9 +29,9 @@ socket.on('simulate', function(id){
 				capacity: parseInt(json.PhoronixTestSuite.Result.Data.Entry.Value),
 				config: {
 					name: name,
-					core: core,
-					ram: ram,
-					disk: disk 
+					core: parseInt(core),
+					ram: parseInt(ram),
+					disk: parseInt(disk) 
 				}
 				
 			}
