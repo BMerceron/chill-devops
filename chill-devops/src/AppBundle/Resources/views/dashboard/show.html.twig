@@ -23,8 +23,6 @@
                     <td>{{ scenario.periodicity~" mois" }}</td>
                     <td>{{ scenario.clientAdd~" %" }}</td>
                     <td>
-                        <a href="{{ path('scenario_edit', {'id': scenario.id}) }}"
-                           class="btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">edit</i></a>
                         <a class="btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">star</i></a>
                         <a href="{{ path('scenario_delete', {'id': scenario.id}) }}" class="modal-delete btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">delete</i></a>
                     </td>
