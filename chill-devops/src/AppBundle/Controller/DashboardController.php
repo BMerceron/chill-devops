@@ -34,7 +34,6 @@ class DashboardController extends Controller
 
         $form->handleRequest($request);
 
-
             if ($form->isSubmitted() && $form->isValid()) {
 
                 /*TODO - SEND SIMULATION*/

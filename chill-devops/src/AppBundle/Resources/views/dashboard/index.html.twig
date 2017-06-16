@@ -69,7 +69,6 @@
                         </div>
                     </div>
                 </div>
-                <script src="{{ asset('js/chrono.js') }}"></script>
                 <div class="chrono" style="width: 80%; margin: auto;">
                     <div style="float: right">
                         <span>Le temps estimé est d'environ </span><span class="psb-js-chrono-minutes">11</span><span class="psb-js-inner-minutes"> minutes </span><span class="psb-js-chrono-secondes">00</span><span class="psb-js-inner-secondes"> secondes</span>
@@ -83,5 +82,6 @@
     </div>
 {% endblock %}
 {% block javascripts %}
+    <script src="{{ asset('js/chrono.js') }}"></script>
     <script src="{{ asset('js/dashboard.js') }}"></script>
 {% endblock %}

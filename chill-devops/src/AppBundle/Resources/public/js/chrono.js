@@ -6,7 +6,6 @@ var chrono  = {
         var dataDate = $('.psb-js-date');
         var start  = new Date('2017-06-13 00:12:10');
         var end = new Date('2017-06-13 00:00:00');
-        console.log("test")
         return this.dateDiff(end, start);
     },
 
