@@ -34,7 +34,6 @@ class DashboardController extends Controller
 
         $form->handleRequest($request);
 
-
             if ($form->isSubmitted() && $form->isValid()) {
 
                 /*TODO - SEND SIMULATION*/
@@ -149,23 +148,6 @@ class DashboardController extends Controller
         }
 
         return new JsonResponse();
-    }
-
-    public function deleteAction(Request $request, Scenario $scenario)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $scenarioRepo = $em->getRepository('AppBundle:Scenario');
-        $scenarioToRemove = $scenarioRepo->findOneById($scenario);
-        try {
-            $em->remove($scenarioToRemove);
-            $em->flush();
-            $request->getSession()->getFlashBag()->add('success', 'Scenario supprimé');
-        } catch (\Doctrine\DBAL\DBALException $e){
-        $request->getSession()->getFlashBag()->add('danger', 'Erreur lors de la suppression :'
-        . PHP_EOL . $e->getMessage());
-        }
-
-        return $this->redirectToRoute('scenario_history');
     }
 
     private function createDeleteForm(Scenario $scenario)

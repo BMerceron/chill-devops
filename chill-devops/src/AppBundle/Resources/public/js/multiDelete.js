@@ -1,3 +1,8 @@
+$(document).ready(function(){
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+});
+
 var scenarioIdArray = [];
 
 function checkArray(arr, val) {
@@ -27,33 +32,7 @@ $("#multiDeleteButton").on("click", function () {
     })
 });
 
-$(".spb-js-edit").on("click", function () {
-    var id =$(this).attr('data-id');
-
-    if (document.getElementById('spb-js-input-edit') == null){
-        var input = document.createElement("input");
-        input.type = 'text';
-        input.value = $(this).attr('data-name');
-        input.id = 'spb-js-input-edit';
-
-        $(this).after(input);
-    } else {
-        $('#spb-js-input-edit').remove()
-    }
-
-    $('#spb-js-input-edit').keypress(function() {
-        if (event.keyCode == 13 ) {
-            var data = {
-                id: id,
-                name: $('#spb-js-input-edit').val()
-            };
-            $.ajax({
-                url: "/scenario/editInput/",
-                data: data,
-                success: function () {
-                    location.reload();
-                }
-            })
-        }
-    })
+$('.modal-multi-delete').click(function() {
+    var targetUrl = $('.modal-multi-delete').attr("data-target-url");
+    $('#removeLink').attr('href', targetUrl);
 });
