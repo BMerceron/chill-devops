@@ -17,7 +17,7 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td><a href="{{ path('scenario_show', {'id': scenario.id}) }}">{{ scenario.name }}</a></td>
+                    <td><a href="{{ path('scenario_show', {'id': scenario.id}) }}">{{ scenario.name }}</a><i style="color: #039be5; margin-right: 50px;" class="spb-js-edit right material-icons" data-id="{{ scenario.id }}" data-name="{{ scenario.name }}">edit</i></td>
                     <td>{{ scenario.createdAt|date("d/M/Y") }}</td>
                     <td>{{ scenario.clientStart }}</td>
                     <td>{{ scenario.periodicity~" mois" }}</td>
@@ -38,4 +38,7 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/edit.js') }}"></script>
 {% endblock %}
