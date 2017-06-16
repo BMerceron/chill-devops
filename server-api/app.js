@@ -12,7 +12,7 @@ socket.on('simulate', function(id){
 		console.log("stdout", stdout)
 		console.log("error", error)
 		console.log("stderr", stderr)
-		/*fs.readFile('/var/lib/phoronix-test-suite/test-results/'+id+'/composite.xml', 'utf-8', function(err, data){
+		fs.readFile('/var/lib/phoronix-test-suite/test-results/'+id+'/composite.xml', 'utf-8', function(err, data){
 			var json = JSON.parse(parser.toJson(data));
 			var hardware = json.PhoronixTestSuite.System.Hardware;
 			var re = /Hz \((.+)\), Motherboard/g;
@@ -35,19 +35,7 @@ socket.on('simulate', function(id){
 			
 			socket.emit('response', result);
 
-		});*/
+		});
 	});
 
 });
-
-
-
-/*{
-	capacity: int,
-	config: {
-		name: string,
-		core: int(nb,
-		ram: int(Go),
-		disk: int(go)
-	}
-}*/
