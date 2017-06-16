@@ -8,10 +8,9 @@ socket.on('simulate', function(id){
 
 	var name = 'Test server';
 
-	exec('echo "'+id+'" | /chill_project/scripts/launch_test.sh', function puts(error, stdout, stderr) {
-		console.log("stdout", stdout)
-		console.log("error", error)
-		console.log("stderr", stderr)
+	//exec('echo "'+id+'" | /chill_project/scripts/launch_test.sh', function puts(error, stdout, stderr) {
+		var id = 'pbwafdzyfa2mjvbdaaai';
+
 		fs.readFile('/var/lib/phoronix-test-suite/test-results/'+id+'/composite.xml', 'utf-8', function(err, data){
 			var json = JSON.parse(parser.toJson(data));
 			var hardware = json.PhoronixTestSuite.System.Hardware;
@@ -36,6 +35,6 @@ socket.on('simulate', function(id){
 			socket.emit('response', result);
 
 		});
-	});
+	//});
 
 });
