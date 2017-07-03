@@ -30,7 +30,7 @@
                             <td class="center">{{ scenario.periodicity~" mois" }}</td>
                             <td class="center">{{ scenario.clientAdd~" %" }}</td>
                             <td class="center">
-                                <a class="btn-floating waves-effect waves-light light-green lighten-1"><i
+                                <a id="bookmark-{{ scenario.id }}" data-id="{{ scenario.id }}" href={{ path('scenario_add_bookmark', {'id': scenario.id}) }} class="btn-floating waves-effect waves-light light-green lighten-1"><i
                                             class="material-icons">star</i></a>
                             </td>
                             <td class="center">
@@ -90,4 +90,5 @@
     <script src="{{ asset('js/modalDelete.js') }}"></script>
     <script src="{{ asset('js/multiDelete.js') }}"></script>
     <script src="{{ asset('js/edit.js') }}"></script>
+    <script src="{{ asset('js/bookmark.js') }}"> </script>
 {% endblock %}
