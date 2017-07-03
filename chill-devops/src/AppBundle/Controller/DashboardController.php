@@ -173,4 +173,15 @@ class DashboardController extends Controller
 
         return new JsonResponse();
     }
+
+
+    public function addBookmarkAction($id)
+    {
+      $em = $this->getDoctrine()->getManager();
+      $scenario = $em->getRepository('AppBundle:Scenario')->findOneById($id);
+      $scenario->setIsBookmarked(true);
+      $em->flush();
+
+      return new JsonResponse();
+    }
 }
