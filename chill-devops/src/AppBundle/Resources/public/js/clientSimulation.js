@@ -8,6 +8,6 @@ function onSimulate() {
     socket.emit('simulate', 'simulate');
 }
 
-socket.on('response', function(data) {
-    console.log(data);
+socket.on('response', function(results) {
+    console.log(results);
 })
