@@ -18,9 +18,13 @@ $('.k-js-input-search').keyup(function () {
                     }
                     $( ".collection-item" ).hover(
                         function() {
-                            $( this ).find('a').css( "color" , "#FFF");
+                            $( this ).addClass( "active" );
+                            $(this).find('a').css( "color" , "#FFF");
+
                         }, function() {
-                            $( this ).find('a').css( "color" , "#039be5");
+                            $( this ).removeClass( "active" );
+                            $(this).find('a').css( "color" , "#039be5");
+
                         }
                     );
                 }
