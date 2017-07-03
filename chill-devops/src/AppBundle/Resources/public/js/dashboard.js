@@ -3,7 +3,7 @@ $( document ).ready(function() {
 
     $(".js-submit_scenario").click(function(event){
         event.preventDefault();
-        $('.modal').modal('open');
+        $('.js-confirm_scenario_modal').modal('open');
 
     });
 });

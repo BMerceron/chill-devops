@@ -3,7 +3,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -42,7 +41,9 @@ class Scenario
      * @Assert\NotBlank()
      * @Assert\Range(
      *      min = 1,
+     *      max = 60,
      *      minMessage = "Must be at least {{ limit }}",
+     *      maxMessage = "Must be at most {{ limit }}",
      * )
      */
     private $periodicity;
@@ -67,11 +68,11 @@ class Scenario
     private $cost;
 
     /**
-     * @var int
+     * @var array
      *
-     * @ORM\Column(name="energyCost", type="integer", nullable=true)
+     * @ORM\Column(name="totalPrices", type="array", nullable=true)
      */
-    private $energyCost;
+    private $totalPrices;
 
     /**
      * @var bool
@@ -92,15 +93,30 @@ class Scenario
      *
      * @ORM\Column(name="name", type="string", length=255)
      * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage = "Must be at least {{ limit }}",
+     * )
      */
     private $name;
+
+    /**
+     *
+     * @ORM\ManyToMany(targetEntity="Configuration")
+     * @ORM\JoinTable(name="scenario_configuration",
+     *      joinColumns={@ORM\JoinColumn(name="scenario_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="configuration_id", referencedColumnName="id")}
+     *      )
+     */
+    private $servers;
 
     /**
      * Scenario constructor.
      */
     public function __construct()
     {
-        $this->createdAt = new DateTime();
+        $this->createdAt = new \DateTime();
+        $this->servers = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -210,30 +226,6 @@ class Scenario
     }
 
     /**
-     * Set energyCost
-     *
-     * @param integer $energyCost
-     *
-     * @return Scenario
-     */
-    public function setEnergyCost($energyCost)
-    {
-        $this->energyCost = $energyCost;
-
-        return $this;
-    }
-
-    /**
-     * Get energyCost
-     *
-     * @return int
-     */
-    public function getEnergyCost()
-    {
-        return $this->energyCost;
-    }
-
-    /**
      * Set isBookmarked
      *
      * @param boolean $isBookmarked
@@ -304,5 +296,44 @@ class Scenario
     {
         return $this->name;
     }
+
+    /**
+     * @return array
+     */
+    public function getTotalPrices()
+    {
+        return $this->totalPrices;
+    }
+
+    /**
+     * @param array $totalPrices
+     * @return Scenario
+     */
+    public function setTotalPrices($totalPrices)
+    {
+        $this->totalPrices = $totalPrices;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getServers()
+    {
+        return $this->servers;
+    }
+
+    /**
+     * @param mixed $servers
+     * @return Scenario
+     */
+    public function setServers($servers)
+    {
+        $this->servers = $servers;
+        return $this;
+    }
+
+
+
 }
 

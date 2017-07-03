@@ -1,6 +1,6 @@
 {% extends 'AppBundle::layout.html.twig' %}
 {% block content %}
-    <div class="container" style="margin: 50px auto">
+    <div class="container-fluid" id="index-form" style="margin: 50px auto">
         <div class="row">
             <div class="col s12 grey lighten-3">
                 <h2>Simulateur</h2>
@@ -10,11 +10,17 @@
                         d'utilisateurs}</b> utilisateurs en simultané, puis tous les <b>{Périodicité}</b> mois, <b>{Pourcentage
                         d'utilisateurs}</b> % s'ajouteront à ce serveur.</p>
                 <p><i>Exemple : </i></p>
-                <p><i>Je souhaite connaître le coût du serveur <b>Corporate</b>. Au départ avec <b>10000</b>
-                        utilisateurs en simultané, puis tous les <b>3</b> mois, <b>5</b> % s'ajouteront à ce
-                        serveur.</i></p>
+                <p><i>Je souhaite connaître le coût du serveur <b>Corporate</b>. Au départ avec <b>10000</b> utilisateurs en simultané, puis tous les <b>3</b> mois, <b>5</b> % s'ajouteront à ce serveur.</i></p>
+                {% for type, flash_messages in app.session.flashBag.all %}
+                    {% for flash_message in flash_messages %}
+                        <div class="flash-{{ type }} card red" id="card-alert">
+                            <div class="card-content white-text">
+                                <p><i class="mdi-alert-error"></i> Error: {{ flash_message }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
                 {{ form_start(form) }}
-
                 <div class="col s12">
                     {{ form_row(form.name) }}
                 </div>
@@ -25,26 +31,23 @@
                     {{ form_row(form.periodicity) }}
                 </div>
                 <div class="col s4">
-                    {{ form_row(form.clientAdd) }}
+                    {{ form_row(form.clientAdd, { 'attr': {'placeholder': '%'} }) }}
                 </div>
+                    <!-- Modal Button -->
+                    <a class="btn waves-effect waves-light right light-green lighten-1 js-submit_scenario spb-js-start-chrono" href="#confirm_scenario_modal">Load</a>
 
-                <!-- Modal Button -->
-                <a class="btn waves-effect waves-light right light-green lighten-1 js-submit_scenario spb-js-start-chrono"
-                   href="#confirm_scenario_modal">Load</a>
+                    <!-- Modal Structure -->
+                    <div id="confirm_scenario_modal" class="modal js-confirm_scenario_modal">
+                        <div class="modal-content">
+                            <h4>Are you ready ?</h4>
+                            <p><i>Temps d'attente estimé à 10 minutes</i></p>
+                        </div>
 
-                <!-- Modal Structure -->
-                <div id="confirm_scenario_modal" class="modal">
-                    <div class="modal-content">
-                        <h4>Are you ready ?</h4>
-                        <p><i>Temps d'attente estimé à 10 minutes</i></p>
-                    </div>
-
-                    <div class="modal-footer">
-                        <!-- Submit Button (confirmation) -->
-                        <button class="btn waves-effect waves-light right light-green lighten-1" type="submit"
-                                name="action" onclick="onSimulate()">Yes
-                        </button>
-                        <a href="#" class="modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
+                        <div class="modal-footer">
+                            <!-- Submit Button (confirmation) -->
+                            <button class="btn waves-effect waves-light right light-green lighten-1" type="submit" name="action">Yes</button>
+                            <button class="modal-action modal-close waves-effect waves-red btn-flat">Cancel</button>
+                        </div>
                     </div>
                 </div>
                 {{ form_end(form) }}
@@ -52,23 +55,77 @@
         </div>
         <div class="row" style="border-top: 1px #9e9e9e solid">
             {% if scenario is defined %}
-                <div class="row">
-                    <div class="col s12 white lighten-3">
-                        <h2 class="col s12 center">{{ scenario.name }}</h2>
-                        {# TODO - display graph#}
-                        <div class="col s12 center chrono" style="padding-right: 50px; padding-left: 50px;">
-                            <div>
-                                <span>Le temps estimé est d'environ </span><span class="psb-js-chrono-minutes">11</span><span
-                                        class="psb-js-inner-minutes"> minutes </span><span
-                                        class="psb-js-chrono-secondes">00</span><span class="psb-js-inner-secondes"> secondes</span>
-                            </div>
-                            <div class="progress">
-                                <div class="indeterminate"></div>
-                            </div>
+            <input id="chartDatas" hidden="hidden" value="{{ data }}">
+                <div class="col s12 grey lighten-3">
+                    <h2 class="left">{{ scenario.name }}</h2>
+                    <div class="right" style="margin-top: 25px;">
+                        <a href="{{ path('scenario_edit', {'id': scenario.id}) }}" class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">edit</i></a>
+                        <a class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">star</i></a>
+                        <!-- Modal Button -->
+                        <a class="btn-floating btn-large waves-effect waves-light light-green lighten-1 js-delete_scenario" href="#confirm_delete_scenario"><i class="material-icons">delete</i></a>
+                    </div>
+
+                    <!-- Modal Structure -->
+                    <div id="confirm_delete_scenario" class="modal js-confirm_delete_scenario">
+                        <div class="modal-content">
+                            <h4>Attention</h4>
+                            <p>Vous êtes sur le point de supprimer le scénario. Il vous sera impossible de le récupérer après la suppression. Etes-vous sûr de vouloir continuer ? </p>
+                        </div>
+                        <div class="modal-footer">
+                            <!-- Submit Button (confirmation) -->
+                            <button class="btn waves-effect waves-light right light-green lighten-1" type="submit" name="action">Yes</button>
+                            <button class="modal-action modal-close waves-effect waves-red btn-flat">Cancel</button>
+                        </div>
+                    </div>
+                    {% include 'AppBundle:dashboard:chart.html.twig' %}
+                    <hr>
+                    <div class="row">
+                        <div class="col s6 m6">
+                            <p>
+                                <b>Date de la simulation: </b>{{ scenario.createdAt|date("d/m/Y") }}<br>
+                                <b>Nombre d'utilisateur de départ: </b>{{ scenario.clientStart }}<br>
+                                <b>Incrémentation mensuelle: </b>{{ scenario.periodicity~" mois" }}<br>
+                                <b>Pourcentage d'ajout client: </b>{{ scenario.clientAdd~" %" }}
+                            </p>
+                        </div>
+                        <div class="col s6 m6">
+                            <p><b>Total: </b>{{ totalPrice~" €" }}</p>
+                            <p><b>Total Green: </b>{{ totalGreenPrice~" €" }}</p>
+                        </div>
+                        <div >
+                            <table class="striped centered">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Core</th>
+                                    <th>CPU</th>
+                                    <th>RAM</th>
+                                    <th>Disque</th>
+                                    <th>Capacité<br> simultanée</th>
+                                    <th>Maintenance | Green <br>(€/mois)</th>
+                                    <th>Coût d'achat | Green <br>(€)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for key,value in servers %}
+                                    {% if value is not empty %}
+                                        <tr>
+                                            <td>Serveur 1</td>
+                                            <td>1</td>
+                                            <td>2</td>
+                                            <td>3</td>
+                                            <td>4</td>
+                                            <td>{{ infoServers[key]["capacity"] }}</td>
+                                            <td>{{ infoServers[key]["priceByMonth"]~" | "~infoServers[key]["greenPriceByMonth"] }}</td>
+                                            <td>{{ infoServers[key]["buyingPrice"]~" | "~infoServers[key]["greenBuyingPrice"] }}</td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-                <div class="col 12"></div>
             {% endif %}
         </div>
     </div>
@@ -78,4 +135,9 @@
         <script src="{{ asset('js/chrono.js') }}"></script>
         <script src="{{ asset('js/clientSimulation.js') }}"></script>
     {% endblock %}
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/dashboard.js') }}"></script>
+    <script src="{{ asset('js/c3.min.js') }}"></script>
+    <script src="{{ asset('js/d3.min.js') }}"></script>
 {% endblock %}
