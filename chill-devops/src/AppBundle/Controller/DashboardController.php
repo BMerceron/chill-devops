@@ -171,17 +171,28 @@ class DashboardController extends Controller
             }
         }
 
-        return new JsonResponse();
     }
 
-
-    public function addBookmarkAction($id)
+    public function addBookmarkAction($id, $entity)
     {
-      $em = $this->getDoctrine()->getManager();
-      $scenario = $em->getRepository('AppBundle:Scenario')->findOneById($id);
-      $scenario->setIsBookmarked(true);
-      $em->flush();
+      $entity->setIsBookmarked(true);
+      $entity->flush();
 
-      return new JsonResponse();
+      return $this->redirectToRoute("scenario_history");
+    }
+
+    public function deleteBookmarkAction($id, $entity)
+    {
+      $entity->setIsBookmarked(false);
+      $entity->flush();
+
+      return $this->redirectToRoute("scenario_history");
+    }
+
+    public function bookmarkAction($id)
+    {
+      $scenario = $this->getDoctrine()->getManager()->getRepository('AppBundle:Scenario')->findOneById($id);
+
+      return ($scenario->getIsBookmarked()) ? $this->deleteBookmarkAction() : $this->addBookmarkAction();
     }
 }
