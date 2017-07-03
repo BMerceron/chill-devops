@@ -18,7 +18,7 @@ $(".psb-js-delete-select").on("click", function() {
     var scenarioId = $(this).attr("data-id");
     checkArray(scenarioIdArray, scenarioId);
 
-})
+});
 
 // click on delete multiple button
 
