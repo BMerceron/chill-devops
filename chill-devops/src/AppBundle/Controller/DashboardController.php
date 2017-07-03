@@ -135,12 +135,19 @@ class DashboardController extends Controller
         $em = $this->getDoctrine()->getManager();
         $scenarioRepository = $em->getRepository('AppBundle:Scenario');
         $scenario = $scenarioRepository->findOneById($request->get('id'));
-
+        $result = $this->get('app_dashboard_scenario_result')->getPricesAndServers($scenario);
+        $totalPrice = $this->get('app_dashboard_scenario_result')->getTotalPrice();
+        $datas = [];
+        foreach ($result as $key => $value){
+            array_push($datas, $value);
+        }
         $deleteForm = $this->createDeleteForm($scenario);
 
         $html = $this->renderView('AppBundle:dashboard:pdfExport.html.twig', array(
+            'totalPrice' => $totalPrice,
             'scenario' => $scenario,
             'delete_form' => $deleteForm->createView(),
+            'data' => $datas
         ));
 
         $filename = sprintf('test-%s.pdf', date('Y-m-d'));
