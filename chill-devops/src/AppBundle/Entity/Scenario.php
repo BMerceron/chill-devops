@@ -93,6 +93,10 @@ class Scenario
      *
      * @ORM\Column(name="name", type="string", length=255)
      * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage = "Must be at least {{ limit }}",
+     * )
      */
     private $name;
 

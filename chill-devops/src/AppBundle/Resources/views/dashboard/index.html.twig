@@ -35,7 +35,7 @@
                     <a class="btn waves-effect waves-light right light-green lighten-1 js-submit_scenario spb-js-start-chrono" href="#confirm_scenario_modal">Load</a>
 
                     <!-- Modal Structure -->
-                    <div id="confirm_scenario_modal" class="modal">
+                    <div id="confirm_scenario_modal" class="modal js-confirm_scenario_modal">
                         <div class="modal-content">
                             <h4>Are you ready ?</h4>
                             <p><i>Temps d'attente estimé à 10 minutes</i></p>
@@ -44,7 +44,7 @@
                         <div class="modal-footer">
                             <!-- Submit Button (confirmation) -->
                             <button class="btn waves-effect waves-light right light-green lighten-1" type="submit" name="action">Yes</button>
-                            <a href="#" class="modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
+                            <button class="modal-action modal-close waves-effect waves-red btn-flat">Cancel</button>
                         </div>
                     </div>
                 {{ form_end(form) }}
@@ -63,7 +63,7 @@
                     </div>
 
                     <!-- Modal Structure -->
-                    <div id="confirm_delete_scenario" class="modal">
+                    <div id="confirm_delete_scenario" class="modal js-confirm_delete_scenario">
                         <div class="modal-content">
                             <h4>Attention</h4>
                             <p>Vous êtes sur le point de supprimer le scénario. Il vous sera impossible de le récupérer après la suppression. Etes-vous sûr de vouloir continuer ? </p>
@@ -71,7 +71,7 @@
                         <div class="modal-footer">
                             <!-- Submit Button (confirmation) -->
                             <button class="btn waves-effect waves-light right light-green lighten-1" type="submit" name="action">Yes</button>
-                            <a href="#" class="modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
+                            <button class="modal-action modal-close waves-effect waves-red btn-flat">Cancel</button>
                         </div>
                     </div>
                     {% include 'AppBundle:dashboard:chart.html.twig' %}
@@ -123,19 +123,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="chrono" style="width: 80%; margin: auto;">
-                    <div style="float: right">
-                        <span>Le temps estimé est d'environ </span><span class="psb-js-chrono-minutes">11</span><span class="psb-js-inner-minutes"> minutes </span><span class="psb-js-chrono-secondes">00</span><span class="psb-js-inner-secondes"> secondes</span>
-                    </div>
-                    <div class="progress" >
-                        <div class="indeterminate"></div>
-                    </div>
-                </div>
             {% endif %}
         </div>
     </div>
 {% endblock %}
 {% block javascripts %}
-    <script src="{{ asset('js/chrono.js') }}"></script>
     <script src="{{ asset('js/dashboard.js') }}"></script>
+    <script src="{{ asset('js/c3.min.js') }}"></script>
+    <script src="{{ asset('js/d3.min.js') }}"></script>
 {% endblock %}
