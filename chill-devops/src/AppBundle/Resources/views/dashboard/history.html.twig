@@ -6,9 +6,9 @@
             <div class="col s12" style="position: relative">
                 <a class="left btn waves-effect waves-light light-green lighten-1" href="{{ path ("app_dashboard") }}">Ajouter un Scénario</a>
                 <a href="#multiDeleteModal" id="multibutton" class="left  modal-multi-delete btn waves-light light-green lighten-1" data-toggle="modalDelete">Supprimer la sélection</a>
-                <input class="right input-search k-js-input-search" data-toggle="modalDelete" style="width: 20%;">
+                <input class="right input-search k-js-input-search" data-toggle="modalDelete" style="width: 20%;"><i class="material-icons" style="position: absolute; right: 8px; top: 20px;">search</i>
                 <div style="width: 20%; position: absolute; right: 8px; top: 48px;">
-                    <ul class="k-js-result-search-scenario collection"></ul>
+                    <ul style="padding: 0; margin: 0" class="k-js-result-search-scenario collection"></ul>
                 </div>
             </div>
             {% if scenarios is not empty %}

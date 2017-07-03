@@ -14,19 +14,20 @@ $('.k-js-input-search').keyup(function () {
                     var id = 'li-result-'+data[counter].id;
                     var href = '/scenario/show/'+data[counter].id;
                     if (!document.getElementById(id)) {
-                        $('.k-js-result-search-scenario').append('<li id="'+id+'" class="collection-item text-white"><a href='+href+'>'+data[counter].name+'</a></li>');
+                        $('.k-js-result-search-scenario').append('<li id="'+id+'" class="collection-item"><a class="text-white" href='+href+'>'+data[counter].name+'</a></li>');
                     }
                     $( ".collection-item" ).hover(
                         function() {
                             $( this ).addClass( "active" );
+                            $( this ).find('a').css( "color" , "#FFF");
+
                         }, function() {
                             $( this ).removeClass( "active" );
+                            $( this ).find('a').css( "color" , "#039be5");
                         }
                     );
                 }
-
             }
         })
     }
-
 });
