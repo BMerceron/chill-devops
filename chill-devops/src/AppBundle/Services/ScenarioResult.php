@@ -23,7 +23,7 @@ class ScenarioResult
      */
     public function getTotalClientsByPeriodicity($scenario)
     {
-        if (!$scenario instanceof Scenario) {
+        if ($scenario instanceof Scenario) {
             $this->periodicity = $scenario->getPeriodicity();
             $clientStart = $scenario->getClientStart();
             $clientAdd = $scenario->getClientAdd()/100;
