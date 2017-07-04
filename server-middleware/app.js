@@ -16,6 +16,7 @@ ioclient.on('connection', function(socket){
 
 	setInterval(function(){
 		if(waiting[socket.id]) {
+			console.log('Waiting response for '+socket.id, waiting[socket.id].length)
             if (vms.length === waiting[socket.id].length) {
                 socket.emit('waiting', waiting[socket.id]);
                 waiting[socket.id] = [];
