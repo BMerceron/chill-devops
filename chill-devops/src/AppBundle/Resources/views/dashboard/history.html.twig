@@ -30,8 +30,13 @@
                             <td class="center">{{ scenario.periodicity~" mois" }}</td>
                             <td class="center">{{ scenario.clientAdd~" %" }}</td>
                             <td class="center">
-                                <a id="bookmark-{{ scenario.id }}" data-id="{{ scenario.id }}" href={{ path('scenario_add_bookmark', {'id': scenario.id}) }} class="btn-floating waves-effect waves-light light-green lighten-1"><i
+                                {% if scenario.isBookmarked == null or scenario.isBookmarked == false  %}
+                                    <a data-tooltip="Ajouter aux favoris" data-position="bottom" data-delay="50" href="{{ path('scenario_add_bookmark', {'id': scenario.id}) }}" class="btn-floating btn tooltipped waves-effect waves-light light-green lighten-1"><i
                                             class="material-icons">star</i></a>
+                                {% else %}
+                                    <a data-tooltip="Supprimer des favoris" data-position="bottom" data-delay="50" href="{{ path('scenario_delete_bookmark', {'id': scenario.id}) }}" class="tooltipped favorited"><i
+                                        class="material-icons" style="color: #9ccc65">star</i></a>
+                                {% endif %}
                             </td>
                             <td class="center">
                                 <p>
