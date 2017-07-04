@@ -13,10 +13,12 @@ var iovm = require('socket.io')(httpvm);
 ioclient.on('connection', function(socket){
 
 	console.log("New client: "+socket.id);
+    waiting[socket.id] = [];
+    console.log('waiting length for '+socket.id+' is '+waiting[socket.id].length);
 
-	setInterval(function(){
+	var loop = setInterval(function(){
 		if(waiting[socket.id]) {
-			console.log('Waiting response for '+socket.id, waiting[socket.id].length)
+            console.log('waiting length for '+socket.id+' is '+waiting[socket.id].length);
             if (vms.length === waiting[socket.id].length) {
                 socket.emit('waiting', waiting[socket.id]);
                 waiting[socket.id] = [];
@@ -31,7 +33,12 @@ ioclient.on('connection', function(socket){
 			vm.emit('waiting', socket.id);
 		});
 
-	}, 300);
+	}, 1000);
+
+	socket.on('disconnect', function(){
+        clearInterval(loop);
+        delete waiting[socket.id];
+	})
 
  	socket.on('simulate', function(){
 
@@ -54,8 +61,6 @@ iovm.on('connection', function(socket){
 	});
 
 	socket.on('waiting', function(data){
-		if(!waiting[data.client])
-			waiting[data.client] = [];
 		waiting[data.client].push(data.waiting);
 	});
 
