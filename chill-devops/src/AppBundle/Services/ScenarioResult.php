@@ -30,7 +30,7 @@ class ScenarioResult
         } else {
             $this->periodicity = $scenario['periodicity'];
             $clientStart = $scenario['clientStart'];
-            $clientAdd = $scenario['clientAdd'];
+            $clientAdd = $scenario['clientAdd']/100;
         }
 
         $total = [];
