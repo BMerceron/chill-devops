@@ -24,11 +24,11 @@ ioclient.on('connection', function(socket){
             if (waiting[socket.id].length !== 0) {
                 return;
             }
+		}
 
-            vms.forEach(function (vm) {
-                vm.emit('waiting', socket.id);
-            });
-        }
+		vms.forEach(function (vm) {
+			vm.emit('waiting', socket.id);
+		});
 
 	}, 300);
 
