@@ -15,18 +15,20 @@ ioclient.on('connection', function(socket){
 	console.log("New client: "+socket.id);
 
 	setInterval(function(){
-        if(vms.length === waiting[socket.id].length){
-            socket.emit('waiting', waiting[socket.id]);
-            waiting[socket.id] = [];
-        }
+		if(waiting[socket.id]) {
+            if (vms.length === waiting[socket.id].length) {
+                socket.emit('waiting', waiting[socket.id]);
+                waiting[socket.id] = [];
+            }
 
-        if(waiting[socket.id].length !== 0){
-            return;
-        }
+            if (waiting[socket.id].length !== 0) {
+                return;
+            }
 
-        vms.forEach(function(vm){
-            vm.emit('waiting', socket.id);
-        });
+            vms.forEach(function (vm) {
+                vm.emit('waiting', socket.id);
+            });
+        }
 
 	}, 300);
 
