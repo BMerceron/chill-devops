@@ -2,13 +2,20 @@
  * Created by jonathan on 03/07/17.
  */
 $('.k-js-input-search').keyup(function () {
-    if ($(this).val().length < 2) {
+    if ($( this ).val().length < 2) {
         $('.k-js-result-search-scenario li').remove()
     }
-    if ($(this).val().length > 2) {
+    search($( this ))
+});
+$('.k-js-input-search').on('click', function () {
+    search($( this ))
+});
+
+function search(element) {
+    if (element.val().length > 2) {
         $.ajax({
             url: "/scenario/search",
-            data: {'data': $(this).val()},
+            data: {'data': element.val()},
             success: function (data) {
                 for (var counter = 0; counter < data.length; counter ++){
                     var id = 'li-result-'+data[counter].id;
@@ -18,11 +25,11 @@ $('.k-js-input-search').keyup(function () {
                     }
                     $( ".collection-item" ).hover(
                         function() {
-                            $( this ).addClass( "active" );
+                            $(this).addClass( "active" );
                             $(this).find('a').css( "color" , "#FFF");
 
                         }, function() {
-                            $( this ).removeClass( "active" );
+                            $(this).removeClass( "active" );
                             $(this).find('a').css( "color" , "#039be5");
 
                         }
@@ -31,4 +38,4 @@ $('.k-js-input-search').keyup(function () {
             }
         })
     }
-});
+}
