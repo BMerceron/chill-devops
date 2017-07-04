@@ -9,7 +9,8 @@ socket.on('waiting', function(){
 	exec('phoronix-test-suite info apache', function(error, stdout, stderr){
 		var data = stdout;
         var re = /Estimated Run-Time:[\s]+(\d+)[\s]+Seconds/g;
-        waiting = re.exec(data)[1];
+        result = re.exec(data);
+        waiting = result[1];
 	});
 	socket.emit('waiting', waiting);
 });
