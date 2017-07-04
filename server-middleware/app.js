@@ -3,6 +3,7 @@ var queue = [];
 var results = [];
 var isSimulating = false;
 var forWhoSimulating;
+var waiting = [];
 
 var httpclient = require('http').Server();
 var httpvm = require('http').Server();
@@ -12,6 +13,22 @@ var iovm = require('socket.io')(httpvm);
 ioclient.on('connection', function(socket){
 
 	console.log("New client: "+socket.id);
+
+	setInterval(function(){
+        if(vms.length === waiting[socket.id].length){
+            socket.emit('waiting', waiting[socket.id]);
+            waiting[socket.id] = [];
+        }
+
+        if(waiting[socket.id].length !== 0){
+            return;
+        }
+
+        vms.forEach(function(vm){
+            vm.emit('waiting', socket.id);
+        });
+
+	}, 300);
 
  	socket.on('simulate', function(){
 
@@ -31,6 +48,12 @@ iovm.on('connection', function(socket){
 	socket.on('response', function(data){
 		console.log("get response from VM "+socket.id);
 		results.push(data);
+	});
+
+	socket.on('waiting', function(data){
+		if(!waiting[data.client])
+			waiting[data.client] = [];
+		waiting[data.client].push(data.waiting);
 	});
 
 	socket.on('disconnect', function(){
