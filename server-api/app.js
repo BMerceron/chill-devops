@@ -5,10 +5,11 @@ var sys = require('sys');
 var exec = require('child_process').exec;
 
 socket.on('waiting', function(){
+	var waiting = 600;
 	exec('phoronix-test-suite info apache', function(error, stdout, stderr){
 		var data = stdout;
         var re = /Estimated Run-Time:[\s]+(\d+)[\s]+Seconds/g;
-        var waiting = re.exec(data)[1];
+        waiting = re.exec(data)[1];
 	});
 	socket.emit('waiting', waiting);
 });
