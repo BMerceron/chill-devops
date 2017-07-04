@@ -26,7 +26,8 @@
                         <a href="{{ path('scenario_edit', {'id': scenario.id}) }}"
                            class="btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">edit</i></a>
                         <a class="btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">star</i></a>
-                        <a href="{{ path('scenario_delete', {'id': scenario.id}) }}" class="modal-delete btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">delete</i></a>
+                        {#<a href="{{ path('scenario_delete', {'id': scenario.id, 'route': 'scenario_history'}) }}" class="modal-delete btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">delete</i></a>#}
+                        <a class="modal-delete btn-floating waves-effect waves-light light-green lighten-1" href="#confirm_delete_scenario"><i class="material-icons">delete</i></a>
                     </td>
                 </tr>
                 </tbody>
@@ -85,4 +86,19 @@
             </div>
         </div>
     </div>
+    <div id="confirm_delete_scenario" class="modal js-confirm_delete_scenario">
+        <div class="modal-content">
+            <h4>Attention</h4>
+            <p>Vous êtes sur le point de supprimer le scénario. Il vous sera impossible de le récupérer après la suppression. Etes-vous sûr de vouloir continuer ? </p>
+        </div>
+        <div class="modal-footer">
+            <!-- Submit Button (confirmation) -->
+            <button class="btn waves-effect waves-light right light-green lighten-1" ><a href="{{ path('scenario_delete', {'id': scenario.id, 'route': 'scenario_history' }) }}" style="color: #FFF;">Oui</a></button>
+            <button class="modal-action modal-close waves-effect waves-red btn-flat">Annuler</button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/dashboard.js') }}"></script>
 {% endblock %}
