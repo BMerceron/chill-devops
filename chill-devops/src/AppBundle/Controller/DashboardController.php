@@ -98,9 +98,11 @@ class DashboardController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $scenarios = $em->getRepository('AppBundle:Scenario')->findAll();
+        $bookmarks = $this->showBookmarksAction();
 
         return $this->render('AppBundle:dashboard:history.html.twig', array(
             'scenarios' => $scenarios,
+            'favorites' => $bookmarks
         ));
     }
 
@@ -170,7 +172,6 @@ class DashboardController extends Controller
                 }
             }
         }
-
     }
 
     /**
@@ -207,7 +208,7 @@ class DashboardController extends Controller
     public function showBookmarksAction() {
       $em = $this->getDoctrine()->getManager();
       $bookmarksList = $em->getRepository('AppBundle:Scenario')->findBy(array("isBookmarked"=>true));
-
-      return $this->render("AppBundle:dashboard:favorites.html.twig", array('scenarios' => $bookmarksList));
+      return $bookmarksList;
+//      return $this->render("AppBundle:dashboard:favorites.html.twig", array('scenarios' => $bookmarksList));
     }
 }
