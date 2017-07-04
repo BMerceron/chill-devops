@@ -7,9 +7,10 @@ var exec = require('child_process').exec;
 socket.on('waiting', function(){
 	exec('phoronix-test-suite info apache', function(error, stdout, stderr){
 		var data = stdout;
-		console.log(data);
+        var re = /Estimated Run-Time:[\s]+(\d+)[\s]+Seconds/g;
+        var waiting = re.exec(data)[1];
 	});
-	socket.emit('waiting', 600);
+	socket.emit('waiting', waiting);
 });
 
 socket.on('simulate', function(id){
