@@ -21,15 +21,18 @@ class ScenarioResult
      * @param Scenario $scenario
      * @return array|void
      */
-    public function getTotalClientsByPeriodicity(Scenario $scenario)
+    public function getTotalClientsByPeriodicity($scenario)
     {
-        if (!$scenario instanceof Scenario) {
-            return;
+        if ($scenario instanceof Scenario) {
+            $this->periodicity = $scenario->getPeriodicity();
+            $clientStart = $scenario->getClientStart();
+            $clientAdd = $scenario->getClientAdd()/100;
+        } else {
+            $this->periodicity = $scenario['periodicity'];
+            $clientStart = $scenario['clientStart'];
+            $clientAdd = $scenario['clientAdd']/100;
         }
 
-        $this->periodicity = $scenario->getPeriodicity();
-        $clientStart = $scenario->getClientStart();
-        $clientAdd = $scenario->getClientAdd()/100;
         $total = [];
 
         $total[$this->periodicity]=$clientStart;
