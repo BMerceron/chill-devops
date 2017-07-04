@@ -22,6 +22,7 @@ ioclient.on('connection', function(socket){
             if (vms.length === waiting[socket.id].length) {
                 socket.emit('waiting', waiting[socket.id]);
                 waiting[socket.id] = [];
+                console.log('Emiting waiting result for '+ socket.id +' and the length is now '+waiting[socket.id].length)
             }
 
             if (waiting[socket.id].length !== 0) {
