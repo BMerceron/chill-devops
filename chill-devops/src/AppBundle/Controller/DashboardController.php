@@ -198,7 +198,7 @@ class DashboardController extends Controller
       $scenario->setIsBookmarked(false);
       $em->flush();
 
-      return $this->redirectToRoute("scenario_favorites");
+      return $this->redirectToRoute("scenario_history");
     }
 
     /**
