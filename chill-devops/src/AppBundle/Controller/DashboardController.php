@@ -173,26 +173,41 @@ class DashboardController extends Controller
 
     }
 
-    public function addBookmarkAction($id, $entity)
+    /**
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function addBookmarkAction($id)
     {
-      $entity->setIsBookmarked(true);
-      $entity->flush();
+      $em = $this->getDoctrine()->getManager();
+      $scenario = $em->getRepository('AppBundle:Scenario')->findOneById($id);
+      $scenario->setIsBookmarked(true);
+      $em->flush();
 
       return $this->redirectToRoute("scenario_history");
     }
 
-    public function deleteBookmarkAction($id, $entity)
+    /**
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteBookmarkAction($id)
     {
-      $entity->setIsBookmarked(false);
-      $entity->flush();
+      $em = $this->getDoctrine()->getManager();
+      $scenario = $em->getRepository('AppBundle:Scenario')->findOneById($id);
+      $scenario->setIsBookmarked(false);
+      $em->flush();
 
-      return $this->redirectToRoute("scenario_history");
+      return $this->redirectToRoute("scenario_favorites");
     }
 
-    public function bookmarkAction($id)
-    {
-      $scenario = $this->getDoctrine()->getManager()->getRepository('AppBundle:Scenario')->findOneById($id);
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showBookmarksAction() {
+      $em = $this->getDoctrine()->getManager();
+      $bookmarksList = $em->getRepository('AppBundle:Scenario')->findBy(array("isBookmarked"=>true));
 
-      return ($scenario->getIsBookmarked()) ? $this->deleteBookmarkAction() : $this->addBookmarkAction();
+      return $this->render("AppBundle:dashboard:favorites.html.twig", array('scenarios' => $bookmarksList));
     }
 }
