@@ -34,7 +34,6 @@ class DashboardController extends Controller
 
             if ($form->isSubmitted() && $form->isValid()) {
 
-                /*TODO - SEND SIMULATION*/
                 /** @var Scenario $scenario */
                 $scenario = $form->getData();
                 $totalClient = $this->get('app_dashboard_scenario_result')->getTotalClientsByPeriodicity($scenario);
@@ -48,6 +47,8 @@ class DashboardController extends Controller
                         'form' => $form->createView(),
                     ));
                 }
+
+                /*TODO - SEND SIMULATION*/
 
                 $result = $this->get('app_dashboard_scenario_result')->getPricesAndServers($scenario);
                 $servers = $this->get('app_dashboard_scenario_result')->getServers();

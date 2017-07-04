@@ -73,7 +73,7 @@
                         </div>
                         <div class="modal-footer">
                             <!-- Submit Button (confirmation) -->
-                            <button class="btn waves-effect waves-light right light-green lighten-1" type="submit" name="action">Yes</button>
+                            <button class="btn waves-effect waves-light right light-green lighten-1" onclick="onSimulate()" type="submit" name="action">Yes</button>
                             <button class="modal-action modal-close waves-effect waves-red btn-flat">Cancel</button>
                         </div>
                     </div>
@@ -134,10 +134,7 @@
         <script src="{{ asset('js/dashboard.js') }}"></script>
         <script src="{{ asset('js/chrono.js') }}"></script>
         <script src="{{ asset('js/clientSimulation.js') }}"></script>
+        <script src="{{ asset('js/c3.min.js') }}"></script>
+        <script src="{{ asset('js/d3.min.js') }}"></script>
     {% endblock %}
-{% endblock %}
-{% block javascripts %}
-    <script src="{{ asset('js/dashboard.js') }}"></script>
-    <script src="{{ asset('js/c3.min.js') }}"></script>
-    <script src="{{ asset('js/d3.min.js') }}"></script>
 {% endblock %}
