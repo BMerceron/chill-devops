@@ -4,13 +4,8 @@ var parser = require('xml2json');
 var sys = require('sys');
 var exec = require('child_process').exec;
 
-socket.on('waiting', function(client){
-
-	socket.emit('waiting', {
-		client: client,
-		waiting: 10
-	});
-
+socket.on('waiting', function(){
+	socket.emit('waiting', 600);
 });
 
 socket.on('simulate', function(id){

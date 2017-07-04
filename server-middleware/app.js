@@ -2,8 +2,8 @@ var vms = [];
 var queue = [];
 var results = [];
 var isSimulating = false;
+var simulatingSince = new Date();
 var forWhoSimulating;
-var waiting = [];
 
 var httpclient = require('http').Server();
 var httpvm = require('http').Server();
@@ -13,33 +13,6 @@ var iovm = require('socket.io')(httpvm);
 ioclient.on('connection', function(socket){
 
 	console.log("New client: "+socket.id);
-    waiting[socket.id] = [];
-    console.log('waiting length for '+socket.id+' is '+waiting[socket.id].length);
-
-	var loop = setInterval(function(){
-		if(waiting[socket.id]) {
-            console.log('waiting length for '+socket.id+' is '+waiting[socket.id].length);
-            if (vms.length === waiting[socket.id].length) {
-                socket.emit('waiting', waiting[socket.id]);
-                waiting[socket.id] = [];
-                console.log('Emiting waiting result for '+ socket.id +' and the length is now '+waiting[socket.id].length)
-            }
-
-            if (waiting[socket.id].length !== 0) {
-                return;
-            }
-		}
-
-		vms.forEach(function (vm) {
-			vm.emit('waiting', socket.id);
-		});
-
-	}, 1000);
-
-	socket.on('disconnect', function(){
-        clearInterval(loop);
-        delete waiting[socket.id];
-	})
 
  	socket.on('simulate', function(){
 
@@ -47,6 +20,19 @@ ioclient.on('connection', function(socket){
 
  		queue.push(socket);
  	});
+
+ 	socket.on('waiting', function(){
+ 		var waiting = 0;
+ 		vms.forEach(function(vm){
+ 			if(vm.waiting > waiting)
+ 				waiting = vm.waiting;
+		});
+
+ 		var elapsed = ((new Date().getTime() - simulatingSince.getTime()) / 1000);
+ 		waiting = waiting - elapsed;
+
+ 		socket.emit('waiting', waiting);
+	});
 
 });
 
@@ -62,7 +48,7 @@ iovm.on('connection', function(socket){
 	});
 
 	socket.on('waiting', function(data){
-		waiting[data.client].push(data.waiting);
+		socket.waiting = data;
 	});
 
 	socket.on('disconnect', function(){
@@ -87,6 +73,14 @@ httpvm.listen(9080, function(){
 
 setInterval(function(){
 
+	// Waiting management
+
+	vms.forEach(function(vm){
+		vm.emit('waiting');
+	});
+
+	// Event management
+
 	console.log(queue.length, 'Events in queue');
 
 	if(vms.length === results.length && isSimulating){
@@ -108,6 +102,7 @@ setInterval(function(){
  		vm.emit('simulate', elem.id);
  	});
 
+	simulatingSince = new Date();
 	forWhoSimulating = elem;
  	isSimulating = true;
 
