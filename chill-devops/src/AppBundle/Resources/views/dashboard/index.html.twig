@@ -35,7 +35,6 @@
                 </div>
                     <!-- Modal Button -->
                     <a class="btn waves-effect waves-light right light-green lighten-1 js-submit_scenario spb-js-start-chrono" href="#confirm_scenario_modal">Load</a>
-
                     <!-- Modal Structure -->
                     <div id="confirm_scenario_modal" class="modal js-confirm_scenario_modal">
                         <div class="modal-content">
@@ -45,7 +44,7 @@
 
                         <div class="modal-footer">
                             <!-- Submit Button (confirmation) -->
-                            <button class="btn waves-effect waves-light right light-green lighten-1" type="submit" name="action">Yes</button>
+                            <button class="btn waves-effect waves-light right light-green lighten-1" onclick="onSimulate()" type="submit" name="action">Yes</button>
                             <button class="modal-action modal-close waves-effect waves-red btn-flat">Cancel</button>
                         </div>
                     </div>
@@ -73,7 +72,7 @@
                         </div>
                         <div class="modal-footer">
                             <!-- Submit Button (confirmation) -->
-                            <button class="btn waves-effect waves-light right light-green lighten-1" onclick="onSimulate()" type="submit" name="action">Yes</button>
+                            <button class="btn waves-effect waves-light right light-green lighten-1" type="submit" name="action">Yes</button>
                             <button class="modal-action modal-close waves-effect waves-red btn-flat">Cancel</button>
                         </div>
                     </div>
