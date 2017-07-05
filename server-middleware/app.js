@@ -22,16 +22,20 @@ ioclient.on('connection', function(socket){
  	});
 
  	socket.on('waiting', function(){
- 		var timeTaken = 0;
+ 		console.log("Client "+socket.id+" want to get waiting time");
+ 		/*var timeTaken = 0;
  		vms.forEach(function(vm){
+ 			console.log("VM "+vm.id+" has waiting : "+vm.waiting);
  			if(vm.waiting > timeTaken)
  				timeTaken = vm.waiting;
 		});
 
  		var elapsed = ((new Date().getTime() - simulatingSince.getTime()) / 1000);
+ 		if(elapsed < 0)
+ 			elapsed = 0;
  		waiting = timeTaken - elapsed + (queue.length * timeTaken);
 
- 		socket.emit('waiting', waiting);
+ 		socket.emit('waiting', waiting);*/
 	});
 
 });
