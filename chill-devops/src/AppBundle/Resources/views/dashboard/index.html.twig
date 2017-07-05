@@ -6,7 +6,7 @@
                 <h2>Simulateur</h2>
                 <h5>Comment ça marche ?</h5>
                 <p>Il suffit de renseigner les données manquantes à la phrase suivante :</p>
-                <p>Je souhaite connaître le coût du serveur <b>{Nom du serveur}</b>. Au départ avec <b>{Nombre d'utilisateurs}</b> utilisateurs en simultané, puis tous les <b>{Périodicité}</b> mois, <b>{Pourcentage d'utilisateurs}</b> % s'ajouteront à ce serveur.</p>
+                <p>Je souhaite connaître le coût du serveur <b>{Nom du scénario}</b>. Au départ avec <b>{Nombre d'utilisateurs}</b> utilisateurs en simultané, puis tous les <b>{Périodicité}</b> mois, <b>{Pourcentage d'utilisateurs}</b> % s'ajouteront à ce serveur.</p>
                 <p><i>Exemple : </i></p>
                 <p><i>Je souhaite connaître le coût du serveur <b>Corporate</b>. Au départ avec <b>10000</b> utilisateurs en simultané, puis tous les <b>3</b> mois, <b>5</b> % s'ajouteront à ce serveur.</i></p>
                 {% for type, flash_messages in app.session.flashBag.all %}
@@ -32,7 +32,7 @@
                     {{ form_row(form.clientAdd, { 'attr': {'placeholder': '%'} }) }}
                 </div>
                     <!-- Modal Button -->
-                    <a class="btn waves-effect waves-light right light-green lighten-1 js-submit_scenario spb-js-start-chrono" href="#confirm_scenario_modal">Load</a>
+                    <a class="btn waves-effect waves-light right light-green lighten-1 js-submit_scenario spb-js-start-chrono" href="#confirm_scenario_modal">Lancer la simulation</a>
 
                     <!-- Modal Structure -->
                     <div id="confirm_scenario_modal" class="modal js-confirm_scenario_modal">
@@ -43,8 +43,8 @@
 
                         <div class="modal-footer">
                             <!-- Submit Button (confirmation) -->
-                            <button class="btn waves-effect waves-light right light-green lighten-1" type="submit" name="action">Yes</button>
-                            <button class="modal-action modal-close waves-effect waves-red btn-flat">Cancel</button>
+                            <button class="btn waves-effect waves-light right light-green lighten-1" type="submit" name="action">C'est parti !</button>
+                            <button class="modal-action modal-close waves-effect waves-red btn-flat">Pas encore</button>
                         </div>
                     </div>
                 {{ form_end(form) }}
