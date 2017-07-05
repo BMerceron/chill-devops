@@ -26,6 +26,6 @@ class CheckIsAvailable
 
             return false;
         }
-        return true;
+        return $totalClient;
     }
 }
