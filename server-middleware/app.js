@@ -22,14 +22,14 @@ ioclient.on('connection', function(socket){
  	});
 
  	socket.on('waiting', function(){
- 		var waiting = 0;
+ 		var timeTaken = 0;
  		vms.forEach(function(vm){
- 			if(vm.waiting > waiting)
- 				waiting = vm.waiting;
+ 			if(vm.waiting > timeTaken)
+ 				timeTaken = vm.waiting;
 		});
 
  		var elapsed = ((new Date().getTime() - simulatingSince.getTime()) / 1000);
- 		waiting = waiting - elapsed;
+ 		waiting = timeTaken - elapsed + (queue.length * timeTaken);
 
  		socket.emit('waiting', waiting);
 	});
