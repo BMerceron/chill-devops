@@ -49,8 +49,6 @@ class DashboardController extends Controller
                     ));
                 }
 
-                /*TODO - SEND SIMULATION*/
-
                 $result = $this->get('app_dashboard_scenario_result')->getPricesAndServers($scenario);
                 $servers = $this->get('app_dashboard_scenario_result')->getServers();
                 $infoServers = [];
@@ -177,7 +175,6 @@ class DashboardController extends Controller
     }
 
     public function isAvailableAction(Request $request){
-        $isAjax = $request->isXmlHttpRequest();
         $datas = $request->request->all();
         $totalClients = $this->get('app_dashboard_check_available')->isAvailable($datas);
         if ($totalClients == true){
