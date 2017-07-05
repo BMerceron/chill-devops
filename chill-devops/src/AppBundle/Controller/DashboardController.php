@@ -186,31 +186,35 @@ class DashboardController extends Controller
     }
 
     /**
+     * @param Request $request
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function addBookmarkAction($id)
+    public function addBookmarkAction(Request $request, $id)
     {
       $em = $this->getDoctrine()->getManager();
+      $referer = $request->headers->get('referer');
       $scenario = $em->getRepository('AppBundle:Scenario')->findOneById($id);
       $scenario->setIsBookmarked(true);
       $em->flush();
 
-      return $this->redirectToRoute("scenario_history");
+      return $this->redirect($referer);
     }
 
     /**
+     * @param Request $request
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteBookmarkAction($id)
+    public function deleteBookmarkAction(Request $request, $id)
     {
       $em = $this->getDoctrine()->getManager();
+      $referer = $request->headers->get('referer');
       $scenario = $em->getRepository('AppBundle:Scenario')->findOneById($id);
       $scenario->setIsBookmarked(false);
       $em->flush();
 
-      return $this->redirectToRoute("scenario_history");
+      return $this->redirect($referer);
     }
 
     /**
