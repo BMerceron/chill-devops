@@ -54,7 +54,7 @@ class DashboardController extends Controller
                 $servers = $this->get('app_dashboard_scenario_result')->getServers();
                 $infoServers = [];
                 foreach ($servers as $key => $value) {
-                    $infoServers[$key] = $this->get('app_dashboard_scenario_result')->getInfoServer($key);
+                    $infoServers[] = $this->get('app_dashboard_scenario_result')->getInfoServer($key);
                 }
                 $datas = [];
                 foreach ($result as $key => $value){

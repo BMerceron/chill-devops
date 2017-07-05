@@ -104,20 +104,18 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for key,value in servers %}
-                                    {% if value is not empty %}
+                                    {% for server in scenario.servers %}
                                         <tr>
-                                            <td>Serveur 1</td>
-                                            <td>1</td>
-                                            <td>2</td>
-                                            <td>3</td>
-                                            <td>4</td>
-                                            <td>{{ infoServers[key]["capacity"] }}</td>
-                                            <td>{{ infoServers[key]["priceByMonth"]~" | "~infoServers[key]["greenPriceByMonth"] }}</td>
-                                            <td>{{ infoServers[key]["buyingPrice"]~" | "~infoServers[key]["greenBuyingPrice"] }}</td>
+                                            <td>{{server.name }}</td>
+                                            <td>{{server.core }}</td>
+                                            <td>{{server.cpu }}</td>
+                                            <td>{{server.ram }}</td>
+                                            <td>{{server.disk }}</td>
+                                            <td>{{ infoServers[server.id-1]["capacity"] }}</td>
+                                            <td>{{ infoServers[server.id-1]["priceByMonth"]~" | "~infoServers[server.id-1]["greenPriceByMonth"] }}</td>
+                                            <td>{{ infoServers[server.id-1]["buyingPrice"]~" | "~infoServers[server.id-1]["greenBuyingPrice"] }}</td>
                                         </tr>
-                                    {% endif %}
-                                {% endfor %}
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>

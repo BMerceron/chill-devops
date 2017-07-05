@@ -7,4 +7,10 @@ $( document ).ready(function() {
 
     });
 
+    $(".js-delete_scenario").click(function(event){
+        event.preventDefault();
+        $('.js-confirm_delete_scenario').modal('open');
+
+    });
+
 });
