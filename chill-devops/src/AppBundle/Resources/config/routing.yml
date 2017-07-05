@@ -36,7 +36,7 @@ scenario_delete:
 scenario_delete_selection:
     path:    /scenario/delete/selection
     defaults: { _controller: AppBundle:Dashboard:deleteSelection }
-
+    
 scenario_add_bookmark:
     path:    /scenario/bookmark/{id}
     defaults: { _controller: AppBundle:Dashboard:addBookmark }
@@ -48,3 +48,7 @@ scenario_delete_bookmark:
     defaults: { _controller: AppBundle:Dashboard:deleteBookmark }
     requirements:
         id: \d+
+        
+secenario_search:
+    path:  /scenario/search
+    defaults: { _controller: AppBundle:Dashboard:search }

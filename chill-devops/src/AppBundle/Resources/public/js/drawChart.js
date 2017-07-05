@@ -22,7 +22,7 @@ $( document ).ready(function() {
   data:{
         json: dataset,
         keys: {
-            value: ['Clients', 'PriceByMonth', 'BuyingCost', 'GreenPriceByMonth', 'GreenBuyingCost'],
+            value: ['Clients', 'PriceByMonth', 'BuyingCost', 'GreenPriceByMonth', 'GreenBuyingCost', "ByClientByMonth", "GreenByClientByMonth"],
         },
         types: {
             BuyingCost: 'bar',
@@ -38,7 +38,9 @@ $( document ).ready(function() {
           GreenBuyingCost: 'blue',
           BuyingCost: 'purple',
           Clients: 'red',
-          PriceByMonth: 'orange'
+          PriceByMonth: 'orange',
+          ByClientByMonth: 'black',
+          GreenByClientByMonth: 'pink'
         }
     },
     bar: {

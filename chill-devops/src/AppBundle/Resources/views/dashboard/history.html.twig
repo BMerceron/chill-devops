@@ -3,10 +3,14 @@
     <div class="row">
         <div class="col s12 center history-content">
             <h2>Historique des scénarios</h2>
-            <div class="col s12">
+            <div class="col s12" style="position: relative">
                 <a class="left btn waves-effect waves-light light-green lighten-1" href="{{ path ("app_dashboard") }}">Ajouter un Scénario</a>
                 <a id="show-favorites" class="center btn waves-effect waves-light light-green lighten-1" >Favoris</a>
-                <a href="#multiDeleteModal" id="multibutton" class="right modal-multi-delete btn waves-light light-green lighten-1" data-toggle="modalDelete">Supprimer la sélection</a>
+                <a href="#multiDeleteModal" id="multibutton" class="left  modal-multi-delete btn waves-light light-green lighten-1 mrg-l-15" data-toggle="modalDelete">Supprimer la sélection</a>
+                <input class="right input-search k-js-input-search" data-toggle="modalDelete" style="width: 20%;"><i class="material-icons" style="position: absolute; right: 8px; top: 20px;">search</i>
+                <div style="width: 20%; position: absolute; right: 8px; top: 46px; z-index: 45;">
+                    <ul style="padding: 0; margin: 0" class="k-js-result-search-scenario collection"></ul>
+                </div>
             </div>
             {% if scenarios is not empty %}
                 <table class="responsive-table striped">
@@ -132,4 +136,5 @@
     <script src="{{ asset('js/multiDelete.js') }}"></script>
     <script src="{{ asset('js/edit.js') }}"></script>
     <script src="{{ asset('js/bookmark.js') }}"> </script>
+    <script src="{{ asset('js/search.js') }}"></script>
 {% endblock %}
