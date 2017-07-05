@@ -32,3 +32,7 @@ scenario_delete:
 scenario_delete_selection:
     path:    /scenario/delete/selection
     defaults: { _controller: AppBundle:Dashboard:deleteSelection }
+
+app_dashboard_check_is_available:
+    path:    /scenario/checkAvailable
+    defaults: { _controller: AppBundle:Dashboard:isAvailable }

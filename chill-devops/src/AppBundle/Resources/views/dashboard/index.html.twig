@@ -135,5 +135,28 @@
         <script src="{{ asset('js/clientSimulation.js') }}"></script>
         <script src="{{ asset('js/c3.min.js') }}"></script>
         <script src="{{ asset('js/d3.min.js') }}"></script>
+        <script>
+            var socket = io.connect('http://192.170.1.14:9090');
+
+            function onSimulate() {
+                var clientStart = $("#form_clientStart").val();
+                var periodicity = $("#form_periodicity").val();
+                var clientAdd = $("#form_clientAdd").val();
+
+                var datas = {clientStart: clientStart,periodicity: periodicity,clientAdd: clientAdd};
+                $.ajax({
+                    type: "POST",
+                    url: "{{ path('app_dashboard_check_is_available') }}",
+                    dataType: "JSON",
+                    data: datas,
+                    success: function (results) {
+                        console.log(results, 'ça marche !!!! :°)');
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert('C\'est nul');
+                    }
+                    // socket.emit('simulate', 'simulate');
+                });
+            }</script>
     {% endblock %}
 {% endblock %}

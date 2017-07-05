@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class DashboardController extends Controller
 {
@@ -173,5 +174,17 @@ class DashboardController extends Controller
         }
 
         return new JsonResponse();
+    }
+
+    public function isAvailableAction(Request $request){
+        $isAjax = $request->isXmlHttpRequest();
+        $datas = $request->request->all();
+        var_dump($datas);die;
+        $totalClients = $this->get('app_dashboard_check_available')->isAvailable(json_decode($datas, true));
+        if ($isAjax){
+            $data = $totalClients;
+            return new JsonResponse($data);
+        }
+        return new JsonResponse("error");
     }
 }
