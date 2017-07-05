@@ -179,12 +179,11 @@ class DashboardController extends Controller
     public function isAvailableAction(Request $request){
         $isAjax = $request->isXmlHttpRequest();
         $datas = $request->request->all();
-        var_dump($datas);die;
-        $totalClients = $this->get('app_dashboard_check_available')->isAvailable(json_decode($datas, true));
-        if ($isAjax){
+        $totalClients = $this->get('app_dashboard_check_available')->isAvailable($datas);
+        if ($totalClients == true){
             $data = $totalClients;
-            return new JsonResponse($data);
+            return new JsonResponse(true);
         }
-        return new JsonResponse("error");
+        return new JsonResponse(false);
     }
 }
