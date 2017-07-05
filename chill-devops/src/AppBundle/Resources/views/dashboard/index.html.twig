@@ -104,16 +104,16 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    {% for key,server in scenario.servers %}
+                                    {% for server in scenario.servers %}
                                         <tr>
                                             <td>{{server.name }}</td>
                                             <td>{{server.core }}</td>
                                             <td>{{server.cpu }}</td>
                                             <td>{{server.ram }}</td>
                                             <td>{{server.disk }}</td>
-                                            <td>{{ infoServers[key]["capacity"] }}</td>
-                                            <td>{{ infoServers[key]["priceByMonth"]~" | "~infoServers[key]["greenPriceByMonth"] }}</td>
-                                            <td>{{ infoServers[key]["buyingPrice"]~" | "~infoServers[key]["greenBuyingPrice"] }}</td>
+                                            <td>{{ infoServers[server.id-1]["capacity"] }}</td>
+                                            <td>{{ infoServers[server.id-1]["priceByMonth"]~" | "~infoServers[server.id-1]["greenPriceByMonth"] }}</td>
+                                            <td>{{ infoServers[server.id-1]["buyingPrice"]~" | "~infoServers[server.id-1]["greenBuyingPrice"] }}</td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>

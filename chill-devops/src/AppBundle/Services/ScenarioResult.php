@@ -121,11 +121,11 @@ class ScenarioResult
     {
         switch ($server) {
             case "one":
-                return ["capacity" =>6500, "buyingPrice" =>850, "priceByMonth" =>20, "greenBuyingPrice" =>1000, "greenPriceByMonth" =>10];
+                return ["capacity" =>465, "buyingPrice" =>424, "priceByMonth" =>355, "greenBuyingPrice" =>1689, "greenPriceByMonth" =>302];
             case "two":
-                return ["capacity" =>8000, "buyingPrice" =>1200, "priceByMonth" =>30, "greenBuyingPrice" =>1500, "greenPriceByMonth" =>15];
+                return ["capacity" =>595, "buyingPrice" =>817, "priceByMonth" =>371, "greenBuyingPrice" =>1981, "greenPriceByMonth" =>315];
             case "three":
-                return ["capacity" =>10000, "buyingPrice" =>1500, "priceByMonth" =>50, "greenBuyingPrice" =>2000, "greenPriceByMonth" =>25];
+                return ["capacity" =>1323, "buyingPrice" =>1192, "priceByMonth" =>371, "greenBuyingPrice" =>2361, "greenPriceByMonth" =>315];
         }
 
         return ["capacity" =>0, "buyingPrice" =>0, "priceByMonth" =>0, "greenBuyingPrice" =>0, "greenPriceByMonth" =>0 ];
@@ -149,8 +149,6 @@ class ScenarioResult
         $result = [];
         $servers = ["one"=>[], "two"=>[], "three"=>[]];
         $activity = $servers;
-        $activity["TotalMonths"] = 0;
-        $period = [];
 
         $totalPrice = 0;
         $totalGreenPrice = 0;
@@ -165,7 +163,7 @@ class ScenarioResult
             $result[$key]["BuyingCost"] = 0;
             $result[$key]["GreenBuyingCost"] = 0;
             $result[$key]["ByClientByMonth"] = 0;
-            $result[$key]["CostByMonth"] = 0;
+            $result[$key]["GreenByClientByMonth"] = 0;
             $result[$key]["LastMonth"] = $key;
 
             //how many servers do we need
@@ -291,6 +289,7 @@ class ScenarioResult
             if (!empty($servers["three"])) {
                 $result[$key]["PriceByMonth"] += (($this->getOnlineServers($servers["three"])) * $three['priceByMonth']);
                 $result[$key]["ByClientByMonth"] += ((($this->getOnlineServers($servers["three"])) * $three['priceByMonth']))/$result[$key]["Clients"];
+                $result[$key]["GreenByClientByMonth"] += ((($this->getOnlineServers($servers["three"])) * $three['greenPriceByMonth']))/$result[$key]["Clients"];
                 $result[$key]["GreenPriceByMonth"] += (($this->getOnlineServers($servers["three"])) * $three['greenPriceByMonth']);
                 $totalPrice += ($three['priceByMonth'] * $this->periodicity);
                 $totalGreenPrice += ($three['greenPriceByMonth'] * $this->periodicity);
@@ -298,6 +297,7 @@ class ScenarioResult
             if (!empty($servers["two"])) {
                 $result[$key]["PriceByMonth"] += (($this->getOnlineServers($servers["two"])) * $two['priceByMonth']);
                 $result[$key]["ByClientByMonth"] += ((($this->getOnlineServers($servers["two"])) * $two['priceByMonth']))/$result[$key]["Clients"];
+                $result[$key]["GreenByClientByMonth"] += ((($this->getOnlineServers($servers["two"])) * $two['greenPriceByMonth']))/$result[$key]["Clients"];
                 $result[$key]["GreenPriceByMonth"] += (($this->getOnlineServers($servers["two"])) * $two['greenPriceByMonth']);
                 $totalPrice += ($two['priceByMonth'] * $this->periodicity);
                 $totalGreenPrice += ($two['greenPriceByMonth'] * $this->periodicity);
@@ -305,6 +305,7 @@ class ScenarioResult
             if (!empty($servers["one"])) {
                 $result[$key]["PriceByMonth"] += (($this->getOnlineServers($servers["one"])) * $one['priceByMonth']);
                 $result[$key]["ByClientByMonth"] += ((($this->getOnlineServers($servers["one"])) * $one['priceByMonth']))/$result[$key]["Clients"];
+                $result[$key]["GreenByClientByMonth"] += ((($this->getOnlineServers($servers["one"])) * $one['greenPriceByMonth']))/$result[$key]["Clients"];
                 $result[$key]["GreenPriceByMonth"] += (($this->getOnlineServers($servers["one"])) * $one['greenPriceByMonth']);
                 $totalPrice += ($one['priceByMonth'] * $this->periodicity);
                 $totalGreenPrice += ($one['greenPriceByMonth'] * $this->periodicity);
@@ -317,34 +318,40 @@ class ScenarioResult
                     foreach ($serv as $server => $status) {
 
                         if ($status == "online") {
-                            $activity[$type][$server][]= $key ;
-                            if (sizeof($activity[$type]) < ($server + 1)) {
-                                array_push($activity[$type], $this->periodicity);
-                                //ajout de la périodicité en cours dans tableau à mettre après la valuer du nombre de mois actif ($key)
-                            } else {
-//                                $activity[$type][$server] += $this->periodicity;
-
-                            }
+                            $activity[$type][$server][]= $key;
                         }
                     }
                 }
 
             }
-            $activity["TotalMonths"] = $key;
-
-            dump($activity);
-
         }
 
-        // calculer prix par mois de l'achat de chaque serveur
-        // le répartir pour chaque mois où le serveur était actif (exemple: pour un serveur actif en periode 5,15,20, faire $result['5'], $result['15'], $result['20']) dans costbymonth et l'ajouter à pricebymonth)
-        // diviser le prix de chaque période par le nombre de clients (faire un foreach sur $result et diviser costbymonth par le nombre de client du mois (Client))
-
+        foreach ($activity as $type => $serv){
+            foreach ($serv as $id => $value){
+                switch ($type){
+                    case "one":
+                        $monthly = $one["buyingPrice"]/(sizeof($value)*$this->periodicity);
+                        $greenMonthly = $one["greenBuyingPrice"]/(sizeof($value)*$this->periodicity);
+                        break;
+                    case "two":
+                        $monthly = $two["buyingPrice"]/(sizeof($value)*$this->periodicity);
+                        $greenMonthly = $two["greenBuyingPrice"]/(sizeof($value)*$this->periodicity);
+                        break;
+                    case "three":
+                        $monthly =$three["buyingPrice"]/(sizeof($value)*$this->periodicity);
+                        $greenMonthly = $three["greenBuyingPrice"]/(sizeof($value)*$this->periodicity);
+                        break;
+                }
+                foreach ($value as $numP => $period){
+                    $result[$period]["ByClientByMonth"] += $monthly/$result[$period]["Clients"];
+                    $result[$period]["GreenByClientByMonth"] += $greenMonthly/$result[$period]["Clients"];
+                }
+            }
+        }
 
         $this->servers = $servers;
         $this->totalPrice = $totalPrice;
         $this->totalGreenPrice = $totalGreenPrice;
-        die;
         return $result;
 
     }
