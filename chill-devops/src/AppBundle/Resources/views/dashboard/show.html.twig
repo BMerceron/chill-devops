@@ -17,7 +17,7 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td><a href="{{ path('scenario_show', {'id': scenario.id}) }}">{{ scenario.name }}</a></td>
+                    <td><a href="{{ path('scenario_show', {'id': scenario.id}) }}">{{ scenario.name }}</a><i style="color: #039be5; margin-left: 15px;" class="spb-js-edit material-icons" data-id="{{ scenario.id }}" data-name="{{ scenario.name }}">edit</i></td>
                     <td>{{ scenario.createdAt|date("d/M/Y") }}</td>
                     <td>{{ scenario.clientStart }}</td>
                     <td>{{ scenario.periodicity~" mois" }}</td>
@@ -25,8 +25,13 @@
                     <td>
                         <a href="{{ path('scenario_edit', {'id': scenario.id}) }}"
                            class="btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">edit</i></a>
-                        <a class="btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">star</i></a>
-                        {#<a href="{{ path('scenario_delete', {'id': scenario.id, 'route': 'scenario_history'}) }}" class="modal-delete btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">delete</i></a>#}
+                        {% if scenario.isBookmarked == null or scenario.isBookmarked == false  %}
+                            <a data-tooltip="Ajouter aux favoris" data-position="bottom" data-delay="50" href="{{ path('scenario_add_bookmark', {'id': scenario.id}) }}" class="btn-floating btn tooltipped waves-effect waves-light light-green lighten-1"><i
+                                        class="material-icons">star</i></a>
+                        {% else %}
+                            <a data-tooltip="Supprimer des favoris" data-position="bottom" data-delay="50" href="{{ path('scenario_delete_bookmark', {'id': scenario.id}) }}" class="btn-floating waves-effect waves-light light-green lighten-5 tooltipped favorited"><i
+                                        class="material-icons" style="color: #9ccc65">star</i></a>
+                        {% endif %}
                         <a class="modal-delete btn-floating waves-effect waves-light light-green lighten-1" href="#confirm_delete_scenario"><i class="material-icons">delete</i></a>
                     </td>
                 </tr>
@@ -102,4 +107,5 @@
     <script src="{{ asset('js/c3.min.js') }}"></script>
     <script src="{{ asset('js/d3.min.js') }}"></script>
     <script src="{{ asset('js/dashboard.js') }}"></script>
+    <script src="{{ asset('js/edit.js') }}"></script>
 {% endblock %}

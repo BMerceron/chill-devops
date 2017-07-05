@@ -29,6 +29,11 @@ $( document ).ready(function() {
             x : 'LastMonth',
             value: ['Clients', 'PriceByMonth', 'BuyingCost'],
         },
+        names: {
+            Clients : 'Clients',
+            PriceByMonth: 'Coût de maintenance',
+            BuyingCost: 'Investissement'
+        },
         types: {
             BuyingCost: 'bar'
         },
@@ -62,7 +67,7 @@ $( document ).ready(function() {
         },
         y2: {
             label: {
-                text: 'Achats Matériel',
+                text: 'Investissement',
                 position: 'outer-middle'
             },
             tick: {
@@ -106,7 +111,7 @@ $( document ).ready(function() {
     .attr("dx", dx)
     .attr("y", y)
     .attr("dy", dy)
-    .text("Frais de maintenance")
+    .text("Coût de maintenance")
     .style("text-anchor", "middle")
     .style("opacity",0);
 
@@ -118,6 +123,11 @@ var greenChart = c3.generate({
             x : 'LastMonth',
             value: ['Clients', 'GreenPriceByMonth', 'GreenBuyingCost'],
         },
+        names: {
+            Clients : 'Clients',
+            GreenPriceByMonth: 'Coût de maintenance',
+            GreenBuyingCost: 'Investissement'
+        },
         types: {
             GreenBuyingCost: 'bar'
         },
@@ -125,7 +135,7 @@ var greenChart = c3.generate({
             Clients: 'y',
             GreenBuyingCost: 'y2'
         },
-      colors: {
+        colors: {
           GreenBuyingCost: 'blue',
           Clients: 'red',
           GreenPriceByMonth: 'green'
@@ -151,7 +161,7 @@ var greenChart = c3.generate({
         },
         y2: {
             label: {
-                text: 'Achats Matériel',
+                text: 'Investissement',
                 position: 'outer-middle'
             },
             tick: {
@@ -196,7 +206,7 @@ var greenChart = c3.generate({
     .attr("dx", dx)
     .attr("y", y)
     .attr("dy", dy)
-    .text("Frais de maintenance")
+    .text("Coût de maintenance")
     .style("text-anchor", "middle")
     .style("opacity",0);
 
@@ -208,14 +218,19 @@ var greenChart = c3.generate({
             x : 'LastMonth',
             value: ['ByClientByMonth', 'BuyingCost'],
         },
+        names: {
+            ByClientByMonth: 'Coût client/mois',
+            BuyingCost: 'Investissement'
+        },
         types: {
-            BuyingCost: 'bar'
+            BuyingCost: 'bar',
+            ByClientByMonth: 'spline'
         },
         axes: {
             ByClientByMonth: 'y',
             BuyingCost: 'y2'
         },
-      colors: {
+        colors: {
           BuyingCost: 'blue',
           ByClientByMonth: 'red'
         }
@@ -236,11 +251,16 @@ var greenChart = c3.generate({
             label: {
                 text: 'Coût par client (cts)',
                 position: 'outer-middle'
+            },
+            tick: {
+                format: function (d) { 
+                    return d.toFixed(2); 
+                }
             }
         },
         y2: {
             label: {
-                text: 'Achats Matériel',
+                text: 'Investissement',
                 position: 'outer-middle'
             },
             tick: {
@@ -257,6 +277,7 @@ var greenChart = c3.generate({
             value: function (value, ratio, id) {
                 var res = value;
                 if(id !== "Clients" ){
+                    value = id === "ByClientByMonth" ? value.toFixed(3) : value;
                     res = value + " €";
                 }
                 return res;
