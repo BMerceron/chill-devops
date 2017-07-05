@@ -11,6 +11,7 @@ function getWaiting(){
 
 socket.on('waiting', function(waiting){
     console.log(waiting);
+    $('#waiting').html(Math.round(waiting) + " secondes");
 });
 
 socket.on('response', function(results) {
