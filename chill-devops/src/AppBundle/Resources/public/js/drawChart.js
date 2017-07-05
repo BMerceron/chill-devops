@@ -200,6 +200,75 @@ var greenChart = c3.generate({
     .style("text-anchor", "middle")
     .style("opacity",0);
 
+  var costByMonthChart = c3.generate({
+  bindto: "#chart-container-cost",
+  data:{
+        json: dataset,
+        keys: {
+            x : 'LastMonth',
+            value: ['ByClientByMonth', 'BuyingCost'],
+        },
+        types: {
+            BuyingCost: 'bar'
+        },
+        axes: {
+            ByClientByMonth: 'y',
+            BuyingCost: 'y2'
+        },
+      colors: {
+          BuyingCost: 'blue',
+          ByClientByMonth: 'red'
+        }
+    },
+    bar: {
+        width: {
+            ratio: 0.5 }
+    },
+    axis: {
+        x: {
+            type: 'category',
+            label: {
+                text: 'Durée ( périodicité )',
+                position: 'outer-center'
+            }
+        },
+        y: {
+            label: {
+                text: 'Coût par client (cts)',
+                position: 'outer-middle'
+            }
+        },
+        y2: {
+            label: {
+                text: 'Achats Matériel',
+                position: 'outer-middle'
+            },
+            tick: {
+                format: function (d) { 
+                    return (d + " €"); 
+                }
+            },
+            show: true
+        }
+    },
+    tooltip: {
+        format: {
+            title: function (d) { return d; },
+            value: function (value, ratio, id) {
+                var res = value;
+                if(id !== "Clients" ){
+                    res = value + " €";
+                }
+                return res;
+            }
+        }
+    },
+    zoom: {
+        enabled: true
+    },
+    regions: regions
+  });
+
   var indusToggle = true;
   var indusChartContainer = $("#chart-container-industrial");
   indusChartContainer.find(".c3-legend-item-Clients").click(function(){
@@ -217,7 +286,7 @@ var greenChart = c3.generate({
 
   var greenToggle = true;
   var greenChartContainer = $("#chart-container-green");
-  greenChartContainer.find(".c3-axis-item-Clients").click(function(){
+  greenChartContainer.find(".c3-legend-item-Clients").click(function(){
     if(greenToggle){
         greenChartContainer.find(".c3-axis-y-label").hide();
         greenToggle = false;

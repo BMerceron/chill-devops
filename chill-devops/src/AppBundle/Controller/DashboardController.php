@@ -182,6 +182,7 @@ class DashboardController extends Controller
                 }
             }
         }
+        return new JsonResponse();
     }
 
     /**
