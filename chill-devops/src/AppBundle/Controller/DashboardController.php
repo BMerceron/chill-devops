@@ -7,6 +7,7 @@ use AppBundle\Entity\Configuration;
 use AppBundle\Entity\Scenario;
 use AppBundle\Services\ScenarioResult;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
@@ -181,5 +182,26 @@ class DashboardController extends Controller
         }
 
         return new JsonResponse();
+    }
+
+    public function searchAction(Request $request)
+    {
+        $tabScenarios = [];
+        $em = $this->getDoctrine()->getManager();
+
+        $scenarioRepository = $em->getRepository('AppBundle:Scenario');
+
+        if($request->isXmlHttpRequest()) {
+            $scenarios = $scenarioRepository->searchScenario($request->get('data'));
+
+            foreach ($scenarios as $scenario) {
+                array_push($tabScenarios, array(
+                    'id' => $scenario->getId(),
+                    'name' => $scenario->getName()
+                ));
+            }
+        }
+
+        return new JsonResponse($tabScenarios);
     }
 }

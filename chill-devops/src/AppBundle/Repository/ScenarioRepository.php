@@ -10,4 +10,13 @@ namespace AppBundle\Repository;
  */
 class ScenarioRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function searchScenario($name)
+    {
+        $query = $this->createQueryBuilder('s')
+            ->where("s.name LIKE '$name%'")
+            ->getQuery()
+            ->getResult();
+
+        return $query;
+    }
 }
