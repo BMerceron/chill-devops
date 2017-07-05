@@ -161,6 +161,18 @@
                         alert('Erreur lors de la requête');
                     }
                 });
+                function getWaiting(){
+                    socket.emit('waiting');
+                };
+
+                socket.on('waiting', function(waiting){
+                    console.log(waiting);
+                    $('#waiting').html(Math.round(waiting) + " secondes");
+                });
+
+                socket.on('response', function(results) {
+                    console.log(results);
+                });
             }</script>
     {% endblock %}
 {% endblock %}
