@@ -10,14 +10,12 @@ socket.on('waiting', function(){
 		var data = stdout;
         var re = /Estimated Run-Time:[\s]+(\d+)[\s]+Seconds/g;
         result = re.exec(data);
-        console.log(result[1])
         waiting = result[1];
         socket.emit('waiting', waiting);
 	});
 });
 
 socket.on('simulate', function(id){
-
 	var name = 'Test server';
 	var id = 'j1ge4gjvnmjqticeaaao';
 	var idpath = id.replace('_', '').replace('-', '').toLowerCase();
@@ -52,5 +50,4 @@ socket.on('simulate', function(id){
 
 		});
 	//});
-
 });

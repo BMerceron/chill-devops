@@ -11,7 +11,12 @@ function getWaiting(){
 
 socket.on('waiting', function(waiting){
     console.log(waiting);
+    $('#waiting').html(Math.round(waiting) + " secondes");
 });
+
+function onSimulate(){
+    socket.emit('simulate');
+}
 
 socket.on('response', function(results) {
     console.log(results);
