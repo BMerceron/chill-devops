@@ -17,10 +17,10 @@ socket.on('waiting', function(){
 
 socket.on('simulate', function(id){
 	var name = 'Test server';
-	var id = 'j1ge4gjvnmjqticeaaao';
+	//var id = 'j1ge4gjvnmjqticeaaao';
 	var idpath = id.replace('_', '').replace('-', '').toLowerCase();
 
-	//exec('echo "'+id+'" | /chill_project/scripts/launch_test.sh', function(error, stdout, stderr) {
+	exec('echo "'+id+'" | /chill_project/scripts/launch_test.sh', function(error, stdout, stderr) {
 		fs.readFile('/var/lib/phoronix-test-suite/test-results/'+idpath+'/composite.xml', 'utf-8', function(err, data){
 			if(err)
 				console.log(err);
@@ -49,5 +49,5 @@ socket.on('simulate', function(id){
 			socket.emit('response', result);
 
 		});
-	//});
+	});
 });
