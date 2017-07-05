@@ -40,6 +40,10 @@ ioclient.on('connection', function(socket){
 		console.log('Emmiting waiting time ('+waiting+') to client '+socket.id);
  		socket.emit('waiting', waiting);
 	});
+
+ 	socket.on('disconnect', function(){
+		console.log("Client " + socket.id + " disconnected");
+	});
 });
 
 iovm.on('connection', function(socket){
@@ -57,6 +61,8 @@ iovm.on('connection', function(socket){
 	});
 
 	socket.on('disconnect', function(){
+        console.log("VM " + socket.id + " disconnected");
+
 		vms = vms.filter(function(vm){
 			return vm.id !== socket.id; 
 		});
