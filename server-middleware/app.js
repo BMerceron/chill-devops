@@ -23,7 +23,7 @@ ioclient.on('connection', function(socket){
 
  	socket.on('waiting', function(){
  		console.log("Client "+socket.id+" want to get waiting time");
- 		/*var timeTaken = 0;
+ 		var timeTaken = 0;
  		vms.forEach(function(vm){
  			console.log("VM "+vm.id+" has waiting : "+vm.waiting);
  			if(vm.waiting > timeTaken)
@@ -33,9 +33,9 @@ ioclient.on('connection', function(socket){
  		var elapsed = ((new Date().getTime() - simulatingSince.getTime()) / 1000);
  		if(elapsed < 0)
  			elapsed = 0;
- 		waiting = timeTaken - elapsed + (queue.length * timeTaken);
+ 		var waiting = (timeTaken - elapsed) + (queue.length * timeTaken);
 
- 		socket.emit('waiting', waiting);*/
+ 		socket.emit('waiting', waiting);
 	});
 
 });
