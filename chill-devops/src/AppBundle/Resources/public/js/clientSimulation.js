@@ -11,6 +11,7 @@ function getWaiting(){
 
 socket.on('waiting', function(waiting){
    console.log(waiting);
+   alert(waiting);
 });
 
 socket.on('response', function(results) {

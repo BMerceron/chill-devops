@@ -35,6 +35,7 @@ ioclient.on('connection', function(socket){
  			elapsed = 0;
  		var waiting = (timeTaken - elapsed) + (queue.length * timeTaken);
 
+		console.log('Emmiting waiting time ('+waiting+') to client '+socket.id);
  		socket.emit('waiting', waiting);
 	});
 
