@@ -4,6 +4,10 @@
 var chrono  = {
     initChronoDate: function (startSecondes){
 
+        if(typeof this.setIntervalChrono !== 'undefined'){
+            clearInterval(this.setIntervalChrono);
+        }
+
         var calMinutes = startSecondes/60;
         var minutes = Math.floor(calMinutes);
         var seconds = startSecondes - minutes*60;
@@ -63,7 +67,7 @@ var chrono  = {
         if (minutes < 2) {
             $('.chrono .psb-js-inner-minutes').html(' minute ');
         }
-        if (secondes > 10) {
+        if (seconds > 10) {
             $('.chrono .psb-js-inner-secondes').html(' secondes ');
         }
         if (minutes > 10) {
@@ -75,13 +79,13 @@ var chrono  = {
         $('.chrono .psb-js-chrono-secondes').html(seconds);
 
 
-        var setIntervalChrono = setTimeout(function(){
+        this.setIntervalChrono = setTimeout(function(){
             chrono.start(hour, minutes, seconds);
         }, 1000);
         if (hour == 0 & minutes == 0 & seconds == 0) {
-            clearInterval(setIntervalChrono);
+            clearInterval(this.setIntervalChrono);
         }
 
     }
 };
-    chrono.initChronoDate();
+    //chrono.initChronoDate();

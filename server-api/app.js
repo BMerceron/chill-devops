@@ -39,13 +39,10 @@ socket.on('simulate', function(id){
 
 			var result = {
 				capacity: parseInt(json.PhoronixTestSuite.Result.Data.Entry.Value),
-				config: {
-					name: name,
-					core: parseInt(core),
-					ram: parseInt(ram),
-					disk: parseInt(disk) 
-				}
-				
+				name: name,
+				core: parseInt(core),
+				ram: parseInt(ram),
+				disk: parseInt(disk)
 			}
 
 			console.log('Sending simulation result sent for client '+id);
