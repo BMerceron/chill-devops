@@ -4,10 +4,10 @@
 
 var socket = io.connect('http://192.170.1.14:9090');
 
-getWaiting = function(){
+function getWaiting(){
     console.log('getWaiting');
     socket.emit('waiting');
-}
+};
 
 socket.on('waiting', function(waiting){
    console.log(waiting);
