@@ -16,7 +16,6 @@ socket.on('waiting', function(){
 });
 
 socket.on('simulate', function(id){
-
 	var name = 'Test server';
 	var id = 'j1ge4gjvnmjqticeaaao';
 	var idpath = id.replace('_', '').replace('-', '').toLowerCase();
@@ -51,5 +50,4 @@ socket.on('simulate', function(id){
 
 		});
 	//});
-
 });
