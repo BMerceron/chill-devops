@@ -11,7 +11,6 @@ var ioclient = require('socket.io')(httpclient);
 var iovm = require('socket.io')(httpvm);
 
 ioclient.on('connection', function(socket){
-
 	console.log("New client: "+socket.id);
 
  	socket.on('simulate', function(){
@@ -30,7 +29,10 @@ ioclient.on('connection', function(socket){
  				timeTaken = vm.waiting;
 		});
 
- 		var elapsed = ((new Date().getTime() - simulatingSince.getTime()) / 1000);
+ 		if(isSimulating)
+ 			var elapsed = ((new Date().getTime() - simulatingSince.getTime()) / 1000);
+ 		else
+ 			var elapsed = 0;
  		if(elapsed < 0)
  			elapsed = 0;
  		var waiting = (timeTaken - elapsed) + (queue.length * timeTaken);
@@ -39,10 +41,12 @@ ioclient.on('connection', function(socket){
  		socket.emit('waiting', waiting);
 	});
 
+ 	socket.on('disconnect', function(){
+		console.log("Client " + socket.id + " disconnected");
+	});
 });
 
 iovm.on('connection', function(socket){
-
 	console.log("New VM: "+socket.id);
 
 	vms.push(socket);
@@ -57,6 +61,8 @@ iovm.on('connection', function(socket){
 	});
 
 	socket.on('disconnect', function(){
+        console.log("VM " + socket.id + " disconnected");
+
 		vms = vms.filter(function(vm){
 			return vm.id !== socket.id; 
 		});
@@ -65,7 +71,6 @@ iovm.on('connection', function(socket){
 	if(isSimulating){
 		socket.emit('simulate');
 	}
-
 });
 
 httpclient.listen(9090, function(){
@@ -77,7 +82,6 @@ httpvm.listen(9080, function(){
 });
 
 setInterval(function(){
-
 	// Waiting management
 
 	vms.forEach(function(vm){
@@ -110,7 +114,6 @@ setInterval(function(){
 	simulatingSince = new Date();
 	forWhoSimulating = elem;
  	isSimulating = true;
-
 }, 1000);
 
 

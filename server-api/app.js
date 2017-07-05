@@ -16,6 +16,7 @@ socket.on('waiting', function(){
 });
 
 socket.on('simulate', function(id){
+	console.log('Simulation start for client '+id);
 
 	var name = 'Test server';
 	var id = 'j1ge4gjvnmjqticeaaao';
@@ -46,10 +47,10 @@ socket.on('simulate', function(id){
 				}
 				
 			}
-			
+
+			console.log('Sending simulation result sent for client '+id);
 			socket.emit('response', result);
 
 		});
 	//});
-
 });
