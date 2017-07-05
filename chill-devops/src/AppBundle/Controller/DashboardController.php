@@ -155,6 +155,15 @@ class DashboardController extends Controller
             ;
     }
 
+    public function deleteAction(Scenario $scenario, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($scenario);
+        $em->flush();
+
+        return $this->redirectToRoute($request->get('route'));
+    }
+
     public function deleteSelectionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
