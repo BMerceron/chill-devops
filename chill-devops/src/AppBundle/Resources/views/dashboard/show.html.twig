@@ -17,7 +17,7 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td><a href="{{ path('scenario_show', {'id': scenario.id}) }}">{{ scenario.name }}</a></td>
+                    <td><a href="{{ path('scenario_show', {'id': scenario.id}) }}">{{ scenario.name }}</a><i style="color: #039be5; margin-left: 15px;" class="spb-js-edit material-icons" data-id="{{ scenario.id }}" data-name="{{ scenario.name }}">edit</i></td>
                     <td>{{ scenario.createdAt|date("d/M/Y") }}</td>
                     <td>{{ scenario.clientStart }}</td>
                     <td>{{ scenario.periodicity~" mois" }}</td>
@@ -107,4 +107,5 @@
     <script src="{{ asset('js/c3.min.js') }}"></script>
     <script src="{{ asset('js/d3.min.js') }}"></script>
     <script src="{{ asset('js/dashboard.js') }}"></script>
+    <script src="{{ asset('js/edit.js') }}"></script>
 {% endblock %}
