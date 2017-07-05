@@ -10,10 +10,10 @@ socket.on('waiting', function(){
 		var data = stdout;
         var re = /Estimated Run-Time:[\s]+(\d+)[\s]+Seconds/g;
         result = re.exec(data);
-        console.log(result);
+        console.log(result[1])
         waiting = result[1];
+        socket.emit('waiting', waiting);
 	});
-	socket.emit('waiting', waiting);
 });
 
 socket.on('simulate', function(id){
