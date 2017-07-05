@@ -6,3 +6,7 @@ parameters:
 services:
     app_dashboard_scenario_result:
         class: AppBundle\Services\ScenarioResult
+
+    app_dashboard_check_available:
+        class: AppBundle\Services\CheckIsAvailable
+        arguments: ['@service_container']
