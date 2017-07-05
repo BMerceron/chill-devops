@@ -2,11 +2,19 @@
  * Created by jonathan on 14/06/17.
  */
 var chrono  = {
-    initChronoDate: function (){
-        var dataDate = $('.psb-js-date');
-        var start  = new Date('2017-06-13 00:12:10');
-        var end = new Date('2017-06-13 00:00:00');
-        return this.dateDiff(end, start);
+    initChronoDate: function (startSecondes){
+
+        var calMinutes = startSecondes/60;
+        var minutes = Math.floor(calMinutes);
+        var seconds = startSecondes - minutes*60;
+        if(minutes >= 60 ) {
+            var calHours = minutes/60;
+            var hours = Math.floor(calHours);
+            minutes = minutes - (60*hours);
+        } else {
+            hours = 0;
+        }
+        chrono.displayChrono(hours, minutes, seconds);
     },
 
     dateDiff: function (date1, date2){
@@ -42,11 +50,11 @@ var chrono  = {
         this.displayChrono (hour, minutes, secondes);
     },
 
-    displayChrono: function (hour, minutes, secondes) {
-        if (secondes < 10) {
-            secondes = "0" + parseInt(secondes);
+    displayChrono: function (hour, minutes, seconds) {
+        if (seconds < 10) {
+            seconds = "0" + parseInt(seconds);
         }
-        if (secondes < 2) {
+        if (seconds < 2) {
             $('.chrono .psb-js-inner-secondes').text(' seconde ');
         }
         if (minutes < 10) {
@@ -64,13 +72,13 @@ var chrono  = {
 
         $('.chrono .psb-js-chrono-hours').html(hour);
         $('.chrono .psb-js-chrono-minutes').html(minutes);
-        $('.chrono .psb-js-chrono-secondes').html(secondes);
+        $('.chrono .psb-js-chrono-secondes').html(seconds);
 
 
         var setIntervalChrono = setTimeout(function(){
-            chrono.start(hour, minutes, secondes);
+            chrono.start(hour, minutes, seconds);
         }, 1000);
-        if (hour == 0 & minutes == 0 & secondes == 0) {
+        if (hour == 0 & minutes == 0 & seconds == 0) {
             clearInterval(setIntervalChrono);
         }
 
