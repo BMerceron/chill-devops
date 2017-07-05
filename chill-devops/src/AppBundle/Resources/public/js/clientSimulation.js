@@ -14,6 +14,10 @@ socket.on('waiting', function(waiting){
     $('#waiting').html(Math.round(waiting) + " secondes");
 });
 
+function onSimulate(){
+    socket.emit('simulate');
+}
+
 socket.on('response', function(results) {
     console.log(results);
 });
