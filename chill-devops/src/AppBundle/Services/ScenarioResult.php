@@ -136,12 +136,13 @@ class ScenarioResult
 
     /**
      * @param Scenario $scenario
-     * @return array|void
+     * @return array
+     * @throws \Exception
      */
-    public function getPricesAndServers(Scenario $scenario)
+    public function getPricesAndServers($scenario)
     {
         if (!$scenario instanceof Scenario) {
-            return;
+            throw new \Exception('Need an instance of Scenario.');
         }
         $totalClients = $this->getTotalClientsByPeriodicity($scenario);
 
