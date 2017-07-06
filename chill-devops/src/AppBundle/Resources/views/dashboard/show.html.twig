@@ -17,16 +17,20 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td><a href="{{ path('scenario_show', {'id': scenario.id}) }}">{{ scenario.name }}</a></td>
+                    <td><a href="{{ path('scenario_show', {'id': scenario.id}) }}">{{ scenario.name }}</a><i style="color: #039be5; margin-right: 30px; float: right;" class="spb-js-edit material-icons" data-id="{{ scenario.id }}" data-name="{{ scenario.name }}">edit</i></td>
                     <td>{{ scenario.createdAt|date("d/M/Y") }}</td>
                     <td>{{ scenario.clientStart }}</td>
                     <td>{{ scenario.periodicity~" mois" }}</td>
                     <td>{{ scenario.clientAdd~" %" }}</td>
                     <td>
-                        <a href="{{ path('scenario_edit', {'id': scenario.id}) }}"
-                           class="btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">edit</i></a>
-                        <a class="btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">star</i></a>
-                        <a href="{{ path('scenario_delete', {'id': scenario.id}) }}" class="modal-delete btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">delete</i></a>
+                        {% if scenario.isBookmarked == null or scenario.isBookmarked == false  %}
+                            <a data-tooltip="Ajouter aux favoris" data-position="bottom" data-delay="50" href="{{ path('scenario_add_bookmark', {'id': scenario.id}) }}" class="btn-floating btn tooltipped waves-effect waves-light light-green lighten-1"><i
+                                        class="material-icons">star</i></a>
+                        {% else %}
+                            <a data-tooltip="Supprimer des favoris" data-position="bottom" data-delay="50" href="{{ path('scenario_delete_bookmark', {'id': scenario.id}) }}" class="btn-floating waves-effect waves-light light-green lighten-5 tooltipped favorited"><i
+                                        class="material-icons" style="color: #9ccc65">star</i></a>
+                        {% endif %}
+                        <a class="modal-delete btn-floating waves-effect waves-light light-green lighten-1" href="#confirm_delete_scenario"><i class="material-icons">delete</i></a>
                     </td>
                 </tr>
                 </tbody>
@@ -85,4 +89,21 @@
             </div>
         </div>
     </div>
+    <div id="confirm_delete_scenario" class="modal js-confirm_delete_scenario">
+        <div class="modal-content">
+            <h4>Attention</h4>
+            <p>Vous êtes sur le point de supprimer le scénario. Il vous sera impossible de le récupérer après la suppression. Etes-vous sûr de vouloir continuer ? </p>
+        </div>
+        <div class="modal-footer">
+            <!-- Submit Button (confirmation) -->
+            <button class="btn waves-effect waves-light right light-green lighten-1" ><a href="{{ path('scenario_delete', {'id': scenario.id, 'route': 'scenario_history' }) }}" style="color: #FFF;">Oui</a></button>
+            <button class="modal-action modal-close waves-effect waves-red btn-flat">Annuler</button>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/c3.min.js') }}"></script>
+    <script src="{{ asset('js/d3.min.js') }}"></script>
+    <script src="{{ asset('js/dashboard.js') }}"></script>
+    <script src="{{ asset('js/edit.js') }}"></script>
 {% endblock %}

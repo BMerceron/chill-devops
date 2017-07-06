@@ -3,9 +3,14 @@
     <div class="row">
         <div class="col s12 center history-content">
             <h2>Historique des scénarios</h2>
-            <div class="col s12">
+            <div class="col s12" style="position: relative">
                 <a class="left btn waves-effect waves-light light-green lighten-1" href="{{ path ("app_dashboard") }}">Ajouter un Scénario</a>
-                <a href="#multiDeleteModal" id="multibutton" class="right modal-multi-delete btn waves-light light-green lighten-1" data-toggle="modalDelete">Supprimer la sélection</a>
+                <a id="show-favorites" class="center btn waves-effect waves-light light-green lighten-1" >Favoris</a>
+                <a href="#multiDeleteModal" id="multibutton" class="left modal-multi-delete btn waves-light red" data-toggle="modalDelete">Supprimer la sélection</a>
+                <input class="right input-search k-js-input-search" data-toggle="modalDelete" style="width: 20%;"><i class="material-icons" style="position: absolute; right: 8px; top: 20px;">search</i>
+                <div style="width: 20%; position: absolute; right: 8px; top: 46px; z-index: 45;">
+                    <ul style="padding: 0; margin: 0" class="k-js-result-search-scenario collection"></ul>
+                </div>
             </div>
             {% if scenarios is not empty %}
                 <table class="responsive-table striped">
@@ -20,7 +25,7 @@
                         <th class="center">Supprimer</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="spb-js-show-all">
                     {% for scenario in scenarios %}
                         <tr>
                             <td class="center"><a href="{{ path('scenario_show', {'id': scenario.id}) }}">{{ scenario.name }}</a><i style="color: #039be5;" class="spb-js-edit right material-icons" data-id="{{ scenario.id }}" data-name="{{ scenario.name }}">edit</i>
@@ -30,8 +35,13 @@
                             <td class="center">{{ scenario.periodicity~" mois" }}</td>
                             <td class="center">{{ scenario.clientAdd~" %" }}</td>
                             <td class="center">
-                                <a class="btn-floating waves-effect waves-light light-green lighten-1"><i
+                                {% if scenario.isBookmarked == null or scenario.isBookmarked == false  %}
+                                    <a data-tooltip="Ajouter aux favoris" data-position="bottom" data-delay="50" href="{{ path('scenario_add_bookmark', {'id': scenario.id}) }}" class="btn-floating btn tooltipped waves-effect waves-light light-green lighten-1"><i
                                             class="material-icons">star</i></a>
+                                {% else %}
+                                    <a data-tooltip="Supprimer des favoris" data-position="bottom" data-delay="50" href="{{ path('scenario_delete_bookmark', {'id': scenario.id}) }}" class="tooltipped favorited"><i
+                                        class="material-icons" style="color: #9ccc65">star</i></a>
+                                {% endif %}
                             </td>
                             <td class="center">
                                 <p>
@@ -44,9 +54,37 @@
                         </tr>
                     {% endfor %}
                     </tbody>
+                    <tbody class="spb-js-show-favorites" style="display: none;">
+                    {% if favorites is not empty %}
+                        {% for favorite in favorites %}
+                                <tr>
+                                    <td class="center"><a href="{{ path('scenario_show', {'id': favorite.id}) }}">{{ favorite.name }}</a><i style="color: #039be5;" class="spb-js-edit right material-icons" data-id="{{ favorite.id }}" data-name="{{ favorite.name }}">edit</i>
+                                    </td>
+                                    <td class="center">{{ favorite.createdAt|date("d/M/ Y") }}</td>
+                                    <td class="center">{{ favorite.clientStart }}</td>
+                                    <td class="center">{{ favorite.periodicity~" mois" }}</td>
+                                    <td class="center">{{ favorite.clientAdd~" %" }}</td>
+                                    <td class="center">
+                                        {% if favorite.isBookmarked == null or favorite.isBookmarked == false  %}
+                                            <a data-tooltip="Ajouter aux favoris" data-position="bottom" data-delay="50" href="{{ path('scenario_add_bookmark', {'id': favorite.id}) }}" class="btn-floating btn tooltipped waves-effect waves-light light-green lighten-1"><i
+                                                        class="material-icons">star</i></a>
+                                        {% else %}
+                                            <a data-tooltip="Supprimer des favoris" data-position="bottom" data-delay="50" href="{{ path('scenario_delete_bookmark', {'id': favorite.id}) }}" class="tooltipped favorited"><i
+                                                        class="material-icons" style="color: #9ccc65">star</i></a>
+                                        {% endif %}
+                                    </td>
+
+                                </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td class="grey lighten-3">Vous n'avez pas de scénarios favoris pour le moment. Vous pouvez en ajouter en cliquant sur le bouton Etoile.</td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
                 </table>
                 <div class="col s12">
-                    <a href="#multiDeleteModal" id="multibutton" class="right modal-multi-delete btn waves-light light-green lighten-1" data-toggle="modalDelete">Supprimer la sélection</a>
+                    <a href="#multiDeleteModal" id="multibutton" class="right modal-multi-delete btn waves-light red" data-toggle="modalDelete">Supprimer la sélection</a>
                 </div>
             {% else %}
                 <div class="col s12 grey lighten-3 center">
@@ -57,27 +95,12 @@
             {% endif %}
         </div>
     </div>
-    {# modal delete scenario#}
-    <div id="deleteModal" class="modal">
-        <div class="modal-content">
-            <h4>Attention</h4>
-            <p>Vous êtes sur le point de supprimer ce scénario. Il vous sera impossible de le récupérer après la
-                <suppression class=""></suppression>
-            </p>
-        </div>
-        <div class="modal-footer">
-            <a href="#" id="removeLink" class="modal-action modal-close waves-effect waves-green btn-flat">Oui</a>
-            <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat">Non</a>
-        </div>
-    </div>
-
     {# modal multidelete scenario#}
     <div id="multiDeleteModal" class="modal">
         <div class="modal-content">
             <h4>Attention</h4>
             <p>Vous êtes sur le point de supprimer les scénarios sélectionnés. Il vous sera impossible de les récupérer
                 après la suppression. Etes-vous sûr de vouloir continuer ?
-                <suppression class=""></suppression>
             </p>
         </div>
         <div class="modal-footer">
@@ -87,7 +110,8 @@
     </div>
 {% endblock %}
 {% block javascripts %}
-    <script src="{{ asset('js/modalDelete.js') }}"></script>
     <script src="{{ asset('js/multiDelete.js') }}"></script>
     <script src="{{ asset('js/edit.js') }}"></script>
+    <script src="{{ asset('js/bookmark.js') }}"> </script>
+    <script src="{{ asset('js/search.js') }}"></script>
 {% endblock %}
