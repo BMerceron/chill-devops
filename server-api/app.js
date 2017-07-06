@@ -4,6 +4,9 @@ var parser = require('xml2json');
 var sys = require('sys');
 var exec = require('child_process').exec;
 
+var name = process.argv[1] || 'Serveur 1';
+console.log("VM "+name+" is started");
+
 socket.on('waiting', function(){
 	var waiting = 600;
 	exec('phoronix-test-suite info apache', function(error, stdout, stderr){
@@ -18,11 +21,11 @@ socket.on('waiting', function(){
 socket.on('simulate', function(id){
 	console.log('Simulation start for client '+id);
 
-	var name = 'Test server';
-	var id = 'j1ge4gjvnmjqticeaaao';
-	var idpath = id.replace('_', '').replace('-', '').toLowerCase();
+	//var id = 'j1ge4gjvnmjqticeaaao';
+	//var idpath = id.replace('_', '').replace('-', '').toLowerCase();
+	var idpath = id;
 
-	//exec('echo "'+id+'" | /chill_project/scripts/launch_test.sh', function(error, stdout, stderr) {
+	exec('echo "'+id+'" | /chill_project/scripts/launch_test.sh', function(error, stdout, stderr) {
 		fs.readFile('/var/lib/phoronix-test-suite/test-results/'+idpath+'/composite.xml', 'utf-8', function(err, data){
 			if(err)
 				console.log(err);
@@ -49,5 +52,5 @@ socket.on('simulate', function(id){
 			socket.emit('response', result);
 
 		});
-	//});
+	});
 });
