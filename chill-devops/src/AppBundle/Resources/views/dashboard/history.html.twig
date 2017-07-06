@@ -73,7 +73,14 @@
                                                         class="material-icons" style="color: #9ccc65">star</i></a>
                                         {% endif %}
                                     </td>
-
+                                    <td class="center">
+                                        <p>
+                                            <input type="checkbox" class="psb-js-delete-select"
+                                                   id="delete-fav-{{ favorite.id }}" name="selected-scenario"
+                                                   value="{{ favorite.id }}" data-id="{{ favorite.id }}"/>
+                                            <label for="delete-fav-{{ favorite.id }}"></label>
+                                        </p>
+                                    </td>
                                 </tr>
                         {% endfor %}
                     {% else %}
