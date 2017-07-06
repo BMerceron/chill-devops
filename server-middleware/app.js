@@ -29,13 +29,22 @@ ioclient.on('connection', function(socket){
  				timeTaken = vm.waiting;
 		});
 
+ 		console.log("timeTaken: "+timeTaken);
+
  		if(isSimulating)
  			var elapsed = ((new Date().getTime() - simulatingSince.getTime()) / 1000);
  		else
  			var elapsed = 0;
- 		if(elapsed < 0)
- 			elapsed = 0;
- 		var waiting = (timeTaken - elapsed) + (queue.length * timeTaken);
+ 		if(elapsed < 0) elapsed = 0;
+
+ 		console.log("elapsed: "+elapsed);
+
+ 		var remaining = timeTaken - elapsed;
+ 		if (remaining < 0) remaining = 0;
+
+        console.log("remaining: "+remaining);
+
+ 		var waiting = parseInt(remaining) + parseInt(queue.length * timeTaken) + parseInt(timeTaken);
 
 		console.log('Emmiting waiting time ('+waiting+') to client '+socket.id);
  		socket.emit('waiting', waiting);
@@ -93,7 +102,7 @@ setInterval(function(){
 	console.log(queue.length, 'Events in queue');
 
 	if(vms.length === results.length && isSimulating){
-		console.log("All results received for "+forWhoSimulating.id+", sending response to client");
+		console.log("All results received for "+forWhoSimulating.id+", sending response to client", results);
 		forWhoSimulating.emit('response', results);
 		results = [];
 		forWhoSimulating = null;
