@@ -29,14 +29,20 @@ ioclient.on('connection', function(socket){
  				timeTaken = vm.waiting;
 		});
 
+ 		console.log("timeTaken: "+timeTaken);
+
  		if(isSimulating)
  			var elapsed = ((new Date().getTime() - simulatingSince.getTime()) / 1000);
  		else
  			var elapsed = 0;
  		if(elapsed < 0) elapsed = 0;
 
+ 		console.log("elapsed: "+elapsed);
+
  		var remaining = timeTaken - elapsed;
  		if (remaining < 0) remaining = 0;
+
+        console.log("remaining: "+remaining);
 
  		var waiting = remaining + (queue.length * timeTaken) + timeTaken;
 
