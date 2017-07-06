@@ -4,7 +4,7 @@ var parser = require('xml2json');
 var sys = require('sys');
 var exec = require('child_process').exec;
 
-var name = process.argv[1] || 'Serveur 1';
+var name = process.argv[2] || 'Serveur 1';
 console.log("VM "+name+" is started");
 
 socket.on('waiting', function(){
