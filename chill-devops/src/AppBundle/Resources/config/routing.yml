@@ -3,6 +3,11 @@ app_dashboard:
     defaults: { _controller: AppBundle:Dashboard:index }
 
 # crud for scenarios
+
+app_dashboard_update_server:
+    path:     /server/update
+    defaults: { _controller: AppBundle:Dashboard:updateServer }
+
 scenario_edit:
     path:     /scenario/edit/{id}
     defaults: { _controller: AppBundle:Dashboard:edit }

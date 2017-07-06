@@ -19,10 +19,10 @@ class DashboardController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
         $scenario = new Scenario();
         $form = $this->createFormBuilder($scenario)
             ->add('name', TextType::class, array('label' => "Nom du scénario"))
@@ -34,7 +34,6 @@ class DashboardController extends Controller
         $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-
                 /** @var Scenario $scenario */
                 $scenario = $form->getData();
                 $totalClient = $this->get('app_dashboard_scenario_result')->getTotalClientsByPeriodicity($scenario);
@@ -92,6 +91,44 @@ class DashboardController extends Controller
         return $this->render('AppBundle:dashboard:index.html.twig', array(
             'form' => $form->createView(),
         ));
+    }
+
+    public function updateServerAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $servers = $em->getRepository('AppBundle:Configuration');
+        $datas = $request->request->all();
+
+        if(!empty($datas['server1'])) {
+           $server1 = $servers->findOneById('1');
+           $server1->setRam($datas['server1']['ram']);
+           $server1->setCore($datas['server1']['core']);
+           $server1->setDisk($datas['server1']['disk']);
+           $em->persist($server1);
+           $em->flush();
+
+           return new JsonResponse(true);
+        }
+        if(!empty($datas['server2'])) {
+            $server2 = $servers->findOneById('2');
+            $server2->setRam($datas['server2']['ram']);
+            $server2->setCore($datas['server2']['core']);
+            $server2->setDisk($datas['server2']['disk']);
+            $em->persist($server2);
+            $em->flush();
+
+            return new JsonResponse(true);
+        }
+        if(!empty($datas['server3'])) {
+            $server3 = $servers->findOneById('3');
+            $server3->setRam($datas['server3']['ram']);
+            $server3->setCore($datas['server3']['core']);
+            $server3->setDisk($datas['server3']['disk']);
+            $em->persist($server3);
+            $em->flush();
+
+            return new JsonResponse(true);
+        }
+        return new JsonResponse(false);
     }
 
     public function historyAction() {
