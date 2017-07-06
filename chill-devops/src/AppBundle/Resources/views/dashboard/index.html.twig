@@ -54,9 +54,9 @@
             {% if scenario is defined %}
             <input id="chartDatas" hidden="hidden" value="{{ data }}">
                 <div class="col s12 grey lighten-3">
-                    <h2 class="left">{{ scenario.name }}</h2>
+                    <h2 class="left spb-js-edit-show">{{ scenario.name }}</h2>
+                    <i style="color: #039be5; margin-left: 30px; margin-top: 42px" class="spb-js-edit material-icons" data-id="{{ scenario.id }}" data-name="{{ scenario.name }}" data-route="show">edit</i>
                      <div class="right" style="margin-top: 25px;">
-                        <a href="{{ path('scenario_edit', {'id': scenario.id}) }}" class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">edit</i></a>
                         <a href={{ path('scenario_add_bookmark', {'id': scenario.id}) }} class="btn-floating btn-large waves-effect waves-light light-green lighten-1"><i class="material-icons">star</i></a>
                         <!-- Modal Button -->
                         <a class="btn-floating btn-large waves-effect waves-light light-green lighten-1 js-delete_scenario" href="#confirm_delete_scenario" style="color: #FFF;"><i class="material-icons">delete</i></a>
@@ -129,4 +129,5 @@
     <script src="{{ asset('js/dashboard.js') }}"></script>
     <script src="{{ asset('js/c3.min.js') }}"></script>
     <script src="{{ asset('js/d3.min.js') }}"></script>
+    <script src="{{ asset('js/edit.js') }}"></script>
 {% endblock %}
