@@ -194,14 +194,7 @@
                 $.ajax({
                     type: "POST",
                     url: "{{ path('app_dashboard_update_server') }}",
-                    data: datas,
-                    success: function (results) {
-                        console.log('les servers sont mis à jour !')
-
-                    },
-                    error: function() {
-                        console.log('erreur lors de la mise à jour des serveurs');
-                    }
+                    data: datas
                 });
 
                 $('form').submit();

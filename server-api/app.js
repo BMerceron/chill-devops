@@ -4,6 +4,9 @@ var parser = require('xml2json');
 var sys = require('sys');
 var exec = require('child_process').exec;
 
+var name = process.argv[2] || 'Serveur 1';
+console.log("VM "+name+" is started");
+
 socket.on('waiting', function(){
 	var waiting = 600;
 	exec('phoronix-test-suite info apache', function(error, stdout, stderr){
@@ -18,8 +21,7 @@ socket.on('waiting', function(){
 socket.on('simulate', function(id){
 	console.log('Simulation start for client '+id);
 
-	var name = 'Test server';
-	var id = 'j1ge4gjvnmjqticeaaao';
+	var id = 'BhUt06iOtab1KKz6AAC9';
 	var idpath = id.replace('_', '').replace('-', '').toLowerCase();
 
 	//exec('echo "'+id+'" | /chill_project/scripts/launch_test.sh', function(error, stdout, stderr) {
