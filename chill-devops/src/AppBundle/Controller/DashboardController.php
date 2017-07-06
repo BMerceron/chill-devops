@@ -97,35 +97,38 @@ class DashboardController extends Controller
         $em = $this->getDoctrine()->getManager();
         $servers = $em->getRepository('AppBundle:Configuration');
         $datas = $request->request->all();
+        $server1 = $servers->findOneById('1');
+        $server2 = $servers->findOneById('2');
+        $server3 = $servers->findOneById('3');
 
         if(!empty($datas['server1'])) {
-           $server1 = $servers->findOneById('1');
+
            $server1->setRam($datas['server1']['ram']);
            $server1->setCore($datas['server1']['core']);
            $server1->setDisk($datas['server1']['disk']);
            $em->persist($server1);
            $em->flush();
-
-           return new JsonResponse(true);
+           $server1 = true;
         }
         if(!empty($datas['server2'])) {
-            $server2 = $servers->findOneById('2');
             $server2->setRam($datas['server2']['ram']);
             $server2->setCore($datas['server2']['core']);
             $server2->setDisk($datas['server2']['disk']);
             $em->persist($server2);
             $em->flush();
+            $server2 = true;
 
-            return new JsonResponse(true);
         }
         if(!empty($datas['server3'])) {
-            $server3 = $servers->findOneById('3');
             $server3->setRam($datas['server3']['ram']);
             $server3->setCore($datas['server3']['core']);
             $server3->setDisk($datas['server3']['disk']);
             $em->persist($server3);
             $em->flush();
+            $server3 = true;
 
+        }
+        if ($server1 == true && $server2 && $server3) {
             return new JsonResponse(true);
         }
         return new JsonResponse(false);
