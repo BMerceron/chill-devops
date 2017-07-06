@@ -23,6 +23,9 @@
                     <td>{{ scenario.periodicity~" mois" }}</td>
                     <td>{{ scenario.clientAdd~" %" }}</td>
                     <td>
+                        <a href="{{ path('scenario_edit', {'id': scenario.id}) }}"
+                           class="btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">edit</i></a>
+
                         {% if scenario.isBookmarked == null or scenario.isBookmarked == false  %}
                             <a data-tooltip="Ajouter aux favoris" data-position="bottom" data-delay="50" href="{{ path('scenario_add_bookmark', {'id': scenario.id}) }}" class="btn-floating btn tooltipped waves-effect waves-light light-green lighten-1"><i
                                         class="material-icons">star</i></a>
@@ -31,6 +34,9 @@
                                         class="material-icons" style="color: #9ccc65">star</i></a>
                         {% endif %}
                         <a class="modal-delete btn-floating waves-effect waves-light light-green lighten-1" href="#confirm_delete_scenario"><i class="material-icons">delete</i></a>
+
+                        <a href="{{ path('scenario_delete', {'id': scenario.id}) }}" class="modal-delete btn-floating waves-effect waves-light light-green lighten-1"><i class="material-icons">delete</i></a>
+                        <a class="btn-floating waves-effect waves-light light-green lighten-1" href="{{ path('scenario_pdf', {'id': scenario.id}) }}"><img src="{{ asset('img/pdf_logo.png') }}" width="30px" style="margin-top: 4px; margin-left: 6px"></a>
                     </td>
                 </tr>
                 </tbody>
