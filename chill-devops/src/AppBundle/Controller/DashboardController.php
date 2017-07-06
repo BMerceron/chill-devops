@@ -157,7 +157,7 @@ class DashboardController extends Controller
             'infoServers' => $infoServers,
         ));
 
-        $filename = sprintf('test-%s.pdf', date('Y-m-d'));
+        $filename = sprintf('SAASPAASBIEN - '.$scenario->getName().'.pdf', date('Y-m-d'));
 
         return new Response(
             $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
