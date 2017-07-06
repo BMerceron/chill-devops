@@ -206,8 +206,8 @@ var greenChart = c3.generate({
     .style("text-anchor", "middle")
     .style("opacity",0);
 
-  var costByMonthChart = c3.generate({
-  bindto: "#chart-container-cost",
+  var costByMonthChartIndus = c3.generate({
+  bindto: "#chart-container-cost-indus",
   data:{
         json: dataset,
         keys: {
@@ -228,7 +228,7 @@ var greenChart = c3.generate({
         },
         colors: {
           BuyingCost: 'blue',
-          ByClientByMonth: 'red'
+          ByClientByMonth: 'orange'
         }
     },
     bar: {
@@ -286,6 +286,86 @@ var greenChart = c3.generate({
     regions: regions
   });
 
+  var costByMonthChartGreen = c3.generate({
+  bindto: "#chart-container-cost-green",
+  data:{
+        json: dataset,
+        keys: {
+            x : 'LastMonth',
+            value: ['GreenByClientByMonth', 'GreenBuyingCost'],
+        },
+        names: {
+            GreenByClientByMonth: 'Coût client/mois',
+            GreenBuyingCost: 'Investissement'
+        },
+        types: {
+            GreenBuyingCost: 'bar',
+            GreenByClientByMonth: 'spline'
+        },
+        axes: {
+            GreenByClientByMonth: 'y',
+            GreenBuyingCost: 'y2'
+        },
+        colors: {
+          GreenBuyingCost: 'blue',
+          GreenByClientByMonth: 'green'
+        }
+    },
+    bar: {
+        width: {
+            ratio: 0.5 }
+    },
+    axis: {
+        x: {
+            type: 'category',
+            label: {
+                text: 'Durée ( périodicité )',
+                position: 'outer-center'
+            }
+        },
+        y: {
+            label: {
+                text: 'Coût par client (cts)',
+                position: 'outer-middle'
+            },
+            tick: {
+                format: function (d) { 
+                    return d.toFixed(2); 
+                }
+            }
+        },
+        y2: {
+            label: {
+                text: 'Investissement',
+                position: 'outer-middle'
+            },
+            tick: {
+                format: function (d) { 
+                    return (d + " €"); 
+                }
+            },
+            show: true
+        }
+    },
+    tooltip: {
+        format: {
+            title: function (d) { return d; },
+            value: function (value, ratio, id) {
+                var res = value;
+                if(id !== "Clients" ){
+                    value = id === "GreenByClientByMonth" ? value.toFixed(3) : value;
+                    res = value + " €";
+                }
+                return res;
+            }
+        }
+    },
+    zoom: {
+        enabled: true
+    },
+    regions: regions
+  });
+
   var indusToggle = true;
   var indusChartContainer = $("#chart-container-industrial");
   indusChartContainer.find(".c3-legend-item-Clients").click(function(){
@@ -318,14 +398,11 @@ var greenChart = c3.generate({
 
   $("#switchGreen").click(function(){
       $(this).toggleClass("light-green").toggleClass("blue");
-    costByMonthChart.load({
-        json: dataset,
-        keys: {
-            value: ['GreenByClientByMonth', 'GreenBuyingCost'],
-        },
-        unload: ['ByClientByMonth', 'BuyingCost']
-    });
-    costByMonthChart.transform('bar', 'GreenBuyingCost');
+      $("#chart-container-cost-indus").toggle();
+      $("#chart-container-cost-green").toggle();
+      var txt = $(this).hasClass('blue') ? 'Afficher standard' : 'Afficher Green';
+      $(this).text(txt);
+      $("#title-switch-green").toggleClass('hide');
   });
 
 });
