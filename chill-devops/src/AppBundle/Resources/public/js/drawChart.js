@@ -325,6 +325,7 @@ var greenChart = c3.generate({
         },
         unload: ['ByClientByMonth', 'BuyingCost']
     });
+    costByMonthChart.transform('bar', 'GreenBuyingCost');
   });
 
 });
