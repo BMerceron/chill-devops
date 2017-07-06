@@ -38,7 +38,7 @@ scenario_delete_selection:
     defaults: { _controller: AppBundle:Dashboard:deleteSelection }
 
 scenario_pdf:
-    path:     /scenario/pdf/
+    path:     /scenario/pdf/{id}
     defaults: { _controller: AppBundle:Dashboard:pdf }
     requirements:
         id: \d+

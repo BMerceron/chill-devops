@@ -7,11 +7,11 @@ use AppBundle\Entity\Configuration;
 use AppBundle\Entity\Scenario;
 use AppBundle\Services\ScenarioResult;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class DashboardController extends Controller
 {
@@ -132,30 +132,34 @@ class DashboardController extends Controller
         ));
     }
 
-    public function pdfAction(Request $request)
+    public function pdfAction(Scenario $scenario)
     {
-
-        $em = $this->getDoctrine()->getManager();
-        $scenarioRepository = $em->getRepository('AppBundle:Scenario');
-        $scenario = $scenarioRepository->findOneById($request->get('id'));
-        $result = $this->get('app_dashboard_scenario_result')->getPricesAndServers($scenario);
-        $totalPrice = $this->get('app_dashboard_scenario_result')->getTotalPrice();
-        $datas = [];
-        foreach ($result as $key => $value){
-            array_push($datas, $value);
-        }
         $deleteForm = $this->createDeleteForm($scenario);
 
+        $totalPrice = $scenario->getTotalPrices()[0];
+        $totalGreenPrice = $scenario->getTotalPrices()[1];
+        $servers = $scenario->getServers();
+
+        $infoServers = [];
+        $count = 1;
+        foreach ($servers as $server) {
+            $infoServers[$count] = $this->get('app_dashboard_scenario_result')->getInfoServer($server->getLabel());
+            $count++;
+        }
+
+
         $html = $this->renderView('AppBundle:dashboard:pdfExport.html.twig', array(
-            'totalPrice' => $totalPrice,
             'scenario' => $scenario,
             'delete_form' => $deleteForm->createView(),
-            'data' => $datas
+            'totalPrice' => $totalPrice,
+            'totalGreenPrice' => $totalGreenPrice,
+            'servers' => $servers,
+            'infoServers' => $infoServers,
         ));
 
         $filename = sprintf('test-%s.pdf', date('Y-m-d'));
-        
-        return new \Symfony\Component\HttpFoundation\Response(
+
+        return new Response(
             $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
             200,
             [
@@ -163,6 +167,35 @@ class DashboardController extends Controller
                 'Content-Disposition' => sprintf('attachment; filename="%s"', $filename),
             ]
         );
+        die('test');
+
+
+
+//        $result = $this->get('app_dashboard_scenario_result')->getPricesAndServers($scenario);
+//        $totalPrice = $this->get('app_dashboard_scenario_result')->getTotalPrice();
+//        $datas = [];
+//        foreach ($result as $key => $value){
+//            array_push($datas, $value);
+//        }
+//        $deleteForm = $this->createDeleteForm($scenario);
+//
+//        $html = $this->renderView('AppBundle:dashboard:pdfExport.html.twig', array(
+//            'totalPrice' => $totalPrice,
+//            'scenario' => $scenario,
+//            'delete_form' => $deleteForm->createView(),
+//            'data' => $datas
+//        ));
+//
+//        $filename = sprintf('test-%s.pdf', date('Y-m-d'));
+//
+//        return new Response(
+//            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+//            200,
+//            [
+//                'Content-Type'        => 'application/pdf',
+//                'Content-Disposition' => sprintf('attachment; filename="%s"', $filename),
+//            ]
+//        );
     }
 
     public function editAction(Request $request, Scenario $scenario)
