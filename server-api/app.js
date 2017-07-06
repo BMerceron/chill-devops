@@ -19,6 +19,7 @@ socket.on('waiting', function(){
 });
 
 socket.on('simulate', function(id){
+	var id = id;
 	console.log('Simulation start for client '+id);
 
 	//var id = 'j1ge4gjvnmjqticeaaao';
