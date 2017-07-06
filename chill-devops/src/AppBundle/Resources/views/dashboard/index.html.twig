@@ -8,7 +8,9 @@
                 <p>Il suffit de renseigner les données manquantes à la phrase suivante :</p>
                 <p>Je souhaite connaître le coût du serveur <b>{Nom du scénario}</b>. Au départ avec <b>{Nombre d'utilisateurs}</b> utilisateurs en simultané, puis tous les <b>{Périodicité}</b> mois, <b>{Pourcentage d'utilisateurs}</b> % s'ajouteront à ce serveur.</p>
                 <p><i>Exemple : </i></p>
-                <p><i>Je souhaite connaître le coût du serveur <b>Corporate</b>. Au départ avec <b>10000</b> utilisateurs en simultané, puis tous les <b>3</b> mois, <b>5</b> % s'ajouteront à ce serveur.</i></p>
+                <p><i>Je souhaite connaître le coût du serveur <b>Corporate</b>. Au départ avec <b>10000</b>
+                        utilisateurs en simultané, puis tous les <b>3</b> mois, <b>5</b> % s'ajouteront à ce
+                        serveur.</i></p>
                 {% for type, flash_messages in app.session.flashBag.all %}
                     {% for flash_message in flash_messages %}
                         <div class="flash-{{ type }} card red" id="card-alert">
@@ -31,25 +33,35 @@
                 <div class="col s4">
                     {{ form_row(form.clientAdd, { 'attr': {'placeholder': '%'} }) }}
                 </div>
-                    <!-- Modal Button -->
-                    <a class="btn waves-effect waves-light right light-green lighten-1 js-submit_scenario spb-js-start-chrono" href="#confirm_scenario_modal">Lancer la simulation</a>
-
-                    <!-- Modal Structure -->
-                    <div id="confirm_scenario_modal" class="modal js-confirm_scenario_modal">
-                        <div class="modal-content">
-                            <h4>Are you ready ?</h4>
-                            <p><i>Temps d'attente estimé à 10 minutes</i></p>
-                        </div>
-
-                        <div class="modal-footer">
-                            <!-- Submit Button (confirmation) -->
-                            <button class="btn waves-effect waves-light right light-green lighten-1" type="submit" name="action">C'est parti !</button>
-                            <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Pas encore</a>
-                        </div>
+                <input type="hidden" id="configs" value="">
+                <!-- Modal Button -->
+                <a class="btn waves-effect waves-light right light-green lighten-1 js-submit_scenario spb-js-start-chrono"
+                   onclick="getWaiting()" href="#confirm_scenario_modal">Lancer le Test !</a>
+                <!-- Modal Structure -->
+                <div id="confirm_scenario_modal" class="modal js-confirm_scenario_modal">
+                    <div class="modal-content">
+                        <h4>Are you ready ?</h4>
+                        <p><i>Temps d'attente estimé à <span id="waiting">600 secondes</span></i></p>
                     </div>
-                {{ form_end(form) }}
+
+                    <div class="modal-footer">
+                        <!-- Submit Button (confirmation) -->
+                        <a class="btn waves-effect waves-light right light-green lighten-1 modal-action modal-close"
+                           onclick="onSimulate()">Oui !</a>
+                        <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Non, pas encore...</a>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="chrono" style="width: 80%; margin: auto;" hidden="hidden">
+            <div style="float: right">
+                <span>Le temps estimé est d'environ </span><span class="psb-js-chrono-minutes">11</span><span class="psb-js-inner-minutes"> minutes </span><span class="psb-js-chrono-secondes">00</span><span class="psb-js-inner-secondes"> secondes</span>
+            </div>
+            <div class="progress light-green lighten-3" >
+                <div class="indeterminate light-green lighten-1"></div>
+            </div>
+        </div>
+        {{ form_end(form) }}
         <div class="row" style="border-top: 1px #9e9e9e solid">
             {% if scenario is defined %}
             <input id="chartDatas" hidden="hidden" value="{{ data }}">
@@ -119,13 +131,81 @@
                         </div>
                     </div>
                 </div>
-            {% endif %}
-        </div>
+            </div>
+        {% endif %}
     </div>
-{% endblock %}
-{% block javascripts %}
-    <script src="{{ asset('js/dashboard.js') }}"></script>
-    <script src="{{ asset('js/c3.min.js') }}"></script>
-    <script src="{{ asset('js/d3.min.js') }}"></script>
-    <script src="{{ asset('js/edit.js') }}"></script>
+    </div>
+    {% block javascripts %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+        <script src="{{ asset('js/dashboard.js') }}"></script>
+        <script src="{{ asset('js/chrono.js') }}"></script>
+        <script src="{{ asset('js/edit.js') }}"></script>
+        <script src="{{ asset('js/c3.min.js') }}"></script>
+        <script src="{{ asset('js/d3.min.js') }}"></script>
+        <script>
+            var socket = io.connect('http://192.170.1.14:9090');
+
+            function onSimulate() {
+                socket.emit('waiting');
+                chrono.initChronoDate(window.waiting);
+                $('.chrono').removeAttr('hidden');
+
+                var clientStart = $("#form_clientStart").val();
+                var periodicity = $("#form_periodicity").val();
+                var clientAdd = $("#form_clientAdd").val();
+
+                var datas = {clientStart: clientStart, periodicity: periodicity, clientAdd: clientAdd};
+                $.ajax({
+                    type: "POST",
+                    url: "{{ path('app_dashboard_check_is_available') }}",
+                    dataType: "JSON",
+                    data: datas,
+                    success: function (result) {
+                        if (result == true) {
+                            socket.emit('simulate');
+                        }
+                        else {
+                            alert('Le maximum d\'utilisateurs a été atteint, veuillez rééssayer !');
+                        }
+                    },
+                    error: function () {
+                        alert('Erreur lors de la requête');
+                    }
+                });
+            }
+
+            function getWaiting(){
+                socket.emit('waiting');
+            }
+
+            socket.on('waiting', function(waiting){
+                window.waiting = waiting;
+                $('#waiting').html(Math.round(waiting) + " secondes");
+            });
+
+            socket.on('response', function (results) {
+
+                var server1 = results[0] ? results[0] : '';
+                var server2 = results[1] ? results[1] : '';
+                var server3 = results[2] ? results[2] : '';
+
+                var datas = {server1:server1, server2:server2, server3:server3};
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ path('app_dashboard_update_server') }}",
+                    data: datas,
+                    success: function (results) {
+                        console.log('les servers sont mis à jour !')
+
+                    },
+                    error: function() {
+                        console.log('erreur lors de la mise à jour des serveurs');
+                    }
+                });
+
+                $('form').submit();
+            });
+        </script>
+    {% endblock %}
 {% endblock %}

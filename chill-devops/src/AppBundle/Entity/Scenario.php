@@ -332,8 +332,5 @@ class Scenario
         $this->servers = $servers;
         return $this;
     }
-
-
-
 }
 

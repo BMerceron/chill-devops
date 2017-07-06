@@ -19,7 +19,6 @@ class CheckIsAvailable
      * @return bool
      */
     public function isAvailable($datas){
-
         $totalClient = $this->container->get('app_dashboard_scenario_result')->getTotalClientsByPeriodicity($datas);
 
         if ($totalClient[ScenarioResult::TEST_DURATION] > ScenarioResult::MAX_CHARGE) {

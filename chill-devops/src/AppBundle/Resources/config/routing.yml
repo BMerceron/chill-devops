@@ -3,6 +3,11 @@ app_dashboard:
     defaults: { _controller: AppBundle:Dashboard:index }
 
 # crud for scenarios
+
+app_dashboard_update_server:
+    path:     /server/update
+    defaults: { _controller: AppBundle:Dashboard:updateServer }
+
 scenario_edit:
     path:     /scenario/edit/{id}
     defaults: { _controller: AppBundle:Dashboard:edit }
@@ -52,3 +57,7 @@ scenario_delete_bookmark:
 secenario_search:
     path:  /scenario/search
     defaults: { _controller: AppBundle:Dashboard:search }
+
+app_dashboard_check_is_available:
+    path:    /scenario/checkAvailable
+    defaults: { _controller: AppBundle:Dashboard:isAvailable }
