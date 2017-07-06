@@ -1,4 +1,4 @@
-/**
+ /**
  * Created by devmercerie on 16/06/17.
  */
 
@@ -26,7 +26,15 @@ $(".spb-js-edit").on("click", function () {
                 url: "/scenario/editInput/",
                 data: data,
                 success: function () {
-                    location.reload();
+                    if($('.spb-js-edit').attr('data-route') == 'show'){
+                        console.log($('.spb-js-edit-show').text())
+                        $('.spb-js-edit-show').html($('#spb-js-input-edit').val());
+                        $('.spb-js-edit').attr('data-name', $('.spb-js-edit-show').text());
+                        $('#spb-js-input-edit').remove()
+                    }else {
+                        location.reload();
+                    }
+
                 }
             })
         }
