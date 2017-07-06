@@ -33,9 +33,12 @@ ioclient.on('connection', function(socket){
  			var elapsed = ((new Date().getTime() - simulatingSince.getTime()) / 1000);
  		else
  			var elapsed = 0;
- 		if(elapsed < 0)
- 			elapsed = 0;
- 		var waiting = (timeTaken - elapsed) + (queue.length * timeTaken);
+ 		if(elapsed < 0) elapsed = 0;
+
+ 		var remaining = timeTaken - elapsed;
+ 		if (remaining < 0) remaining = 0;
+
+ 		var waiting = remaining + (queue.length * timeTaken) + timeTaken;
 
 		console.log('Emmiting waiting time ('+waiting+') to client '+socket.id);
  		socket.emit('waiting', waiting);
@@ -93,7 +96,7 @@ setInterval(function(){
 	console.log(queue.length, 'Events in queue');
 
 	if(vms.length === results.length && isSimulating){
-		console.log("All results received for "+forWhoSimulating.id+", sending response to client");
+		console.log("All results received for "+forWhoSimulating.id+", sending response to client", results);
 		forWhoSimulating.emit('response', results);
 		results = [];
 		forWhoSimulating = null;
