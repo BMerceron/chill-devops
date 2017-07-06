@@ -197,8 +197,15 @@ class DashboardController extends Controller
       $scenario = $em->getRepository('AppBundle:Scenario')->findOneById($id);
       $scenario->setIsBookmarked(true);
       $em->flush();
+        if (substr($referer, -1) == "/") {
 
-      return $this->redirect($referer);
+            return $this->redirectToRoute('scenario_show', [
+                'id' => $id
+            ]);
+        } else {
+            return $this->redirect($referer);
+        }
+
     }
 
     /**
