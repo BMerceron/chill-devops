@@ -7,6 +7,7 @@ use AppBundle\Entity\Configuration;
 use AppBundle\Entity\Scenario;
 use AppBundle\Services\ScenarioResult;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,7 +54,7 @@ class DashboardController extends Controller
                 $servers = $this->get('app_dashboard_scenario_result')->getServers();
                 $infoServers = [];
                 foreach ($servers as $key => $value) {
-                    $infoServers[$key] = $this->get('app_dashboard_scenario_result')->getInfoServer($key);
+                    $infoServers[] = $this->get('app_dashboard_scenario_result')->getInfoServer($key);
                 }
                 $datas = [];
                 foreach ($result as $key => $value){
@@ -98,9 +99,11 @@ class DashboardController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $scenarios = $em->getRepository('AppBundle:Scenario')->findAll();
+        $bookmarks = $this->showBookmarksAction();
 
         return $this->render('AppBundle:dashboard:history.html.twig', array(
             'scenarios' => $scenarios,
+            'favorites' => $bookmarks
         ));
     }
 
@@ -212,6 +215,15 @@ class DashboardController extends Controller
             ;
     }
 
+    public function deleteAction(Scenario $scenario, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($scenario);
+        $em->flush();
+
+        return $this->redirectToRoute($request->get('route'));
+    }
+
     public function deleteSelectionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -227,7 +239,69 @@ class DashboardController extends Controller
                 }
             }
         }
-
         return new JsonResponse();
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function addBookmarkAction(Request $request, $id)
+    {
+      $em = $this->getDoctrine()->getManager();
+      $referer = $request->headers->get('referer');
+      $scenario = $em->getRepository('AppBundle:Scenario')->findOneById($id);
+      $scenario->setIsBookmarked(true);
+      $em->flush();
+
+      return $this->redirect($referer);
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteBookmarkAction(Request $request, $id)
+    {
+      $em = $this->getDoctrine()->getManager();
+      $referer = $request->headers->get('referer');
+      $scenario = $em->getRepository('AppBundle:Scenario')->findOneById($id);
+      $scenario->setIsBookmarked(false);
+      $em->flush();
+
+      return $this->redirect($referer);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showBookmarksAction() {
+      $em = $this->getDoctrine()->getManager();
+      $bookmarksList = $em->getRepository('AppBundle:Scenario')->findBy(array("isBookmarked"=>true));
+      return $bookmarksList;
+//      return $this->render("AppBundle:dashboard:favorites.html.twig", array('scenarios' => $bookmarksList));
+    }
+
+    public function searchAction(Request $request)
+    {
+        $tabScenarios = [];
+        $em = $this->getDoctrine()->getManager();
+
+        $scenarioRepository = $em->getRepository('AppBundle:Scenario');
+
+        if($request->isXmlHttpRequest()) {
+            $scenarios = $scenarioRepository->searchScenario($request->get('data'));
+
+            foreach ($scenarios as $scenario) {
+                array_push($tabScenarios, array(
+                    'id' => $scenario->getId(),
+                    'name' => $scenario->getName()
+                ));
+            }
+        }
+
+        return new JsonResponse($tabScenarios);
     }
 }

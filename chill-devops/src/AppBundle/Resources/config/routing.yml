@@ -17,6 +17,10 @@ scenario_history:
     path:     /scenario/history
     defaults: { _controller: AppBundle:Dashboard:history }
 
+scenario_favorites:
+    path:     /scenario/favorites
+    defaults: { _controller: AppBundle:Dashboard:showBookmarks }
+
 scenario_show:
     path:     /scenario/show/{id}
     defaults: { _controller: AppBundle:Dashboard:show }
@@ -38,3 +42,19 @@ scenario_pdf:
     defaults: { _controller: AppBundle:Dashboard:pdf }
     requirements:
         id: \d+
+    
+scenario_add_bookmark:
+    path:    /scenario/bookmark/{id}
+    defaults: { _controller: AppBundle:Dashboard:addBookmark }
+    requirements:
+        id: \d+
+
+scenario_delete_bookmark:
+    path:    /scenario/bookmark/delete/{id}
+    defaults: { _controller: AppBundle:Dashboard:deleteBookmark }
+    requirements:
+        id: \d+
+        
+secenario_search:
+    path:  /scenario/search
+    defaults: { _controller: AppBundle:Dashboard:search }
