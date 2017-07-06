@@ -44,7 +44,7 @@ ioclient.on('connection', function(socket){
 
         console.log("remaining: "+remaining);
 
- 		var waiting = remaining + (queue.length * timeTaken) + timeTaken;
+ 		var waiting = parseInt(remaining) + parseInt(queue.length * timeTaken) + parseInt(timeTaken);
 
 		console.log('Emmiting waiting time ('+waiting+') to client '+socket.id);
  		socket.emit('waiting', waiting);
