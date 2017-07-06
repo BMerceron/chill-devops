@@ -28,8 +28,7 @@ ioclient.on('connection', function(socket){
  			if(vm.waiting > timeTaken)
  				timeTaken = vm.waiting;
 		});
-
- 		var timeTaken = 0;
+		
  		var remaining = 0;
  		var elapsed = 0;
 
