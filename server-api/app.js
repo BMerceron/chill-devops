@@ -19,12 +19,10 @@ socket.on('waiting', function(){
 });
 
 socket.on('simulate', function(id){
-	var id = id;
 	console.log('Simulation start for client '+id);
 
 	//var id = 'j1ge4gjvnmjqticeaaao';
-	//var idpath = id.replace('_', '').replace('-', '').toLowerCase();
-	var idpath = id.toLowerCase();
+	var idpath = id.replace('_', '').replace('-', '').toLowerCase();
 
 	exec('echo "'+id+'" | /chill_project/scripts/launch_test.sh', function(error, stdout, stderr) {
 		fs.readFile('/var/lib/phoronix-test-suite/test-results/'+idpath+'/composite.xml', 'utf-8', function(err, data){
