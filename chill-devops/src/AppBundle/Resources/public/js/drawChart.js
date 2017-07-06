@@ -132,7 +132,7 @@ var greenChart = c3.generate({
             GreenBuyingCost: 'y2'
         },
         colors: {
-          GreenBuyingCost: 'blue',
+          GreenBuyingCost: '#0099cc',
           Clients: 'red',
           GreenPriceByMonth: 'green'
         }
@@ -307,7 +307,7 @@ var greenChart = c3.generate({
             GreenBuyingCost: 'y2'
         },
         colors: {
-          GreenBuyingCost: 'blue',
+          GreenBuyingCost: '#0099cc',
           GreenByClientByMonth: 'green'
         }
     },
