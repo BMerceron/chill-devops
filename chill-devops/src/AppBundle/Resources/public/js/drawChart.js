@@ -1,11 +1,7 @@
 $( document ).ready(function() {
     var data = $("#chartDatas").val();
 
-    console.log(data);
-
     var dataset = JSON.parse(data);
-
-    console.log(dataset);
 
     var regions = [];
     var nbData = dataset.length;
@@ -318,6 +314,17 @@ var greenChart = c3.generate({
         greenToggle = true;
         $(".axis-y-2-green").css("opacity", 0);
     }
+  });
+
+  $("#switchGreen").click(function(){
+      $(this).toggleClass("light-green").toggleClass("blue");
+    costByMonthChart.load({
+        json: dataset,
+        keys: {
+            value: ['GreenByClientByMonth', 'GreenBuyingCost'],
+        },
+        unload: ['ByClientByMonth', 'BuyingCost']
+    });
   });
 
 });
