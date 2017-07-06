@@ -1,6 +1,16 @@
-<div class="row">
-    <div id="chart-container" style="margin: 50px auto; height: 400px;">
-    </div>
+<div class="row center-align" style="clear: both">
+    <h5>Gestion classique</h5>
+    <div id="chart-container-industrial" style="margin: 50px auto; height: 400px;"></div>
+</div>
+<div class="row center-align">
+    <h5>Gestion Green</h5>
+    <div id="chart-container-green" style="margin: 50px auto; height: 400px;"></div>
+</div>
+<div class="row center-align">
+    <h5>Evolution du coût d'un client en fonction de l'infrastructure<span id="title-switch-green" class="hide">(green)</span></h5>
+    <div id="chart-container-cost-indus" style="margin: 50px auto; height: 400px;"></div>
+    <div id="chart-container-cost-green" style="margin: 50px auto; height: 400px;" hidden="hidden"></div>
+    <a id="switchGreen" class="btn waves-effect waves-light light-green lighten-1">Afficher Green</a>
 </div>
 
 <style>

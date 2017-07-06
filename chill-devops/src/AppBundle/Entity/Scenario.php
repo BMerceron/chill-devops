@@ -29,7 +29,7 @@ class Scenario
      * @Assert\NotBlank()
      * @Assert\Range(
      *      min = 1,
-     *      minMessage = "Must be at least {{ limit }}",
+     *      minMessage = "Doit être d'au moins {{ limit }}",
      * )
      */
     private $clientStart;
@@ -42,8 +42,8 @@ class Scenario
      * @Assert\Range(
      *      min = 1,
      *      max = 60,
-     *      minMessage = "Must be at least {{ limit }}",
-     *      maxMessage = "Must be at most {{ limit }}",
+     *      minMessage = "Doit être d'au moins {{ limit }}",
+     *      maxMessage = "Doit être au plus{{ limit }}",
      * )
      */
     private $periodicity;
@@ -55,7 +55,7 @@ class Scenario
      * @Assert\NotBlank()
      * @Assert\Range(
      *      min = 1,
-     *      minMessage = "Must be at least {{ limit }}",
+     *      minMessage = "Doit être d'au moins {{ limit }}",
      * )
      */
     private $clientAdd;
@@ -93,6 +93,10 @@ class Scenario
      *
      * @ORM\Column(name="name", type="string", length=255)
      * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage = "Must be at least {{ limit }}",
+     * )
      */
     private $name;
 
@@ -328,8 +332,5 @@ class Scenario
         $this->servers = $servers;
         return $this;
     }
-
-
-
 }
 

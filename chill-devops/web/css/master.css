@@ -1,3 +1,12 @@
+.modal-multi-delete {
+  margin-left: 10px; }
+
+.history-content h2 {
+  text-transform: uppercase; }
+
+#dropdown-header {
+  margin-top: 3%; }
+
 .page-content {
   padding: 40px; }
 
@@ -30,3 +39,6 @@ input[type=range]::-webkit-slider-thumb, input[type=range] + .thumb {
 
 #index-form {
   padding: 0 6%; }
+
+.mrg-l-15 {
+  margin-left: 15px; }

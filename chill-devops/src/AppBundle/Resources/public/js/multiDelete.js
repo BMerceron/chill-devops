@@ -18,19 +18,24 @@ $(".psb-js-delete-select").on("click", function() {
     var scenarioId = $(this).attr("data-id");
     checkArray(scenarioIdArray, scenarioId);
 
-})
+});
 
 // click on delete multiple button
 
-$("#multiDeleteButton").on("click", function () {
-    $.ajax({
-        url: "/scenario/delete/selection",
-        data: {tab:scenarioIdArray},
-        success: function () {
-            location.reload();
-        }
-    })
-});
+$("#multiDeleteButton").on("click", function (event) {
+    if(scenarioIdArray.length === 0) {
+        event.preventDefault();
+    }
+    else{
+        $.ajax({
+            url: "/scenario/delete/selection",
+            data: {tab: scenarioIdArray},
+            success: function () {
+                location.reload();
+            }
+        })
+    }
+})
 
 $('.modal-multi-delete').click(function() {
     var targetUrl = $('.modal-multi-delete').attr("data-target-url");
